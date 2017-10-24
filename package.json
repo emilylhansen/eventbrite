@@ -1,6 +1,36 @@
 {
   "name": "eventbrite",
+  "version": "1.0.0",
+  "description": "eventbrite",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "private": true,
+  "engines": {
+    "node": "6.10.1",
+    "npm": "3.10.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "webpack",
+    "webpack": "webpack --watch",
+    "postinstall": "webpack"
+  },
+  "engines": {
+   "node": "4.1.1",
+   "npm": "2.1.x"
+   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appacademy/BenchBnb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/appacademy/BenchBnb/issues"
+  },
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
