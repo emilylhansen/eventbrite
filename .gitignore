@@ -15,9 +15,7 @@
 
 /node_modules
 /yarn-error.log
-
 .byebug_history
-
 /bundle.js
 /bundle.js.map
 .DS_Store
