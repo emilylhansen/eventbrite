@@ -12,8 +12,13 @@ class Api::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    render json: @user
   end
 
+  def index
+    debugger
+    @users = User.all
+  end
   private
 
   def user_params
