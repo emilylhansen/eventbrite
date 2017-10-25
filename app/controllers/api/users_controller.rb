@@ -19,11 +19,10 @@ class Api::UsersController < ApplicationController
     @users = User.all
   end
 
-  def email_exists
-    # debugger
-    user = User.find_by(email: params[:email])
-    return user === nil ? false : true
-  end
+  # def email_exists
+  #   user = User.find_by(email: params[:email])
+  #   return user === nil ? false : true
+  # end
 
   private
 
