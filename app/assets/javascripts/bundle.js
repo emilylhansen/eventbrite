@@ -763,7 +763,7 @@ module.exports = isObjectLike;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.login = exports.signup = exports.receiveErrors = exports.receiveCurrentUser = exports.RECEIVE_ERRORS = exports.RECEIVE_CURRENT_USER = undefined;
+exports.emailExists = exports.logout = exports.login = exports.signup = exports.receiveEmailExists = exports.receiveEmail = exports.receiveErrors = exports.receiveCurrentUser = exports.RECEIVE_EMAIL_EXISTS = exports.RECEIVE_EMAIL = exports.RECEIVE_ERRORS = exports.RECEIVE_CURRENT_USER = undefined;
 
 var _session_api_util = __webpack_require__(50);
 
@@ -773,6 +773,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var RECEIVE_ERRORS = exports.RECEIVE_ERRORS = 'RECEIVE_ERRORS';
+var RECEIVE_EMAIL = exports.RECEIVE_EMAIL = 'RECEIVE_EMAIL';
+var RECEIVE_EMAIL_EXISTS = exports.RECEIVE_EMAIL_EXISTS = 'RECEIVE_EMAIL_EXISTS';
 
 var receiveCurrentUser = exports.receiveCurrentUser = function receiveCurrentUser(currentUser) {
   return {
@@ -785,6 +787,20 @@ var receiveErrors = exports.receiveErrors = function receiveErrors(errors) {
   return {
     type: RECEIVE_ERRORS,
     errors: errors
+  };
+};
+
+var receiveEmail = exports.receiveEmail = function receiveEmail(email) {
+  return {
+    type: RECEIVE_EMAIL,
+    email: email
+  };
+};
+
+var receiveEmailExists = exports.receiveEmailExists = function receiveEmailExists(emailBool) {
+  return {
+    type: RECEIVE_EMAIL_EXISTS,
+    emailBool: emailBool
   };
 };
 
@@ -812,6 +828,14 @@ var logout = exports.logout = function logout() {
   return function (dispatch) {
     return SessionApiUtil.logout().then(function (user) {
       return dispatch(receiveCurrentUser(null));
+    });
+  };
+};
+
+var emailExists = exports.emailExists = function emailExists(email) {
+  return function (dispatch) {
+    return SessionApiUtil.emailExists(email).then(function (emailBool) {
+      return dispatch(receiveEmailExists(emailBool));
     });
   };
 };
@@ -1811,10 +1835,6 @@ var UserApiUtil = _interopRequireWildcard(_user_api_util);
 
 var _session_actions = __webpack_require__(12);
 
-var _session_actions2 = _interopRequireDefault(_session_actions);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_USERS = exports.RECEIVE_USERS = 'RECEIVE_USERS';
@@ -1837,7 +1857,7 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
 var fetchUser = exports.fetchUser = function fetchUser(id) {
   return function (dispatch) {
     return UserApiUtil.fetchUser(id).then(function (user) {
-      return dispatch((0, _session_actions2.default)(user));
+      return dispatch((0, _session_actions.receiveCurrentUser)(user));
     });
   };
 };
@@ -2653,6 +2673,13 @@ var logout = exports.logout = function logout() {
   return $.ajax({
     method: 'delete',
     url: 'api/session'
+  });
+};
+
+var emailExists = exports.emailExists = function emailExists(email) {
+  return $.ajax({
+    method: 'get',
+    url: 'api/users/email_exists'
   });
 };
 
@@ -4427,7 +4454,7 @@ var _reactDom = __webpack_require__(85);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _session_api_util = __webpack_require__(50);
+var _session_actions = __webpack_require__(12);
 
 var _store = __webpack_require__(98);
 
@@ -4445,12 +4472,13 @@ document.addEventListener("DOMContentLoaded", function () {
   var store = (0, _store2.default)();
   var root = document.getElementById("root");
 
-  window.signup = _session_api_util.signup;
-  window.login = _session_api_util.login;
-  window.logout = _session_api_util.logout;
+  window.signup = _session_actions.signup;
+  window.login = _session_actions.login;
+  window.logout = _session_actions.logout;
   window.getState = store.getState;
   window.dispatch = store.dispatch;
   window.fetchUsers = _user_actions.fetchUsers;
+  window.emailExists = _session_actions.emailExists;
 
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
@@ -25290,19 +25318,26 @@ var _session_actions = __webpack_require__(12);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var defaultState = {
-  current_user: null
+  currentUser: null,
+  email: "",
+  emailExists: null
 };
 
 var SessionReducer = function SessionReducer() {
-  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
   var action = arguments[1];
 
+  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case _session_actions.RECEIVE_CURRENT_USER:
-      return (0, _merge2.default)({}, action.currentUser);
+      return (0, _merge2.default)({}, { currentUser: action.currentUser });
     case _session_actions.RECEIVE_USERS:
       return (0, _merge2.default)({}, action.users);
+    case _session_actions.RECEIVE_EMAIL:
+      return (0, _merge2.default)({}, { email: action.email });
+    case _session_actions.RECEIVE_EMAIL_EXISTS:
+      return (0, _merge2.default)({}, action.emailBool);
     default:
       return oldState;
   }
@@ -27527,11 +27562,13 @@ var UsersReducer = function UsersReducer() {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
-  debugger;
+  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case _user_actions.RECEIVE_USERS:
       return (0, _merge2.default)({}, action.users);
+    case _user_actions.HOLD_EMAIL:
+      return (0, _merge2.default)({}, action.email);
     default:
       return oldState;
   }
@@ -31169,27 +31206,33 @@ var _session_form_container = __webpack_require__(224);
 
 var _session_form_container2 = _interopRequireDefault(_session_form_container);
 
+var _session_form_login_container = __webpack_require__(228);
+
+var _session_form_login_container2 = _interopRequireDefault(_session_form_login_container);
+
+var _session_form_signup_container = __webpack_require__(230);
+
+var _session_form_signup_container2 = _interopRequireDefault(_session_form_signup_container);
+
 var _greeting_container = __webpack_require__(226);
 
 var _greeting_container2 = _interopRequireDefault(_greeting_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// <h1>Happeningbrite</h1>
+// <GreetingContainer/>
 var App = function App() {
   return _react2.default.createElement(
     'div',
     null,
     _react2.default.createElement(
-      'h1',
-      null,
-      'Happeningbrite'
-    ),
-    _react2.default.createElement(_greeting_container2.default, null),
-    _react2.default.createElement(
       _reactRouterDom.Switch,
       null,
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin', component: _session_form_container2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { path: '/' })
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/login', component: _session_form_login_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/signup', component: _session_form_signup_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _greeting_container2.default })
     )
   );
 };
@@ -31217,12 +31260,14 @@ var _session_form = __webpack_require__(225);
 
 var _session_form2 = _interopRequireDefault(_session_form);
 
+var _reactRouterDom = __webpack_require__(25);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    users: state.entities.users,
-    errors: state.errors.session
+    users: Object.values(state.entities.users),
+    errors: Object.values(state.errors.session)
   };
 };
 
@@ -31233,11 +31278,27 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchUser: function fetchUser(id) {
       return dispatch((0, _user_actions.fetchUser)(id));
-    }
+    },
+    receiveEmail: function receiveEmail(email) {
+      return dispatch((0, _session_actions.receiveEmail)(email));
+    },
+    emailExists: function (_emailExists) {
+      function emailExists(_x) {
+        return _emailExists.apply(this, arguments);
+      }
+
+      emailExists.toString = function () {
+        return _emailExists.toString();
+      };
+
+      return emailExists;
+    }(function (email) {
+      return dispatch(emailExists(email));
+    })
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form2.default);
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form2.default));
 
 /***/ }),
 /* 225 */
@@ -31290,16 +31351,19 @@ var SessionForm = function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchUsers();
     }
+
+    // componentWillReceiveProps(newProps) {
+    //   if (!newProps.email){
+    //     this.props.history.push('signin');
+    //   }
+    // }
+
   }, {
     key: 'match',
     value: function match() {
       var _this2 = this;
 
       var match = void 0;
-
-      // if (this.state.email.length === 0) {
-      //   return this.props.users;
-      // }
 
       this.props.users.forEach(function (user) {
         if (user.email === _this2.state.email) {
@@ -31321,25 +31385,14 @@ var SessionForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
+      // debugger
       e.preventDefault();
       var match = this.match();
-      this.props.fetchUser(match.id);
-    }
-  }, {
-    key: 'navLink',
-    value: function navLink() {
-      if (this.props.formType === 'login') {
-        return _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/signup' },
-          'sign up instead'
-        );
+      this.props.receiveEmail(this.state.email);
+      if (match === undefined) {
+        this.props.history.push('signin/signup');
       } else {
-        return _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/login' },
-          'log in instead'
-        );
+        this.props.history.push('signin/login');
       }
     }
   }, {
@@ -31366,19 +31419,32 @@ var SessionForm = function (_React$Component) {
         'div',
         { className: 'signin-form-container' },
         _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/', className: 'signin-form-container-link' },
+          'x'
+        ),
+        _react2.default.createElement(
           'form',
           { onSubmit: this.handleSubmit, className: 'signin-form-box' },
           _react2.default.createElement(
-            'h1',
-            null,
-            'Let\'s get started'
+            'span',
+            { className: 'signin-form-badge' },
+            'E'
           ),
           _react2.default.createElement(
-            'h2',
-            null,
-            'Enter your email to sign up or log in.'
+            'div',
+            { className: 'signin-form-header' },
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Let\'s get started'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Enter your email to sign up or log in.'
+            )
           ),
-          this.renderErrors(),
           _react2.default.createElement(
             'div',
             { className: 'signin-form' },
@@ -31387,12 +31453,16 @@ var SessionForm = function (_React$Component) {
               null,
               'Email address'
             ),
+            _react2.default.createElement('br', null),
             _react2.default.createElement('input', { type: 'text',
+              placeholder: 'Enter email',
               value: this.state.email,
               onChange: this.handleInput('email'),
               className: 'signin-input'
             }),
-            _react2.default.createElement('input', { type: 'submit', value: 'Get Started' })
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'submit', value: 'Get Started', disabled: !this.state.email || this.state.email.length < 10 }),
+            this.renderErrors()
           )
         )
       );
@@ -31480,8 +31550,7 @@ var personalGreeting = function personalGreeting(currentUser, logout) {
     _react2.default.createElement(
       'h2',
       { className: 'header-name' },
-      currentUser.username,
-      '!'
+      currentUser.first_name
     ),
     _react2.default.createElement(
       'button',
@@ -31498,6 +31567,409 @@ var Greeting = function Greeting(_ref) {
 };
 
 exports.default = Greeting;
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(37);
+
+var _session_actions = __webpack_require__(12);
+
+var _session_form_login = __webpack_require__(229);
+
+var _session_form_login2 = _interopRequireDefault(_session_form_login);
+
+var _reactRouterDom = __webpack_require__(25);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { fetchUser  } from '../../actions/user_actions';
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: Boolean(state.session.currentUser),
+    email: state.session.email,
+    errors: Object.values(state.errors.session)
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    login: function login(id) {
+      return dispatch((0, _session_actions.login)(id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form_login2.default);
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(25);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SessionFormLogin = function (_React$Component) {
+  _inherits(SessionFormLogin, _React$Component);
+
+  function SessionFormLogin(props) {
+    _classCallCheck(this, SessionFormLogin);
+
+    var _this = _possibleConstructorReturn(this, (SessionFormLogin.__proto__ || Object.getPrototypeOf(SessionFormLogin)).call(this, props));
+
+    _this.state = {
+      email: _this.props.email,
+      password: ""
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleInput = _this.handleInput.bind(_this);
+    return _this;
+  }
+
+  _createClass(SessionFormLogin, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(newProps) {
+      if (newProps.loggedIn) {
+        this.props.history.push('/');
+      }
+    }
+  }, {
+    key: 'handleInput',
+    value: function handleInput(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.props.login(this.state);
+    }
+  }, {
+    key: 'renderErrors',
+    value: function renderErrors() {
+      var errs = this.props.errors.map(function (error, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: i },
+          error
+        );
+      });
+
+      return _react2.default.createElement(
+        'ul',
+        null,
+        errs
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'signin-login-form-container' },
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/', className: 'signin-login-form-container-link' },
+          'x'
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit, className: 'signin-login-form-box' },
+          _react2.default.createElement(
+            'span',
+            { className: 'signin-login-badge' },
+            'E'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'signin-login-header' },
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Welcome back'
+            ),
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Please enter your password to log in.'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'signin-login-form' },
+            _react2.default.createElement(
+              'label',
+              null,
+              'Email address'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.state.email
+            ),
+            _react2.default.createElement(
+              'label',
+              null,
+              'Password'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'password',
+              value: this.state.password,
+              onChange: this.handleInput('password'),
+              className: 'signin-login-input'
+            }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'submit', value: 'Log in' }),
+            this.renderErrors()
+          )
+        )
+      );
+    }
+  }]);
+
+  return SessionFormLogin;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)(SessionFormLogin);
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(37);
+
+var _session_actions = __webpack_require__(12);
+
+var _session_form_signup = __webpack_require__(232);
+
+var _session_form_signup2 = _interopRequireDefault(_session_form_signup);
+
+var _reactRouterDom = __webpack_require__(25);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: Boolean(state.session.currentUser),
+    email: state.session.email,
+    errors: Object.values(state.errors.session)
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    signup: function signup(id) {
+      return dispatch((0, _session_actions.signup)(id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form_signup2.default);
+
+/***/ }),
+/* 231 */,
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(25);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SessionFormSignup = function (_React$Component) {
+  _inherits(SessionFormSignup, _React$Component);
+
+  function SessionFormSignup(props) {
+    _classCallCheck(this, SessionFormSignup);
+
+    var _this = _possibleConstructorReturn(this, (SessionFormSignup.__proto__ || Object.getPrototypeOf(SessionFormSignup)).call(this, props));
+
+    _this.state = {
+      email: _this.props.email,
+      password: "",
+      first_name: "",
+      last_name: ""
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleInput = _this.handleInput.bind(_this);
+    return _this;
+  }
+
+  _createClass(SessionFormSignup, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(newProps) {
+      if (newProps.loggedIn) {
+        this.props.history.push('/');
+      }
+    }
+  }, {
+    key: 'handleInput',
+    value: function handleInput(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.props.signup(this.state);
+    }
+  }, {
+    key: 'renderErrors',
+    value: function renderErrors() {
+      var errs = this.props.errors.map(function (error, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: i },
+          error
+        );
+      });
+
+      return _react2.default.createElement(
+        'ul',
+        null,
+        errs
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'signin-signup-form-container' },
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/', className: 'signin-signup-form-container-link' },
+          'x'
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit, className: 'signin-signup-form-box' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Welcome'
+          ),
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Create and account.'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'signin-signup-form' },
+            _react2.default.createElement(
+              'label',
+              null,
+              'Email address'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.state.email
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'label',
+                null,
+                'First Name'
+              ),
+              _react2.default.createElement('input', { type: 'text', value: this.state.first_name, onChange: this.handleInput('first_name') }),
+              _react2.default.createElement(
+                'label',
+                null,
+                'Last Name'
+              ),
+              _react2.default.createElement('input', { type: 'text', value: this.state.last_name, onChange: this.handleInput('last_name') })
+            ),
+            _react2.default.createElement(
+              'label',
+              null,
+              'Password'
+            ),
+            _react2.default.createElement('input', { type: 'password',
+              value: this.state.password,
+              onChange: this.handleInput('password'),
+              className: 'signin-signup-input'
+            }),
+            _react2.default.createElement('input', { type: 'submit', value: 'Sign Up' }),
+            this.renderErrors()
+          )
+        )
+      );
+    }
+  }]);
+
+  return SessionFormSignup;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)(SessionFormSignup);
 
 /***/ })
 /******/ ]);

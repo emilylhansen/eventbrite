@@ -20,3 +20,10 @@ export const logout = () => (
     url: 'api/session'
   })
 );
+
+export const emailExists = email => (
+  $.ajax({
+    method: 'get',
+    url: 'api/users/email_exists'
+  })
+);

@@ -1,18 +1,25 @@
 import merge from 'lodash/merge';
 
-import {RECEIVE_CURRENT_USER, RECEIVE_USERS} from '../actions/session_actions';
+import {RECEIVE_CURRENT_USER, RECEIVE_USERS, RECEIVE_EMAIL, RECEIVE_EMAIL_EXISTS} from '../actions/session_actions';
 
 const defaultState = {
-  current_user: null
+  currentUser: null,
+  email: "",
+  emailExists: null
 };
 
-const SessionReducer = (oldState={}, action) => {
+const SessionReducer = (oldState=defaultState, action) => {
+  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
-    return merge({}, action.currentUser);
+    return merge({}, {currentUser: action.currentUser});
     case RECEIVE_USERS:
     return merge({}, action.users);
+    case RECEIVE_EMAIL:
+    return merge({}, {email: action.email});
+    case RECEIVE_EMAIL_EXISTS:
+    return merge({}, action.emailBool)
     default:
     return oldState;
   }

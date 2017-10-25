@@ -2,6 +2,7 @@ class User < ApplicationRecord
   validates :email, :password_digest, :session_token, presence: true
   validates :email, uniqueness: true
   validates :password, length: {minimum: 6, allow_nil: true}
+  validates :first_name, :last_name, :email, length: {minimum: 1}
 
   attr_reader :password
 
@@ -35,5 +36,10 @@ class User < ApplicationRecord
   def ensure_session_token
     self.session_token ||= self.class.generate_session_token
   end
+
+  # def email_exists?(email)
+  #   @user = User.find_by(email: email)
+  #   return @user === 'undefined' ? false : true
+  # end
 
 end

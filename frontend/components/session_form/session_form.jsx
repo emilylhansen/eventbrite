@@ -16,12 +16,14 @@ class SessionForm extends React.Component {
     this.props.fetchUsers();
   }
 
+  // componentWillReceiveProps(newProps) {
+  //   if (!newProps.email){
+  //     this.props.history.push('signin');
+  //   }
+  // }
+
   match() {
     let match;
-
-    // if (this.state.email.length === 0) {
-    //   return this.props.users;
-    // }
 
     this.props.users.forEach(user => {
       if (user.email === this.state.email) {
@@ -30,6 +32,7 @@ class SessionForm extends React.Component {
     });
 
     return match;
+
   }
 
   handleInput(field) {
@@ -39,18 +42,17 @@ class SessionForm extends React.Component {
   }
 
   handleSubmit(e) {
+    // debugger
     e.preventDefault();
     const match = this.match();
-    this.props.fetchUser(match.id);
-  }
-
-  navLink() {
-    if (this.props.formType === 'login') {
-      return <Link to="/signup">sign up instead</Link>;
+    this.props.receiveEmail(this.state.email)
+    if ( match === undefined){
+      this.props.history.push('signin/signup');
     } else {
-      return <Link to="/login">log in instead</Link>;
+      this.props.history.push('signin/login');
     }
   }
+
 
   renderErrors() {
     const errs = this.props.errors.map((error, i) => (
@@ -69,21 +71,28 @@ class SessionForm extends React.Component {
   render() {
     return (
       <div className="signin-form-container">
-        <form onSubmit={this.handleSubmit} className="signin-form-box">
-          <h1>Let's get started</h1>
-          <h2>Enter your email to sign up or log in.</h2>
+        <Link to='/' className="signin-form-container-link">x</Link>
 
-          {this.renderErrors()}
+        <form onSubmit={this.handleSubmit} className="signin-form-box">
+          <span className="signin-form-badge">E</span>
+
+          <div className="signin-form-header">
+            <h1>Let's get started</h1>
+            <p>Enter your email to sign up or log in.</p>
+          </div>
 
           <div className="signin-form">
             <label>Email address</label>
+            <br></br>
               <input type="text"
+                placeholder="Enter email"
                 value={this.state.email}
                 onChange={this.handleInput('email')}
                 className="signin-input"
               />
-
-            <input type="submit" value="Get Started" />
+            <br></br>
+            <input type="submit" value="Get Started" disabled={!this.state.email || this.state.email.length < 10}/>
+            {this.renderErrors()}
           </div>
         </form>
       </div>

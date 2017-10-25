@@ -13,3 +13,100 @@
  *= require_tree .
  *= require_self
  */
+
+.signin-form-container {
+  display: flex;,
+  justify-content: center;
+  text-align: center;
+  margin-top: 70px;
+}
+
+.signin-form-container-link {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  text-decoration: none;
+  font-size: 20px;
+
+}
+
+.signin-form-box {
+  margin: 0 auto;
+  width: 300px;
+}
+
+.signin-form-box input {
+  padding: 10px;
+  margin: 10px 0px;
+  width: 100%;
+  height: 50%;
+  font-size: 18px;
+}
+
+.signin-form-box label {
+  float: left;
+}
+
+.signin-form-badge {
+  font-size: 30px;
+  padding: 15px 25px;
+  background: orange;
+  border-radius: 50%;
+  color: white;
+}
+
+.signin-form-header h1, p {
+  margin: 5px;
+}
+
+.signin-form-header {
+  padding: 30px;
+}
+
+input[type=submit] {
+  border-radius: 30px;
+  background-color: orange;
+  color: white;
+  border: none;
+}
+
+.signin-login-badge {
+  font-size: 30px;
+  padding: 15px 25px;
+  background: gray;
+  border-radius: 50%;
+  color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*comment*/
