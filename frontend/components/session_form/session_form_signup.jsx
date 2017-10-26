@@ -52,26 +52,39 @@ class SessionFormSignup extends React.Component {
         <Link to='/' className="signin-signup-form-container-link">x</Link>
 
         <form onSubmit={this.handleSubmit} className="signin-signup-form-box">
-          <h1>Welcome</h1>
-          <h2>Create and account.</h2>
+          <span className="signin-signup-badge">E</span>
 
+          <div className="signin-signup-header">
+            <h2>Welcome</h2>
+            <h3>Create and account.</h3>
+          </div>
 
           <div className="signin-signup-form">
             <label>Email address</label>
             <p>{this.state.email}</p>
             <div>
-              <label>First Name</label>
-              <input type="text" value={this.state.first_name} onChange={this.handleInput('first_name')}></input>
-              <label>Last Name</label>
-              <input type="text" value={this.state.last_name} onChange={this.handleInput('last_name')}></input>
+              <div className="signin-signup-names">
+                <div>
+                  <label>First Name</label>
+                  <br></br>
+                  <input type="text" value={this.state.first_name} onChange={this.handleInput('first_name')}></input>
+                </div>
+                <div>
+                  <label>Last Name</label>
+                  <br></br>
+                  <input type="text" value={this.state.last_name} onChange={this.handleInput('last_name')}></input>
+                </div>
+              </div>
             </div>
+            <br></br>
             <label>Password</label>
+            <br></br>
               <input type="password"
                 value={this.state.password}
                 onChange={this.handleInput('password')}
                 className="signin-signup-input"
               />
-
+            <br></br>
             <input type="submit" value="Sign Up" />
             {this.renderErrors()}
           </div>

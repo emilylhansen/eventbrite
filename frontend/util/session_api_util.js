@@ -24,6 +24,7 @@ export const logout = () => (
 export const emailExists = email => (
   $.ajax({
     method: 'get',
-    url: 'api/users/email_exists'
+    url: 'api/users/email_exists',
+    data: {email}
   })
 );

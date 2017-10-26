@@ -4,8 +4,7 @@ import {RECEIVE_CURRENT_USER, RECEIVE_USERS, RECEIVE_EMAIL, RECEIVE_EMAIL_EXISTS
 
 const defaultState = {
   currentUser: null,
-  email: "",
-  emailExists: null
+  email: ""
 };
 
 const SessionReducer = (oldState=defaultState, action) => {

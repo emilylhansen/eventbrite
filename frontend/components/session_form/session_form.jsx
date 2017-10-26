@@ -42,9 +42,9 @@ class SessionForm extends React.Component {
   }
 
   handleSubmit(e) {
-    // debugger
     e.preventDefault();
     const match = this.match();
+    // const emailExists = this.props.emailExists({email: this.state.email})
     this.props.receiveEmail(this.state.email)
     if ( match === undefined){
       this.props.history.push('signin/signup');

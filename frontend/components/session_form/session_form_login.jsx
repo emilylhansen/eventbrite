@@ -53,13 +53,15 @@ class SessionFormLogin extends React.Component {
           <span className="signin-login-badge">E</span>
 
           <div className="signin-login-header">
-            <h1>Welcome back</h1>
-            <h2>Please enter your password to log in.</h2>
+            <h2>Welcome back</h2>
+            <h3>Please enter your password to log in.</h3>
           </div>
 
           <div className="signin-login-form">
             <label>Email address</label>
+            <br></br>
             <p>{this.state.email}</p>
+            <br></br>
             <label>Password</label>
             <br></br>
               <input type="password"
