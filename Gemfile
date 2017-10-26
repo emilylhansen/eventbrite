@@ -43,6 +43,10 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.5'
   gem 'rails_12factor'
+  gem 'aws-sdk', '< 3.0'
+  gem "paperclip", '~> 5.0.0'
+  gem 'figaro'
+
 end
 
 group :development do
@@ -55,6 +59,7 @@ group :development do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       end
     end
     resource :session, only: [:create, :destroy, :show]
-
+    resources :events
+    resources :categories
+    resources :event_types
   end
 end

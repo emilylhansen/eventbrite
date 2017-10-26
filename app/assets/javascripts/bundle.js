@@ -4452,8 +4452,6 @@ var _reactDom = __webpack_require__(85);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _session_actions = __webpack_require__(7);
-
 var _store = __webpack_require__(99);
 
 var _store2 = _interopRequireDefault(_store);
@@ -4462,7 +4460,11 @@ var _root = __webpack_require__(189);
 
 var _root2 = _interopRequireDefault(_root);
 
+var _session_actions = __webpack_require__(7);
+
 var _user_actions = __webpack_require__(37);
+
+var _event_actions = __webpack_require__(235);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4483,6 +4485,9 @@ document.addEventListener("DOMContentLoaded", function () {
   window.dispatch = store.dispatch;
   window.fetchUsers = _user_actions.fetchUsers;
   window.emailExists = _session_actions.emailExists;
+  window.fetchEvents = _event_actions.fetchEvents;
+  window.fetchEvent = _event_actions.fetchEvent;
+  window.createEvent = _event_actions.createEvent;
 
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
@@ -27573,12 +27578,15 @@ var _users_reducer = __webpack_require__(187);
 
 var _users_reducer2 = _interopRequireDefault(_users_reducer);
 
+var _events_reducer = __webpack_require__(234);
+
+var _events_reducer2 = _interopRequireDefault(_events_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import EventsReducer from './events_reducer';
-
 var EntitiesReducer = (0, _redux.combineReducers)({
-  users: _users_reducer2.default
+  users: _users_reducer2.default,
+  events: _events_reducer2.default
 });
 
 exports.default = EntitiesReducer;
@@ -31264,6 +31272,10 @@ var _homepage_container = __webpack_require__(232);
 
 var _homepage_container2 = _interopRequireDefault(_homepage_container);
 
+var _event_form_container = __webpack_require__(237);
+
+var _event_form_container2 = _interopRequireDefault(_event_form_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
@@ -31276,6 +31288,8 @@ var App = function App() {
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin', component: _session_form_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/login', component: _session_form_login_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/signup', component: _session_form_signup_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/new', component: _event_form_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId/edit', component: _event_form_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _homepage_container2.default })
     )
   );
@@ -32157,6 +32171,527 @@ var Homepage = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Homepage;
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _merge2 = __webpack_require__(32);
+
+var _merge3 = _interopRequireDefault(_merge2);
+
+var _event_actions = __webpack_require__(235);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var EventsReducer = function EventsReducer() {
+  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  Object.freeze(oldState);
+  switch (action.type) {
+    case _event_actions.RECEIVE_EVENTS:
+      return (0, _merge3.default)({}, action.events);
+    case _event_actions.RECEIVE_EVENT:
+      return (0, _merge3.default)({}, _defineProperty({}, action.event.id, action.event));
+    default:
+      return oldState;
+  }
+};
+
+exports.default = EventsReducer;
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.updateEvent = exports.createEvent = exports.fetchEvent = exports.fetchEvents = exports.receiveEvent = exports.receiveEvents = exports.RECEIVE_EVENT = exports.RECEIVE_EVENTS = undefined;
+
+var _event_api_util = __webpack_require__(236);
+
+var EventApiUtil = _interopRequireWildcard(_event_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_EVENTS = exports.RECEIVE_EVENTS = 'RECEIVE_EVENTS';
+var RECEIVE_EVENT = exports.RECEIVE_EVENT = 'RECEIVE_EVENT';
+
+var receiveEvents = exports.receiveEvents = function receiveEvents(events) {
+  return {
+    type: RECEIVE_EVENTS,
+    events: events
+  };
+};
+
+var receiveEvent = exports.receiveEvent = function receiveEvent(event) {
+  return {
+    type: RECEIVE_EVENT,
+    event: event
+  };
+};
+
+var fetchEvents = exports.fetchEvents = function fetchEvents() {
+  return function (dispatch) {
+    return EventApiUtil.fetchEvents().then(function (events) {
+      return dispatch(receiveEvents(events));
+    });
+  };
+};
+
+var fetchEvent = exports.fetchEvent = function fetchEvent(id) {
+  return function (dispatch) {
+    return EventApiUtil.fetchEvent(id).then(function (event) {
+      return dispatch(receiveEvent(event));
+    });
+  };
+};
+
+var createEvent = exports.createEvent = function createEvent(event) {
+  return function (dispatch) {
+    return EventApiUtil.createEvent(event).then(function (event) {
+      return dispatch(receiveEvent(event));
+    });
+  };
+};
+
+var updateEvent = exports.updateEvent = function updateEvent(event) {
+  return function (dispatch) {
+    return EventApiUtil.updateEvent(event).then(function (event) {
+      return dispatch(receiveEvent(event));
+    });
+  };
+};
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchEvents = exports.fetchEvents = function fetchEvents() {
+  return $.ajax({
+    method: 'get',
+    url: 'api/events'
+  });
+};
+
+var fetchEvent = exports.fetchEvent = function fetchEvent(id) {
+  return $.ajax({
+    method: 'get',
+    url: 'api/events/' + id
+  });
+};
+
+var createEvent = exports.createEvent = function createEvent(event) {
+  return $.ajax({
+    method: 'post',
+    url: 'api/events',
+    data: { event: event },
+    processData: false,
+    contentType: false,
+    dataType: 'json'
+  });
+};
+
+var updateEvent = exports.updateEvent = function updateEvent(event) {
+  return $.ajax({
+    method: 'patch',
+    url: 'api/events/' + event.id,
+    data: { event: event }
+  });
+};
+
+/***/ }),
+/* 237 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(11);
+
+var _reactRouterDom = __webpack_require__(5);
+
+var _event_actions = __webpack_require__(235);
+
+var _event_form = __webpack_require__(238);
+
+var _event_form2 = _interopRequireDefault(_event_form);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var event = {
+    title: "",
+    lat: null,
+    lng: null,
+    start_date_time: null,
+    end_date_time: null,
+    image_content_type: "",
+    image_file_name: "",
+    image_file_size: null,
+    image_updated_at: null,
+    imageFile: null,
+    imageUrl: null,
+    description: "",
+    price: null,
+    num_tickets: null,
+    organizer_id: null,
+    organizer_description: ""
+  };
+  var formType = "new";
+
+  if (ownProps.match.path === '/events/:eventId/edit') {
+    event = state.events[ownProps.match.params.eventId];
+    formType = "edit";
+  }
+  return { event: event, formType: formType };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+  var _action = ownProps.match.path === '/events/new' ? _event_actions.createEvent : _event_actions.updateEvent;
+
+  return {
+    fetchEvent: function fetchEvent(id) {
+      return dispatch((0, _event_actions.fetchEvent)(id));
+    },
+    action: function action(event) {
+      return dispatch(_action(event));
+    }
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_event_form2.default));
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _event_api_util = __webpack_require__(236);
+
+var _event_api_util2 = _interopRequireDefault(_event_api_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EventForm = function (_React$Component) {
+  _inherits(EventForm, _React$Component);
+
+  function EventForm(props) {
+    _classCallCheck(this, EventForm);
+
+    var _this = _possibleConstructorReturn(this, (EventForm.__proto__ || Object.getPrototypeOf(EventForm)).call(this, props));
+
+    _this.state = _this.props.event;
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleInput = _this.handleInput.bind(_this);
+    return _this;
+  }
+
+  _createClass(EventForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.match.params.eventId) {
+        this.props.fetchEvent(this.props.event.id);
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(newProps) {
+      this.setState(newProps.event);
+    }
+  }, {
+    key: 'handleInput',
+    value: function handleInput(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: 'updateFile',
+    value: function updateFile(e) {
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+      fileReader.onloadend = function () {
+        this.setState({ imageFile: file, imageUrl: fileReader.result });
+      }.bind(this);
+
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      // this.props.action(this.state);
+
+      var formData = new FormData();
+      formData.append("event[title]", this.state.title);
+      if (this.state.imageFile) formData.append("event[imageFile]", this.state.imageFile);
+      _event_api_util2.default.action(formData);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'span',
+              null,
+              '1'
+            ),
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Event Details'
+            )
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'EVENT TITLE'
+          ),
+          _react2.default.createElement('input', { type: 'text' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'LOCATION'
+          ),
+          _react2.default.createElement('input', { type: 'text' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'STARTS'
+          ),
+          _react2.default.createElement('input', { type: 'date' }),
+          _react2.default.createElement('input', { list: 'event-form-times', name: 'event-form-times' }),
+          _react2.default.createElement(
+            'datalist',
+            { id: 'event-form-times' },
+            _react2.default.createElement('option', { value: '12:00AM' }),
+            _react2.default.createElement('option', { value: '12:30AM' })
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'ENDS'
+          ),
+          _react2.default.createElement('input', { type: 'date' }),
+          _react2.default.createElement('input', { list: 'event-form-times', name: 'event-form-times' }),
+          _react2.default.createElement(
+            'datalist',
+            { id: 'event-form-times' },
+            _react2.default.createElement('option', { value: '12:00AM' }),
+            _react2.default.createElement('option', { value: '12:30AM' })
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'EVENT IMAGE'
+          ),
+          _react2.default.createElement('input', { type: 'file', onChange: this.updateFile }),
+          _react2.default.createElement('img', { src: this.state.imageUrl }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'EVENT DESCRIPTION'
+          ),
+          _react2.default.createElement('textarea', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'ORGANIZER NAME'
+          ),
+          _react2.default.createElement('input', { type: 'text' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'ORGANIZER DESCRIPTION'
+          ),
+          _react2.default.createElement('textarea', null),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'span',
+              null,
+              '2'
+            ),
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Create Tickets'
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'What type of ticket would you like to start with?'
+          ),
+          _react2.default.createElement(
+            'button',
+            null,
+            'FREE TICKET'
+          ),
+          _react2.default.createElement(
+            'button',
+            null,
+            'PAID TICKET'
+          ),
+          _react2.default.createElement(
+            'button',
+            null,
+            'DONATION'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'span',
+              null,
+              '3'
+            ),
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Additional Settings'
+            )
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'LISTING PRIVACY'
+          ),
+          _react2.default.createElement(
+            'ul',
+            null,
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
+              'Public page'
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
+              'Private page'
+            )
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'EVENT TYPE'
+          ),
+          _react2.default.createElement(
+            'select',
+            null,
+            _react2.default.createElement(
+              'option',
+              { value: 'Class' },
+              'Class'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: 'Party' },
+              'Party'
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'EVENT TOPIC'
+          ),
+          _react2.default.createElement(
+            'select',
+            null,
+            _react2.default.createElement(
+              'option',
+              { value: 'Business' },
+              'Business'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: 'Music' },
+              'Music'
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'REMAINING TICKETS'
+          ),
+          _react2.default.createElement('input', { type: 'checkbox', name: 'remaining_tickets' })
+        )
+      );
+    }
+  }]);
+
+  return EventForm;
+}(_react2.default.Component);
+
+exports.default = EventForm;
 
 /***/ })
 /******/ ]);

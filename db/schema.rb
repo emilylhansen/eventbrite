@@ -10,10 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171024193506) do
+ActiveRecord::Schema.define(version: 20171026180012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "event_categories", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "category_id", null: false
+  end
+
+  create_table "event_event_types", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "event_type_id", null: false
+  end
+
+  create_table "event_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title", null: false
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.datetime "start_date_time", null: false
+    t.datetime "end_date_time", null: false
+    t.string "image_file_name", null: false
+    t.string "image_content_type", null: false
+    t.integer "image_file_size", null: false
+    t.datetime "image_updated_at", null: false
+    t.text "description", null: false
+    t.float "price", null: false
+    t.integer "organizer_id", null: false
+    t.string "organizer_description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "num_tickets", null: false
+    t.index ["organizer_id"], name: "index_events_on_organizer_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false

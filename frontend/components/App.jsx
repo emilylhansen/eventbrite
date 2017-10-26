@@ -12,6 +12,7 @@ import SessionFormLoginContainer from './session_form/session_form_login_contain
 import SessionFormSignupContainer from './session_form/session_form_signup_container';
 import NavBarContainer from './navbar/navbar_container';
 import HomepageContainer from './homepage/homepage_container';
+import EventFormContainer from './event_form/event_form_container';
 
 const App = () => (
   <div>
@@ -19,6 +20,8 @@ const App = () => (
       <Route exact path="/signin" component={SessionFormContainer}/>
       <Route exact path="/signin/login" component={SessionFormLoginContainer}/>
       <Route exact path="/signin/signup" component={SessionFormSignupContainer}/>
+      <Route exact path="/events/new" component={EventFormContainer}/>
+      <Route exact path="/events/:eventId/edit" component={EventFormContainer}/>
       <Route path="/" component={HomepageContainer}/>
     </Switch>
   </div>

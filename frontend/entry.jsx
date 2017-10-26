@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {signup, login, logout, emailExists} from './actions/session_actions';
 import configureStore from './store/store';
 import Root from './components/root';
+import {signup, login, logout, emailExists} from './actions/session_actions';
 import {fetchUsers} from './actions/user_actions';
+import {fetchEvents, fetchEvent, createEvent} from './actions/event_actions';
 
 
 document.addEventListener("DOMContentLoaded", ()=> {
@@ -23,6 +24,9 @@ document.addEventListener("DOMContentLoaded", ()=> {
   window.dispatch = store.dispatch;
   window.fetchUsers = fetchUsers;
   window.emailExists = emailExists;
+  window.fetchEvents = fetchEvents;
+  window.fetchEvent = fetchEvent;
+  window.createEvent = createEvent;
 
   ReactDOM.render(<Root store={store} />, root);
 });
