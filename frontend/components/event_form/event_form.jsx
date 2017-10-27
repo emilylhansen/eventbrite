@@ -4,12 +4,13 @@ import EventApiUtil from '../../util/event_api_util';
 class EventForm extends React.Component {
   constructor(props){
     super(props);
+    debugger
     this.state = this.props.event;
     this.dateTime = {
-      startDate: null,
-      startTime: null,
-      endDate: null,
-      endTime: null
+      startDate: this.props.dateTime.startDate,
+      startTime: this.props.dateTime.startTime,
+      endDate: this.props.dateTime.endDate,
+      endTime: this.props.dateTime.endTime
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -26,9 +27,7 @@ class EventForm extends React.Component {
   }
 
   handleInput(field){
-    debugger
-    const dateTimeArr = ["startDate", "startTime", "endDate", "endTime"];
-    if (dateTimeArr.includes(field)){
+    if (Object.keys(this.dateTime).includes(field)){
       return (e) => {
         this.dateTime[field] = e.target.value;
       };
@@ -52,6 +51,13 @@ class EventForm extends React.Component {
   }
 
   handleSubmit(e){
+    debugger
+    e.preventDefault();
+
+    const startDateTime = this.dateTime.startDate + " " + this.dateTime.startTime;
+    const endDateTime = this.dateTime.endDate + " " + this.dateTime.endTime;
+    this.state.start_date_time = startDateTime;
+    this.state.end_date_time = endDateTime;
     this.props.action(this.state);
 
     // const formData = new FormData();
@@ -61,10 +67,9 @@ class EventForm extends React.Component {
   }
 
   render(){
-    debugger
     return(
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div>
             <span>1</span>
             <h1>Event Details</h1>
@@ -97,32 +102,38 @@ class EventForm extends React.Component {
           <label>STARTS</label>
             <br></br>
             <input type="date"
-              value={this.state.start_date_time}
+              value={this.dateTime.startDate}
               onChange={this.handleInput('startDate')}
               />
-            <select>
+            <select defaultValue="19:00:00">
               <option value="12:00:00"
                 onChange={this.handleInput('startTime')}
                 >12:00:00</option>
               <option value="12:30:00"
                 onChange={this.handleInput('startTime')}
                 >12:30:00</option>
+              <option value="19:00:00"
+                onChange={this.handleInput('startTime')}
+                >19:00:00</option>
             </select>
             <br></br>
 
           <label>ENDS</label>
             <br></br>
             <input type="date"
-              value={this.state.end_date_time}
+              value={this.dateTime.endDate}
               onChange={this.handleInput('endDate')}
               />
-            <select>
+            <select defaultValue="22:00:00">
               <option value="12:00:00"
                 onChange={this.handleInput('endTime')}
                 >12:00:00</option>
               <option value="12:30:00"
                 onChange={this.handleInput('endTime')}
                 >12:30:00</option>
+              <option value="22:00:00"
+                onChange={this.handleInput('endTime')}
+                >22:00:00</option>
             </select>
             <br></br>
 
@@ -206,6 +217,9 @@ class EventForm extends React.Component {
           <label>REMAINING TICKETS</label>
             <br></br>
             <input type="checkbox" name="remaining_tickets"></input>
+            <br></br>
+
+          <input type="submit" value="MAKE YOUR EVENT LIFE"/>
         </form>
       </div>
     );

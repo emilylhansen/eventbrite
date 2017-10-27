@@ -31,6 +31,7 @@ event1 = Event.create!(
   price: 0,
   num_tickets: 50,
   organizer_id: 6,
+  organizer_name: "Emily",
   organizer_description: "I'm a great event organizer"
 )
 
@@ -48,6 +49,7 @@ event2 = Event.create!(
   price: 50.00,
   num_tickets: 5,
   organizer_id: 5,
+  organizer_name: "Joey",
   organizer_description: "I'm a great event organizer"
 )
 
@@ -65,6 +67,7 @@ event3 = Event.create!(
   price: 15.50,
   num_tickets: 500,
   organizer_id: 4,
+  organizer_name: "App Academy",
   organizer_description: "I'm a great event organizer"
 )
 
@@ -78,6 +81,7 @@ event3 = Event.create!(
   price: 15.50,
   num_tickets: 500,
   organizer_id: 4,
+  organizer_name: "Shake Shack",
   organizer_description: "I'm a great event organizer"
 )
 
@@ -93,21 +97,21 @@ category6 = Category.create!(name: "Health")
 EventType.destroy_all
 
 event_type1 = EventType.create!(name: "Class")
-event_type1 = EventType.create!(name: "Party")
-event_type1 = EventType.create!(name: "Performance")
-event_type1 = EventType.create!(name: "Tour")
-event_type1 = EventType.create!(name: "Networking")
+event_type2 = EventType.create!(name: "Party")
+event_type3 = EventType.create!(name: "Performance")
+event_type4 = EventType.create!(name: "Tour")
+event_type5 = EventType.create!(name: "Networking")
 
 EventCategory.destroy_all
 
-event_category1 = EventCategory.create!(event_id: 11, category_id: 7)
-event_category2 = EventCategory.create!(event_id: 11, category_id: 8)
-event_category3 = EventCategory.create!(event_id: 12, category_id: 7)
-event_category4 = EventCategory.create!(event_id: 13, category_id: 9)
+event_category1 = EventCategory.create!(event_id: event1.id, category_id: category1.id)
+event_category2 = EventCategory.create!(event_id: event2.id, category_id: category2.id)
+event_category3 = EventCategory.create!(event_id: event2.id, category_id: category3.id)
+event_category4 = EventCategory.create!(event_id: event3.id, category_id: category3.id)
 
 EventEventType.destroy_all
 
-event_event_type = EventEventType.create!(event_id: 11, event_type_id: 6)
-event_event_type = EventEventType.create!(event_id: 12, event_type_id: 6)
-event_event_type = EventEventType.create!(event_id: 12, event_type_id: 7)
-event_event_type = EventEventType.create!(event_id: 13, event_type_id: 8)
+event_event_type1 = EventEventType.create!(event_id: event1.id, event_type_id: event_type1.id)
+event_event_type2 = EventEventType.create!(event_id: event1.id, event_type_id: event_type2.id)
+event_event_type3 = EventEventType.create!(event_id: event2.id, event_type_id: event_type2.id)
+event_event_type4 = EventEventType.create!(event_id: event3.id, event_type_id: event_type2.id)

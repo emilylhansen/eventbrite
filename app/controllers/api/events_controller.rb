@@ -6,7 +6,7 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-    debugger
+    # debugger
     @event = Event.create!(event_params)
     if @event.save
       render :show
@@ -42,6 +42,7 @@ class Api::EventsController < ApplicationController
       :price,
       :num_tickets,
       :organizer_id,
+      :organizer_name,
       :organizer_description
     )
   end
