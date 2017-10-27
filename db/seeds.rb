@@ -68,6 +68,19 @@ event3 = Event.create!(
   organizer_description: "I'm a great event organizer"
 )
 
+event3 = Event.create!(
+  title: "Visit this stick",
+  lat: 40.738695,
+  lng: -73.992742,
+  start_date_time: "2017-10-01 18:30:00",
+  end_date_time: "2017-10-01 23:30:00",
+  description: "You'll have a great time!",
+  price: 15.50,
+  num_tickets: 500,
+  organizer_id: 4,
+  organizer_description: "I'm a great event organizer"
+)
+
 Category.destroy_all
 
 category1 = Category.create!(name: "Business")

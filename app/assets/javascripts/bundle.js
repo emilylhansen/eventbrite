@@ -32073,7 +32073,7 @@ var NavBar = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'a',
-                { href: '/' },
+                { href: '/#/events/new' },
                 'CREATE EVENT'
               )
             )
@@ -32162,7 +32162,11 @@ var Homepage = function (_React$Component) {
         "div",
         null,
         _react2.default.createElement(_navbar_container2.default, null),
-        _react2.default.createElement("div", { className: "homepage-img" })
+        _react2.default.createElement(
+          "div",
+          { className: "homepage-img" },
+          _react2.default.createElement("img", { src: window.homepage })
+        )
       );
     }
   }]);
@@ -32202,7 +32206,7 @@ var EventsReducer = function EventsReducer() {
     case _event_actions.RECEIVE_EVENTS:
       return (0, _merge3.default)({}, action.events);
     case _event_actions.RECEIVE_EVENT:
-      return (0, _merge3.default)({}, _defineProperty({}, action.event.id, action.event));
+      return (0, _merge3.default)({}, oldState, _defineProperty({}, action.event.id, action.event));
     default:
       return oldState;
   }
@@ -32305,12 +32309,13 @@ var createEvent = exports.createEvent = function createEvent(event) {
   return $.ajax({
     method: 'post',
     url: 'api/events',
-    data: { event: event },
-    processData: false,
-    contentType: false,
-    dataType: 'json'
+    data: { event: event }
   });
 };
+
+// processData: false,
+// contentType: false,
+// dataType: 'json'
 
 var updateEvent = exports.updateEvent = function updateEvent(event) {
   return $.ajax({
@@ -32346,20 +32351,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var event = {
     title: "",
-    lat: null,
-    lng: null,
-    start_date_time: null,
-    end_date_time: null,
+    location: "",
+    start_date_time: "",
+    end_date_time: "",
     image_content_type: "",
     image_file_name: "",
-    image_file_size: null,
-    image_updated_at: null,
-    imageFile: null,
-    imageUrl: null,
+    image_file_size: "",
+    image_updated_at: "",
+    imageFile: "",
+    imageUrl: "",
     description: "",
-    price: null,
-    num_tickets: null,
-    organizer_id: null,
+    price: "",
+    num_tickets: "",
+    organizer_id: state.session.currentUser,
+    organizer_name: "",
     organizer_description: ""
   };
   var formType = "new";
@@ -32426,6 +32431,12 @@ var EventForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (EventForm.__proto__ || Object.getPrototypeOf(EventForm)).call(this, props));
 
     _this.state = _this.props.event;
+    _this.dateTime = {
+      startDate: null,
+      startTime: null,
+      endDate: null,
+      endTime: null
+    };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
     return _this;
@@ -32435,7 +32446,7 @@ var EventForm = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (this.props.match.params.eventId) {
-        this.props.fetchEvent(this.props.event.id);
+        this.props.fetchEvent(this.props.match.params.eventId);
       }
     }
   }, {
@@ -32448,9 +32459,17 @@ var EventForm = function (_React$Component) {
     value: function handleInput(field) {
       var _this2 = this;
 
-      return function (e) {
-        _this2.setState(_defineProperty({}, field, e.target.value));
-      };
+      debugger;
+      var dateTimeArr = ["startDate", "startTime", "endDate", "endTime"];
+      if (dateTimeArr.includes(field)) {
+        return function (e) {
+          _this2.dateTime[field] = e.target.value;
+        };
+      } else {
+        return function (e) {
+          _this2.setState(_defineProperty({}, field, e.target.value));
+        };
+      }
     }
   }, {
     key: 'updateFile',
@@ -32468,17 +32487,19 @@ var EventForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
-      // this.props.action(this.state);
+      this.props.action(this.state);
 
-      var formData = new FormData();
-      formData.append("event[title]", this.state.title);
-      if (this.state.imageFile) formData.append("event[imageFile]", this.state.imageFile);
-      _event_api_util2.default.action(formData);
+      // const formData = new FormData();
+      // formData.append("event[title]", this.state.title);
+      // if (this.state.imageFile) formData.append("event[imageFile]", this.state.imageFile);
+      // EventApiUtil.action(formData);
     }
   }, {
     key: 'render',
     value: function render() {
+      var _React$createElement;
 
+      debugger;
       return _react2.default.createElement(
         'div',
         null,
@@ -32504,40 +32525,90 @@ var EventForm = function (_React$Component) {
             null,
             'EVENT TITLE'
           ),
-          _react2.default.createElement('input', { type: 'text' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { type: 'text',
+            value: this.state.title,
+            onChange: this.handleInput('title')
+          }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
             'label',
             null,
-            'LOCATION'
+            'LATITUDE'
           ),
-          _react2.default.createElement('input', { type: 'text' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { type: 'text',
+            value: this.state.lat,
+            onChange: this.handleInput('lat')
+          }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'LONGITUDE'
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { type: 'text',
+            value: this.state.lng,
+            onChange: this.handleInput('lng')
+          }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
             'label',
             null,
             'STARTS'
           ),
-          _react2.default.createElement('input', { type: 'date' }),
-          _react2.default.createElement('input', { list: 'event-form-times', name: 'event-form-times' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { type: 'date',
+            value: this.state.start_date_time,
+            onChange: this.handleInput('startDate')
+          }),
           _react2.default.createElement(
-            'datalist',
-            { id: 'event-form-times' },
-            _react2.default.createElement('option', { value: '12:00AM' }),
-            _react2.default.createElement('option', { value: '12:30AM' })
+            'select',
+            null,
+            _react2.default.createElement(
+              'option',
+              { value: '12:00:00',
+                onChange: this.handleInput('startTime')
+              },
+              '12:00:00'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: '12:30:00',
+                onChange: this.handleInput('startTime')
+              },
+              '12:30:00'
+            )
           ),
+          _react2.default.createElement('br', null),
           _react2.default.createElement(
             'label',
             null,
             'ENDS'
           ),
-          _react2.default.createElement('input', { type: 'date' }),
-          _react2.default.createElement('input', { list: 'event-form-times', name: 'event-form-times' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { type: 'date',
+            value: this.state.end_date_time,
+            onChange: this.handleInput('endDate')
+          }),
           _react2.default.createElement(
-            'datalist',
-            { id: 'event-form-times' },
-            _react2.default.createElement('option', { value: '12:00AM' }),
-            _react2.default.createElement('option', { value: '12:30AM' })
+            'select',
+            null,
+            _react2.default.createElement(
+              'option',
+              { value: '12:00:00',
+                onChange: this.handleInput('endTime')
+              },
+              '12:00:00'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: '12:30:00',
+                onChange: this.handleInput('endTime')
+              },
+              '12:30:00'
+            )
           ),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
@@ -32545,6 +32616,7 @@ var EventForm = function (_React$Component) {
             null,
             'EVENT IMAGE'
           ),
+          _react2.default.createElement('br', null),
           _react2.default.createElement('input', { type: 'file', onChange: this.updateFile }),
           _react2.default.createElement('img', { src: this.state.imageUrl }),
           _react2.default.createElement('br', null),
@@ -32553,21 +32625,31 @@ var EventForm = function (_React$Component) {
             null,
             'EVENT DESCRIPTION'
           ),
-          _react2.default.createElement('textarea', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('textarea', { value: this.state.description,
+            onChange: this.handleInput('description')
+          }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
             'label',
             null,
             'ORGANIZER NAME'
           ),
-          _react2.default.createElement('input', { type: 'text' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { type: 'text',
+            value: this.state.organizer_name,
+            onChange: this.handleInput('organizer_name')
+          }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
             'label',
             null,
             'ORGANIZER DESCRIPTION'
           ),
-          _react2.default.createElement('textarea', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('textarea', { value: this.state.organizer_description,
+            onChange: this.handleInput('organizer_description')
+          }),
           _react2.default.createElement(
             'div',
             null,
@@ -32587,6 +32669,7 @@ var EventForm = function (_React$Component) {
             null,
             'What type of ticket would you like to start with?'
           ),
+          _react2.default.createElement('br', null),
           _react2.default.createElement(
             'button',
             null,
@@ -32602,6 +32685,25 @@ var EventForm = function (_React$Component) {
             null,
             'DONATION'
           ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Quantity available'
+          ),
+          _react2.default.createElement('input', { type: 'text',
+            value: this.state.num_tickets,
+            onChange: this.handleInput("num_tickets")
+          }),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Price'
+          ),
+          _react2.default.createElement('input', { type: 'text',
+            value: this.state.price,
+            onChange: this.handleInput("price")
+          }),
           _react2.default.createElement(
             'div',
             null,
@@ -32621,6 +32723,7 @@ var EventForm = function (_React$Component) {
             null,
             'LISTING PRIVACY'
           ),
+          _react2.default.createElement('br', null),
           _react2.default.createElement(
             'ul',
             null,
@@ -32642,6 +32745,7 @@ var EventForm = function (_React$Component) {
             null,
             'EVENT TYPE'
           ),
+          _react2.default.createElement('br', null),
           _react2.default.createElement(
             'select',
             null,
@@ -32662,12 +32766,13 @@ var EventForm = function (_React$Component) {
             null,
             'EVENT TOPIC'
           ),
+          _react2.default.createElement('br', null),
           _react2.default.createElement(
             'select',
             null,
             _react2.default.createElement(
               'option',
-              { value: 'Business' },
+              (_React$createElement = { value: 'Business' }, _defineProperty(_React$createElement, 'value', this.state.location), _defineProperty(_React$createElement, 'onChange', this.handleInput('location')), _React$createElement),
               'Business'
             ),
             _react2.default.createElement(
@@ -32682,6 +32787,7 @@ var EventForm = function (_React$Component) {
             null,
             'REMAINING TICKETS'
           ),
+          _react2.default.createElement('br', null),
           _react2.default.createElement('input', { type: 'checkbox', name: 'remaining_tickets' })
         )
       );

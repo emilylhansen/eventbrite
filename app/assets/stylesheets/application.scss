@@ -237,7 +237,13 @@ li:hover .login-signup-dropdown {
 
 //---------------------
 .homepage-img {
-  background: url("https://media.timeout.com/images/102502467/image.jpg")
+  background: image_url("outside.jpg");
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.homepage-img img{
 }
 
 

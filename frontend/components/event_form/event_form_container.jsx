@@ -7,21 +7,21 @@ import EventForm from './event_form';
 const mapStateToProps = (state, ownProps) => {
   let event = {
     title: "",
-    lat: null,
-    lng: null,
-    start_date_time: null,
-    end_date_time: null,
+    location: "",
+    start_date_time: "",
+    end_date_time: "",
     image_content_type: "",
     image_file_name: "",
-    image_file_size: null,
-    image_updated_at: null,
-    imageFile: null,
-    imageUrl: null,
+    image_file_size: "",
+    image_updated_at: "",
+    imageFile: "",
+    imageUrl: "",
     description: "",
-    price: null,
-    num_tickets: null,
-    organizer_id: null,
-    organizer_description: "",
+    price: "",
+    num_tickets: "",
+    organizer_id: state.session.currentUser,
+    organizer_name: "",
+    organizer_description: ""
   };
   let formType = "new";
 

@@ -16,12 +16,13 @@ export const createEvent = event => (
   $.ajax({
     method: 'post',
     url: 'api/events',
-    data: {event},
-    processData: false,
-    contentType: false,
-    dataType: 'json'
+    data: {event}
   })
 );
+
+// processData: false,
+// contentType: false,
+// dataType: 'json'
 
 export const updateEvent = event => (
   $.ajax({

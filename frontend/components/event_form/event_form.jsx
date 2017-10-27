@@ -5,13 +5,19 @@ class EventForm extends React.Component {
   constructor(props){
     super(props);
     this.state = this.props.event;
+    this.dateTime = {
+      startDate: null,
+      startTime: null,
+      endDate: null,
+      endTime: null
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
   }
 
   componentDidMount(){
     if(this.props.match.params.eventId){
-      this.props.fetchEvent(this.props.event.id);
+      this.props.fetchEvent(this.props.match.params.eventId);
     }
   }
 
@@ -20,9 +26,17 @@ class EventForm extends React.Component {
   }
 
   handleInput(field){
-    return (e) => {
-      this.setState({[field]: e.target.value});
-    };
+    debugger
+    const dateTimeArr = ["startDate", "startTime", "endDate", "endTime"];
+    if (dateTimeArr.includes(field)){
+      return (e) => {
+        this.dateTime[field] = e.target.value;
+      };
+    } else {
+      return (e) => {
+        this.setState({[field]: e.target.value});
+      };
+    }
   }
 
   updateFile(e) {
@@ -38,16 +52,16 @@ class EventForm extends React.Component {
   }
 
   handleSubmit(e){
-    // this.props.action(this.state);
+    this.props.action(this.state);
 
-    const formData = new FormData();
-    formData.append("event[title]", this.state.title);
-    if (this.state.imageFile) formData.append("event[imageFile]", this.state.imageFile);
-    EventApiUtil.action(formData);
+    // const formData = new FormData();
+    // formData.append("event[title]", this.state.title);
+    // if (this.state.imageFile) formData.append("event[imageFile]", this.state.imageFile);
+    // EventApiUtil.action(formData);
   }
 
   render(){
-
+    debugger
     return(
       <div>
         <form>
@@ -57,80 +71,141 @@ class EventForm extends React.Component {
           </div>
 
           <label>EVENT TITLE</label>
-          <input type="text"></input>
-          <br></br>
+            <br></br>
+            <input type="text"
+              value={this.state.title}
+              onChange={this.handleInput('title')}
+              />
+            <br></br>
 
-          <label>LOCATION</label>
-          <input type="text"></input>
-          <br></br>
+          <label>LATITUDE</label>
+            <br></br>
+            <input type="text"
+              value={this.state.lat}
+              onChange={this.handleInput('lat')}
+              />
+            <br></br>
+
+          <label>LONGITUDE</label>
+            <br></br>
+            <input type="text"
+              value={this.state.lng}
+              onChange={this.handleInput('lng')}
+              />
+            <br></br>
 
           <label>STARTS</label>
-          <input type="date"></input>
-          <input list="event-form-times" name="event-form-times"></input>
-          <datalist id="event-form-times">
-            <option value="12:00AM"></option>
-            <option value="12:30AM"></option>
-          </datalist>
+            <br></br>
+            <input type="date"
+              value={this.state.start_date_time}
+              onChange={this.handleInput('startDate')}
+              />
+            <select>
+              <option value="12:00:00"
+                onChange={this.handleInput('startTime')}
+                >12:00:00</option>
+              <option value="12:30:00"
+                onChange={this.handleInput('startTime')}
+                >12:30:00</option>
+            </select>
+            <br></br>
 
           <label>ENDS</label>
-          <input type="date"></input>
-          <input list="event-form-times" name="event-form-times"></input>
-          <datalist id="event-form-times">
-            <option value="12:00AM"></option>
-            <option value="12:30AM"></option>
-          </datalist>
-          <br></br>
+            <br></br>
+            <input type="date"
+              value={this.state.end_date_time}
+              onChange={this.handleInput('endDate')}
+              />
+            <select>
+              <option value="12:00:00"
+                onChange={this.handleInput('endTime')}
+                >12:00:00</option>
+              <option value="12:30:00"
+                onChange={this.handleInput('endTime')}
+                >12:30:00</option>
+            </select>
+            <br></br>
 
           <label>EVENT IMAGE</label>
-          <input type="file" onChange={this.updateFile}/>
-          <img src={this.state.imageUrl}/>
-          <br></br>
+            <br></br>
+            <input type="file" onChange={this.updateFile}/>
+            <img src={this.state.imageUrl}/>
+            <br></br>
 
           <label>EVENT DESCRIPTION</label>
-          <textarea></textarea>
-          <br></br>
+            <br></br>
+            <textarea value={this.state.description}
+              onChange={this.handleInput('description')}
+              />
+            <br></br>
 
           <label>ORGANIZER NAME</label>
-          <input type="text"></input>
-          <br></br>
+            <br></br>
+            <input type="text"
+              value={this.state.organizer_name}
+              onChange={this.handleInput('organizer_name')}
+              />
+            <br></br>
 
           <label>ORGANIZER DESCRIPTION</label>
-          <textarea></textarea>
+            <br></br>
+            <textarea value={this.state.organizer_description}
+              onChange={this.handleInput('organizer_description')}
+              />
 
           <div>
             <span>2</span>
             <h1>Create Tickets</h1>
           </div>
+
           <p>What type of ticket would you like to start with?</p>
+          <br></br>
           <button>FREE TICKET</button>
           <button>PAID TICKET</button>
           <button>DONATION</button>
+          <br></br>
+          <label>Quantity available</label>
+          <input type="text"
+            value={this.state.num_tickets}
+            onChange={this.handleInput("num_tickets")}
+            />
+          <label>Price</label>
+          <input type="text"
+            value={this.state.price}
+            onChange={this.handleInput("price")}
+            />
 
           <div>
             <span>3</span>
             <h1>Additional Settings</h1>
           </div>
+
           <label>LISTING PRIVACY</label>
-          <ul>
-            <li><input type="radio" name="privacy"/>Public page</li>
-            <li><input type="radio" name="privacy"/>Private page</li>
-          </ul>
+            <br></br>
+            <ul>
+              <li><input type="radio" name="privacy"/>Public page</li>
+              <li><input type="radio" name="privacy"/>Private page</li>
+            </ul>
+
           <label>EVENT TYPE</label>
-          <select>
-            <option value="Class">Class</option>
-            <option value="Party">Party</option>
-          </select>
-          <br></br>
+            <br></br>
+            <select>
+              <option value="Class">Class</option>
+              <option value="Party">Party</option>
+            </select>
+            <br></br>
 
           <label>EVENT TOPIC</label>
-          <select>
-            <option value="Business">Business</option>
-            <option value="Music">Music</option>
-          </select>
-          <br></br>
+            <br></br>
+            <select>
+              <option value="Business" value={this.state.location} onChange={this.handleInput('location')}>Business</option>
+              <option value="Music">Music</option>
+            </select>
+            <br></br>
 
           <label>REMAINING TICKETS</label>
-          <input type="checkbox" name="remaining_tickets"></input>
+            <br></br>
+            <input type="checkbox" name="remaining_tickets"></input>
         </form>
       </div>
     );

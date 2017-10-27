@@ -27,7 +27,7 @@ class NavBar extends React.Component{
           <ul className="login-signup-headerlist">
             <li><a href="/">BROWSE EVENTS</a></li>
             {signinLogout}
-            <li><a href="/">CREATE EVENT</a></li>
+            <li><a href="/#/events/new">CREATE EVENT</a></li>
           </ul>
 
         </nav>

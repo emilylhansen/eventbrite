@@ -8,7 +8,7 @@ class Homepage extends React.Component{
       <div>
         <NavBarContainer/>
         <div className="homepage-img">
-
+          <img src={window.homepage}></img>
         </div>
       </div>
     )

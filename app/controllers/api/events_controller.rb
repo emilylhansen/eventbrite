@@ -1,11 +1,12 @@
 class Api::EventsController < ApplicationController
-  before_action :require_logged_in, only: [:create]
+  # before_action :ensure_logged_in, only: [:create]
 
   def index
     @events = Event.all
   end
 
   def create
+    debugger
     @event = Event.create!(event_params)
     if @event.save
       render :show
@@ -37,10 +38,6 @@ class Api::EventsController < ApplicationController
       :lng,
       :start_date_time,
       :end_date_time,
-      :image_content_type,
-      :image_file_name,
-      :image_file_size,
-      :image_updated_at,
       :description,
       :price,
       :num_tickets,

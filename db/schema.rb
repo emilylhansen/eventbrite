@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026180012) do
+ActiveRecord::Schema.define(version: 20171026234933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,10 +43,10 @@ ActiveRecord::Schema.define(version: 20171026180012) do
     t.float "lng", null: false
     t.datetime "start_date_time", null: false
     t.datetime "end_date_time", null: false
-    t.string "image_file_name", null: false
-    t.string "image_content_type", null: false
-    t.integer "image_file_size", null: false
-    t.datetime "image_updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
     t.text "description", null: false
     t.float "price", null: false
     t.integer "organizer_id", null: false
