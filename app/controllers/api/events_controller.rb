@@ -1,17 +1,17 @@
 class Api::EventsController < ApplicationController
-  # before_action :ensure_logged_in, only: [:create]
+  before_action :ensure_logged_in, only: [:create, :update]
 
   def index
     @events = Event.all
   end
 
   def create
-    # debugger
-    @event = Event.create!(event_params)
+    debugger
+    @event = Event.new(event_params)
     if @event.save
       render :show
     else
-      render json: @events.errors.full_messages, status: 422
+      render json: @event.errors.full_messages, status: 422
     end
   end
 
@@ -21,6 +21,7 @@ class Api::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    render json: @event
   end
 
   def update
@@ -43,7 +44,8 @@ class Api::EventsController < ApplicationController
       :num_tickets,
       :organizer_id,
       :organizer_name,
-      :organizer_description
+      :organizer_description,
+      :avatar
     )
   end
 end

@@ -8,7 +8,6 @@ const defaultState = {
 };
 
 const SessionReducer = (oldState=defaultState, action) => {
-  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_CURRENT_USER:

@@ -21,12 +21,8 @@ const mapStateToProps = (state, ownProps) => {
     lng: "",
     start_date_time: "",
     end_date_time: "",
-    image_content_type: undefined,
-    image_file_name: undefined,
-    image_file_size: undefined,
-    image_updated_at: undefined,
-    imageFile: undefined,
-    imageUrl: undefined,
+    avatarFile: null,
+    avatarUrl: null,
     description: "",
     price: "",
     num_tickets: "",
@@ -54,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
     formType = "edit";
   }
 
-  return {event, dateTime, formType};
+  return {event, dateTime, formType, errors: Object.values(state.errors.events)};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

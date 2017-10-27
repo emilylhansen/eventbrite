@@ -7,21 +7,21 @@ class Event < ApplicationRecord
             :description,
             :price,
             :organizer_id,
+            :organizer_name,
             :organizer_description,
             :num_tickets,
             presence: true
 
-            # :image_content_type,
-            # :image_file_name,
-            # :image_file_size,
-            # :image_updated_at,
-            # :image
+
+  # validates :avatar, attachment_presence: true
+  # validates_with AttachmentPresenceValidator, attributes: :avatar
+  # validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 1.megabytes
 
   has_many :event_categories
   has_many :categories, through: :event_categories
   has_many :event_event_types
   has_many :event_types, through: :event_event_types
 
-  # has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }
-  # validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+  has_attached_file :avatar, default_url: "leaf.jpg"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 end

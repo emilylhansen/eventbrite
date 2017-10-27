@@ -12,17 +12,20 @@ export const fetchEvent = id => (
   })
 );
 
-export const createEvent = event => (
+export const createEvent = (formData, callback) => (
   $.ajax({
     method: 'post',
     url: 'api/events',
-    data: {event}
+    data: formData,
+    processData: false,
+    contentType: false,
   })
 );
 
-// processData: false,
-// contentType: false,
-// dataType: 'json'
+// dataType: 'json',
+// success: function() {
+//   callback();
+// }
 
 export const updateEvent = event => (
   $.ajax({

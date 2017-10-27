@@ -23,10 +23,6 @@ event1 = Event.create!(
   lng: -73.992742,
   start_date_time: "2017-10-01 18:30:00",
   end_date_time: "2017-10-01 23:30:00",
-  image_content_type: "png",
-  image_file_name: "image",
-  image_file_size: 10,
-  image_updated_at: "2017-10-01 18:30:00",
   description: "You'll have a great time!",
   price: 0,
   num_tickets: 50,
@@ -41,10 +37,6 @@ event2 = Event.create!(
   lng: -73.992742,
   start_date_time: "2017-10-01 18:30:00",
   end_date_time: "2017-10-01 23:30:00",
-  image_content_type: "png",
-  image_file_name: "image",
-  image_file_size: 10,
-  image_updated_at: "2017-10-01 18:30:00",
   description: "You'll have a great time!",
   price: 50.00,
   num_tickets: 5,
@@ -59,10 +51,6 @@ event3 = Event.create!(
   lng: -73.992742,
   start_date_time: "2017-10-01 18:30:00",
   end_date_time: "2017-10-01 23:30:00",
-  image_content_type: "png",
-  image_file_name: "image",
-  image_file_size: 10,
-  image_updated_at: "2017-10-01 18:30:00",
   description: "You'll have a great time!",
   price: 15.50,
   num_tickets: 500,
@@ -71,7 +59,7 @@ event3 = Event.create!(
   organizer_description: "I'm a great event organizer"
 )
 
-event3 = Event.create!(
+event4 = Event.create!(
   title: "Visit this stick",
   lat: 40.738695,
   lng: -73.992742,

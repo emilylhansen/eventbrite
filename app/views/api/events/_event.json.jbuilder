@@ -5,11 +5,11 @@ json.extract! event,
   :lng,
   :start_date_time,
   :end_date_time,
-  :image_content_type,
-  :image_file_name,
-  :image_file_size,
-  :image_updated_at,
   :description,
   :price,
+  :num_tickets,
   :organizer_id,
+  :organizer_name,
   :organizer_description
+
+json.avatar_url asset_path(event.avatar.url)

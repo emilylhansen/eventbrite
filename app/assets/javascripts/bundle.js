@@ -1897,6 +1897,8 @@ var _event_api_util = __webpack_require__(70);
 
 var EventApiUtil = _interopRequireWildcard(_event_api_util);
 
+var _session_actions = __webpack_require__(7);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_EVENTS = exports.RECEIVE_EVENTS = 'RECEIVE_EVENTS';
@@ -1936,6 +1938,9 @@ var createEvent = exports.createEvent = function createEvent(event) {
   return function (dispatch) {
     return EventApiUtil.createEvent(event).then(function (event) {
       return dispatch(receiveEvent(event));
+    }, function (errors) {
+      debugger;
+      dispatch((0, _session_actions.receiveErrors)(errors.responseJSON));
     });
   };
 };
@@ -1944,6 +1949,8 @@ var updateEvent = exports.updateEvent = function updateEvent(event) {
   return function (dispatch) {
     return EventApiUtil.updateEvent(event).then(function (event) {
       return dispatch(receiveEvent(event));
+    }, function (errors) {
+      return dispatch((0, _session_actions.receiveErrors)(errors.responseJSON));
     });
   };
 };
@@ -3475,17 +3482,20 @@ var fetchEvent = exports.fetchEvent = function fetchEvent(id) {
   });
 };
 
-var createEvent = exports.createEvent = function createEvent(event) {
+var createEvent = exports.createEvent = function createEvent(formData, callback) {
   return $.ajax({
     method: 'post',
     url: 'api/events',
-    data: { event: event }
+    data: formData,
+    processData: false,
+    contentType: false
   });
 };
 
-// processData: false,
-// contentType: false,
-// dataType: 'json'
+// dataType: 'json',
+// success: function() {
+//   callback();
+// }
 
 var updateEvent = exports.updateEvent = function updateEvent(event) {
   return $.ajax({
@@ -25446,7 +25456,6 @@ var SessionReducer = function SessionReducer() {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
   var action = arguments[1];
 
-  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case _session_actions.RECEIVE_CURRENT_USER:
@@ -27631,9 +27640,17 @@ var _session_errors_reducer = __webpack_require__(187);
 
 var _session_errors_reducer2 = _interopRequireDefault(_session_errors_reducer);
 
+var _events_errors_reducer = __webpack_require__(239);
+
+var _events_errors_reducer2 = _interopRequireDefault(_events_errors_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ErrorsReducer = (0, _redux.combineReducers)({ session: _session_errors_reducer2.default });
+var ErrorsReducer = (0, _redux.combineReducers)({
+  session: _session_errors_reducer2.default,
+  events: _events_errors_reducer2.default
+});
+
 exports.default = ErrorsReducer;
 
 /***/ }),
@@ -27659,6 +27676,7 @@ var SessionErrorsReducer = function SessionErrorsReducer() {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];
 
+  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case _session_actions.RECEIVE_ERRORS:
@@ -32361,12 +32379,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     lng: "",
     start_date_time: "",
     end_date_time: "",
-    image_content_type: undefined,
-    image_file_name: undefined,
-    image_file_size: undefined,
-    image_updated_at: undefined,
-    imageFile: undefined,
-    imageUrl: undefined,
+    avatarFile: null,
+    avatarUrl: null,
     description: "",
     price: "",
     num_tickets: "",
@@ -32394,7 +32408,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     formType = "edit";
   }
 
-  return { event: event, dateTime: dateTime, formType: formType };
+  return { event: event, dateTime: dateTime, formType: formType, errors: Object.values(state.errors.events) };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
@@ -32449,9 +32463,9 @@ var EventForm = function (_React$Component) {
   function EventForm(props) {
     _classCallCheck(this, EventForm);
 
+    // debugger
     var _this = _possibleConstructorReturn(this, (EventForm.__proto__ || Object.getPrototypeOf(EventForm)).call(this, props));
 
-    debugger;
     _this.state = _this.props.event;
     _this.dateTime = {
       startDate: _this.props.dateTime.startDate,
@@ -32461,6 +32475,7 @@ var EventForm = function (_React$Component) {
     };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
+    _this.updateFile = _this.handleInput.bind(_this);
     return _this;
   }
 
@@ -32475,6 +32490,10 @@ var EventForm = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
       this.setState(newProps.event);
+
+      // if (this.props.errors.length !== 0){
+      //   this.props.history.push('/');
+      // }
     }
   }, {
     key: 'handleInput',
@@ -32494,10 +32513,11 @@ var EventForm = function (_React$Component) {
   }, {
     key: 'updateFile',
     value: function updateFile(e) {
+      debugger;
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
       fileReader.onloadend = function () {
-        this.setState({ imageFile: file, imageUrl: fileReader.result });
+        this.setState({ avatarFile: file, avatarUrl: fileReader.result });
       }.bind(this);
 
       if (file) {
@@ -32507,6 +32527,8 @@ var EventForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       debugger;
       e.preventDefault();
 
@@ -32514,18 +32536,47 @@ var EventForm = function (_React$Component) {
       var endDateTime = this.dateTime.endDate + " " + this.dateTime.endTime;
       this.state.start_date_time = startDateTime;
       this.state.end_date_time = endDateTime;
-      this.props.action(this.state);
+      // this.props.action(this.state);
 
-      // const formData = new FormData();
-      // formData.append("event[title]", this.state.title);
-      // if (this.state.imageFile) formData.append("event[imageFile]", this.state.imageFile);
-      // EventApiUtil.action(formData);
+      var formData = new FormData();
+      Object.keys(this.state).map(function (col) {
+        return formData.append('event[' + col + ']', _this3.state[col]);
+      });
+      // formData.append("tweet[body]", this.state.body);
+      if (this.state.avatarFile) {
+        formData.append("event[avatar]", this.state.avatarFile);
+      }
+      // TweetApi.createTweet(formData, this.goBack);
+      this.props.action(formData, this.goBack);
+    }
+  }, {
+    key: 'goBack',
+    value: function goBack() {
+      this.props.history.push("/");
+    }
+  }, {
+    key: 'renderErrors',
+    value: function renderErrors() {
+      var errs = this.props.errors.map(function (error, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: i },
+          error
+        );
+      });
+
+      return _react2.default.createElement(
+        'ul',
+        null,
+        errs
+      );
     }
   }, {
     key: 'render',
     value: function render() {
       var _React$createElement;
 
+      // debugger
       return _react2.default.createElement(
         'div',
         null,
@@ -32536,301 +32587,306 @@ var EventForm = function (_React$Component) {
             'div',
             null,
             _react2.default.createElement(
-              'span',
+              'div',
               null,
-              '1'
+              _react2.default.createElement(
+                'span',
+                null,
+                '1'
+              ),
+              _react2.default.createElement(
+                'h1',
+                null,
+                'Event Details'
+              )
             ),
             _react2.default.createElement(
-              'h1',
+              'label',
               null,
-              'Event Details'
-            )
-          ),
-          _react2.default.createElement(
-            'label',
-            null,
-            'EVENT TITLE'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'text',
-            value: this.state.title,
-            onChange: this.handleInput('title')
-          }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'LATITUDE'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'text',
-            value: this.state.lat,
-            onChange: this.handleInput('lat')
-          }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'LONGITUDE'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'text',
-            value: this.state.lng,
-            onChange: this.handleInput('lng')
-          }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'STARTS'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'date',
-            value: this.dateTime.startDate,
-            onChange: this.handleInput('startDate')
-          }),
-          _react2.default.createElement(
-            'select',
-            { defaultValue: '19:00:00' },
-            _react2.default.createElement(
-              'option',
-              { value: '12:00:00',
-                onChange: this.handleInput('startTime')
-              },
-              '12:00:00'
+              'EVENT TITLE'
             ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'text',
+              value: this.state.title,
+              onChange: this.handleInput('title')
+            }),
+            _react2.default.createElement('br', null),
             _react2.default.createElement(
-              'option',
-              { value: '12:30:00',
-                onChange: this.handleInput('startTime')
-              },
-              '12:30:00'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: '19:00:00',
-                onChange: this.handleInput('startTime')
-              },
-              '19:00:00'
-            )
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'ENDS'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'date',
-            value: this.dateTime.endDate,
-            onChange: this.handleInput('endDate')
-          }),
-          _react2.default.createElement(
-            'select',
-            { defaultValue: '22:00:00' },
-            _react2.default.createElement(
-              'option',
-              { value: '12:00:00',
-                onChange: this.handleInput('endTime')
-              },
-              '12:00:00'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: '12:30:00',
-                onChange: this.handleInput('endTime')
-              },
-              '12:30:00'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: '22:00:00',
-                onChange: this.handleInput('endTime')
-              },
-              '22:00:00'
-            )
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'EVENT IMAGE'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'file', onChange: this.updateFile }),
-          _react2.default.createElement('img', { src: this.state.imageUrl }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'EVENT DESCRIPTION'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('textarea', { value: this.state.description,
-            onChange: this.handleInput('description')
-          }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'ORGANIZER NAME'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'text',
-            value: this.state.organizer_name,
-            onChange: this.handleInput('organizer_name')
-          }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'ORGANIZER DESCRIPTION'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('textarea', { value: this.state.organizer_description,
-            onChange: this.handleInput('organizer_description')
-          }),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'span',
+              'label',
               null,
-              '2'
+              'LATITUDE'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'text',
+              value: this.state.lat,
+              onChange: this.handleInput('lat')
+            }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'LONGITUDE'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'text',
+              value: this.state.lng,
+              onChange: this.handleInput('lng')
+            }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'STARTS'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'date',
+              value: this.dateTime.startDate,
+              onChange: this.handleInput('startDate')
+            }),
+            _react2.default.createElement(
+              'select',
+              { defaultValue: '19:00:00' },
+              _react2.default.createElement(
+                'option',
+                { value: '12:00:00',
+                  onChange: this.handleInput('startTime')
+                },
+                '12:00:00'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '12:30:00',
+                  onChange: this.handleInput('startTime')
+                },
+                '12:30:00'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '19:00:00',
+                  onChange: this.handleInput('startTime')
+                },
+                '19:00:00'
+              )
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'ENDS'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'date',
+              value: this.dateTime.endDate,
+              onChange: this.handleInput('endDate')
+            }),
+            _react2.default.createElement(
+              'select',
+              { defaultValue: '22:00:00' },
+              _react2.default.createElement(
+                'option',
+                { value: '12:00:00',
+                  onChange: this.handleInput('endTime')
+                },
+                '12:00:00'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '12:30:00',
+                  onChange: this.handleInput('endTime')
+                },
+                '12:30:00'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '22:00:00',
+                  onChange: this.handleInput('endTime')
+                },
+                '22:00:00'
+              )
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'EVENT IMAGE'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'file', onChange: this.updateFile }),
+            _react2.default.createElement('img', { src: this.state.avatarUrl }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'EVENT DESCRIPTION'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('textarea', { value: this.state.description,
+              onChange: this.handleInput('description')
+            }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'ORGANIZER NAME'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'text',
+              value: this.state.organizer_name,
+              onChange: this.handleInput('organizer_name')
+            }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'ORGANIZER DESCRIPTION'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('textarea', { value: this.state.organizer_description,
+              onChange: this.handleInput('organizer_description')
+            }),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'span',
+                null,
+                '2'
+              ),
+              _react2.default.createElement(
+                'h1',
+                null,
+                'Create Tickets'
+              )
             ),
             _react2.default.createElement(
-              'h1',
+              'p',
               null,
-              'Create Tickets'
-            )
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'What type of ticket would you like to start with?'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'button',
-            null,
-            'FREE TICKET'
-          ),
-          _react2.default.createElement(
-            'button',
-            null,
-            'PAID TICKET'
-          ),
-          _react2.default.createElement(
-            'button',
-            null,
-            'DONATION'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'Quantity available'
-          ),
-          _react2.default.createElement('input', { type: 'text',
-            value: this.state.num_tickets,
-            onChange: this.handleInput("num_tickets")
-          }),
-          _react2.default.createElement(
-            'label',
-            null,
-            'Price'
-          ),
-          _react2.default.createElement('input', { type: 'text',
-            value: this.state.price,
-            onChange: this.handleInput("price")
-          }),
-          _react2.default.createElement(
-            'div',
-            null,
+              'What type of ticket would you like to start with?'
+            ),
+            _react2.default.createElement('br', null),
             _react2.default.createElement(
-              'span',
+              'button',
               null,
-              '3'
+              'FREE TICKET'
             ),
             _react2.default.createElement(
-              'h1',
+              'button',
               null,
-              'Additional Settings'
-            )
-          ),
-          _react2.default.createElement(
-            'label',
-            null,
-            'LISTING PRIVACY'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'ul',
-            null,
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
-              'Public page'
+              'PAID TICKET'
             ),
             _react2.default.createElement(
-              'li',
+              'button',
               null,
-              _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
-              'Private page'
-            )
-          ),
-          _react2.default.createElement(
-            'label',
-            null,
-            'EVENT TYPE'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'select',
-            null,
+              'DONATION'
+            ),
+            _react2.default.createElement('br', null),
             _react2.default.createElement(
-              'option',
-              { value: 'Class' },
-              'Class'
+              'label',
+              null,
+              'Quantity available'
+            ),
+            _react2.default.createElement('input', { type: 'text',
+              value: this.state.num_tickets,
+              onChange: this.handleInput("num_tickets")
+            }),
+            _react2.default.createElement(
+              'label',
+              null,
+              'Price'
+            ),
+            _react2.default.createElement('input', { type: 'text',
+              value: this.state.price,
+              onChange: this.handleInput("price")
+            }),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'span',
+                null,
+                '3'
+              ),
+              _react2.default.createElement(
+                'h1',
+                null,
+                'Additional Settings'
+              )
             ),
             _react2.default.createElement(
-              'option',
-              { value: 'Party' },
-              'Party'
-            )
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'EVENT TOPIC'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'select',
-            null,
+              'label',
+              null,
+              'LISTING PRIVACY'
+            ),
+            _react2.default.createElement('br', null),
             _react2.default.createElement(
-              'option',
-              (_React$createElement = { value: 'Business' }, _defineProperty(_React$createElement, 'value', this.state.location), _defineProperty(_React$createElement, 'onChange', this.handleInput('location')), _React$createElement),
-              'Business'
+              'ul',
+              null,
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
+                'Public page'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
+                'Private page'
+              )
             ),
             _react2.default.createElement(
-              'option',
-              { value: 'Music' },
-              'Music'
-            )
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'label',
-            null,
-            'REMAINING TICKETS'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'checkbox', name: 'remaining_tickets' }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('input', { type: 'submit', value: 'MAKE YOUR EVENT LIFE' })
+              'label',
+              null,
+              'EVENT TYPE'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'select',
+              null,
+              _react2.default.createElement(
+                'option',
+                { value: 'Class' },
+                'Class'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'Party' },
+                'Party'
+              )
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'EVENT TOPIC'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'select',
+              null,
+              _react2.default.createElement(
+                'option',
+                (_React$createElement = { value: 'Business' }, _defineProperty(_React$createElement, 'value', this.state.location), _defineProperty(_React$createElement, 'onChange', this.handleInput('location')), _React$createElement),
+                'Business'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'Music' },
+                'Music'
+              )
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'label',
+              null,
+              'REMAINING TICKETS'
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'checkbox', name: 'remaining_tickets' }),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('input', { type: 'submit', value: 'MAKE YOUR EVENT LIVE' }),
+            this.renderErrors()
+          )
         )
       );
     }
@@ -32840,6 +32896,41 @@ var EventForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = EventForm;
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _merge = __webpack_require__(21);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+var _session_actions = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EventsErrorsReducer = function EventsErrorsReducer() {
+  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  // debugger
+  Object.freeze(oldState);
+  switch (action.type) {
+    case _session_actions.RECEIVE_ERRORS:
+      return (0, _merge2.default)({}, action.errors);
+    default:
+      return oldState;
+  }
+};
+
+exports.default = EventsErrorsReducer;
 
 /***/ })
 /******/ ]);
