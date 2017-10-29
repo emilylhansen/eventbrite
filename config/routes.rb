@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     end
     resource :session, only: [:create, :destroy, :show]
     resources :events
-    resources :categories
-    resources :event_types
+    resources :categories, only: [:create, :show, :index]
+    resources :event_types, only: [:create, :show, :index]
+    resources :event_event_types, only: [:create, :show, :index]
+    resources :event_categories, only: [:create, :show, :index]
   end
 end

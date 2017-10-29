@@ -1,0 +1,28 @@
+.event-index-content {
+  margin: 0 auto;
+  background-color: gray;
+  width: 75%;
+}
+
+.event-index-main {
+}
+
+.event-index-main ul li{
+  margin: 10px 10px;
+  border: 1px solid black;
+}
+
+.event-index-info {
+  margin-top: 50px;
+}
+
+.event-index-info h1 {
+  font-size: 40px;
+}
+
+.event-index-list, .event-index-info {
+  width: 75%;
+  height: 150px;
+  float: right
+
+}

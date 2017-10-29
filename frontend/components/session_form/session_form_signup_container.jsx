@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
-import { signup } from '../../actions/session_actions';
-import SessionFormSignup from './session_form_signup';
 import { withRouter } from 'react-router-dom';
+
+import { signup } from '../../actions/session_actions';
+import { fetchCategories } from '../../actions/category_actions';
+import { fetchEventTypes } from '../../actions/event_type_actions';
+import SessionFormSignup from './session_form_signup';
+
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +17,9 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  signup: id => dispatch(signup(id))
+  signup: id => dispatch(signup(id)),
+  fetchCategories: () => dispatch(fetchCategories()),
+  fetchEventTypes: () => dispatch(fetchEventTypes())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SessionFormSignup);

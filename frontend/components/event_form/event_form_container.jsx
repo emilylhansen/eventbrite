@@ -1,10 +1,14 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchEvent, createEvent, updateEvent } from '../../actions/event_actions';
+import { fetchEvent,
+  createEvent,
+  updateEvent,
+  createEventCategory,
+  createEventEventType } from '../../actions/event_actions';
 import EventForm from './event_form';
 
-const mapStateToProps = (state, ownProps) => {
+const currentDateTime = () => {
   let newDate = new Date();
   let month = newDate.getMonth()+1 < 10 ? "0" + newDate.getMonth()+1 : newDate.getMonth()+1;
   let day = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
@@ -14,6 +18,11 @@ const mapStateToProps = (state, ownProps) => {
   let currentTime = newDate.getHours() + ":"
                   + newDate.getMinutes() + ":"
                   + newDate.getSeconds();
+
+  return {currentDate, currentTime};
+};
+
+const mapStateToProps = (state, ownProps) => {
 
   let event = {
     title: "",
@@ -31,13 +40,23 @@ const mapStateToProps = (state, ownProps) => {
     organizer_description: ""
   };
   let dateTime = {
-    startDate: currentDate,
+    startDate: currentDateTime().currentDate,
     startTime: "19:00:00",
-    endDate: currentDate,
+    endDate: currentDateTime().currentTime,
     endTime: "22:00:00"
   };
 
   let formType = "new";
+
+  let category = Object.values(state.entities.categories)[0].name;
+
+  let eventType = Object.values(state.entities.eventTypes)[0].name;
+
+  let categories = Object.values(state.entities.categories);
+
+  let eventTypes = Object.values(state.entities.eventTypes);
+
+  let errors = Object.values(state.errors.events);
 
   if (ownProps.match.path === '/events/:eventId/edit'){
     event = state.events[ownProps.match.params.eventId];
@@ -48,9 +67,11 @@ const mapStateToProps = (state, ownProps) => {
       endTime: event.end_date_time.split(" ")[1]
     };
     formType = "edit";
+    category = event.categories[0];
+    eventType = event.eventTypes[0];
   }
 
-  return {event, dateTime, formType, errors: Object.values(state.errors.events)};
+  return {event, dateTime, formType, category, eventType, categories, eventTypes, errors};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -58,7 +79,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   return ({
     fetchEvent: id => dispatch(fetchEvent(id)),
-    action: event => dispatch(action(event))
+    action: event => dispatch(action(event)),
+    createEventCategory: eventCategory => dispatch(createEventCategory(eventCategory)),
+    createEventEventType: eventEventType => dispatch(createEventEventType(eventEventType))
   });
 };
 

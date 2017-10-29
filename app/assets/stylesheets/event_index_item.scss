@@ -1,0 +1,20 @@
+.event-index-item-main {
+  display: flex;
+}
+
+.event-index-item-img-div {
+  width: 25%;
+}
+
+.event-index-item-img-div img{
+  width: 25%;
+  height: 100px;
+}
+
+.event-index-item-info {
+  width: 75%;
+}
+
+.event-index-item-info h3{
+  border-bottom: 1px solid gray;
+}

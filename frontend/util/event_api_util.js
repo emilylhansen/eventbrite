@@ -34,3 +34,33 @@ export const updateEvent = event => (
     data: {event}
   })
 );
+
+export const fetchCategories = () => (
+  $.ajax({
+    method: 'get',
+    url: 'api/categories'
+  })
+);
+
+export const createEventCategory = eventCategory => (
+  $.ajax({
+    method: 'post',
+    url: 'api/event_categories',
+    data: {eventCategory}
+  })
+);
+
+export const fetchEventTypes = () => (
+  $.ajax({
+    method: 'get',
+    url: 'api/event_types'
+  })
+);
+
+export const createEventEventType = eventEventType => (
+  $.ajax({
+    method: 'post',
+    url: 'api/event_event_types',
+    data: {eventEventType}
+  })
+);

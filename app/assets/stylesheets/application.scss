@@ -187,64 +187,9 @@
 
 
 //------------------------
-.login-signup-header {
-  position: relative;
-  z-index: 1;
-  background-color: white;
-}
-
-.login-signup {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.login-signup ul{
-  display: flex;
-  list-style: none;
-}
-
-.login-signup ul, li{
-  border-left: 1px solid #ccc;
-}
-
-.login-signup ul, li, a{
-  text-decoration: none;
-}
-
-.login-signup-headerlist > li {
-  position: relative;
-}
-
-.login-signup-dropdown {
-  display: none;
-  position: absolute;
-  left: -1px;
-  font-size: 14px;
-  white-space: nowrap;
-  background: #fff;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  overflow: hidden;
-}
-
-li:hover .login-signup-dropdown {
-  display: block;
-}
 
 
 //---------------------
-.homepage-img {
-  background: image_url("outside.jpg");
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-}
-
-.homepage-img img{
-}
 
 
 

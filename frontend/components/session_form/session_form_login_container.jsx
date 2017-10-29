@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
-import { login } from '../../actions/session_actions';
-// import { fetchUser  } from '../../actions/user_actions';
-import SessionFormLogin from './session_form_login';
 import { withRouter } from 'react-router-dom';
+
+import { login } from '../../actions/session_actions';
+import { fetchCategories } from '../../actions/category_actions';
+import { fetchEventTypes } from '../../actions/event_type_actions';
+import SessionFormLogin from './session_form_login';
 
 
 
@@ -16,7 +18,9 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  login: id => dispatch(login(id))
+  login: id => dispatch(login(id)),
+  fetchCategories: () => dispatch(fetchCategories()),
+  fetchEventTypes: () => dispatch(fetchEventTypes())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SessionFormLogin);

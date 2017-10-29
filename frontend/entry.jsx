@@ -4,7 +4,10 @@ import configureStore from './store/store';
 import Root from './components/root';
 import {signup, login, logout, emailExists} from './actions/session_actions';
 import {fetchUsers} from './actions/user_actions';
-import {fetchEvents, fetchEvent, createEvent} from './actions/event_actions';
+import {fetchEvents, fetchEvent, createEvent, createEventCategory,
+  createEventEventType} from './actions/event_actions';
+import {fetchCategories} from './actions/category_actions';
+import {fetchEventTypes} from './actions/event_type_actions';
 
 
 document.addEventListener("DOMContentLoaded", ()=> {
@@ -27,6 +30,10 @@ document.addEventListener("DOMContentLoaded", ()=> {
   window.fetchEvents = fetchEvents;
   window.fetchEvent = fetchEvent;
   window.createEvent = createEvent;
+  window.fetchCategories = fetchCategories;
+  window.fetchEventTypes = fetchEventTypes;
+  window.createEventCategory = createEventCategory;
+  window.createEventEventType = createEventEventType;
 
   ReactDOM.render(<Root store={store} />, root);
 });

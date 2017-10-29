@@ -17,7 +17,7 @@ const SessionReducer = (oldState=defaultState, action) => {
     case RECEIVE_EMAIL:
     return merge({}, {email: action.email});
     case RECEIVE_EMAIL_EXISTS:
-    return merge({}, action.emailBool)
+    return merge({}, action.emailBool);
     default:
     return oldState;
   }

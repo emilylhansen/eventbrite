@@ -1,6 +1,9 @@
 import merge from 'lodash/merge';
 
-import {RECEIVE_EVENTS, RECEIVE_EVENT} from '../actions/event_actions';
+import {RECEIVE_EVENTS,
+  RECEIVE_EVENT,
+  RECEIVE_EVENT_CATEGORY,
+  RECEIVE_EVENT_EVENT_TYPE} from '../actions/event_actions';
 
 const EventsReducer = (oldState={}, action) => {
   Object.freeze(oldState);

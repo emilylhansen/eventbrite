@@ -15,6 +15,8 @@ class SessionFormLogin extends React.Component {
   componentWillReceiveProps(newProps) {
     if (newProps.loggedIn) {
       this.props.history.push('/');
+      this.props.fetchCategories();
+      this.props.fetchEventTypes();
     }
   }
 

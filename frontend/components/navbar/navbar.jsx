@@ -6,11 +6,11 @@ class NavBar extends React.Component{
   render(){
     const signinLogout = this.props.currentUser ?
     <li>
-      <a href="/">{this.props.currentUser.first_name.toUpperCase()}</a>
+      <a href="/">{this.props.currentUser.first_name.toUpperCase()} &#9660;</a>
       <ul className="login-signup-dropdown">
-        <li><Link to="/">Tickets</Link></li>
-        <li><Link to="/">Saved</Link></li>
-        <li><button onClick={this.props.logout}>Log out</button></li>
+        <li><a href="/">Tickets</a></li>
+        <li><a href="/">Saved</a></li>
+        <li><a onClick={this.props.logout}>Log out</a></li>
       </ul>
     </li>
     :
@@ -18,14 +18,14 @@ class NavBar extends React.Component{
 
     return (
       <header className="login-signup-header">
-        <nav className="login-signup">
+        <nav className="login-signup-nav">
 
-          <h1 className="header-logo">
+          <h1 className="login-signup-logo">
             <a href="#" >Happeningbrite</a>
           </h1>
 
-          <ul className="login-signup-headerlist">
-            <li><a href="/">BROWSE EVENTS</a></li>
+          <ul className="login-signup-header-list">
+            <li><a href="/#/events">BROWSE EVENTS</a></li>
             {signinLogout}
             <li><a href="/#/events/new">CREATE EVENT</a></li>
           </ul>
