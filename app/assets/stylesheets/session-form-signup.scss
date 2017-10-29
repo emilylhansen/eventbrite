@@ -1,0 +1,78 @@
+.signin-signup-form-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+}
+
+
+.signin-signup-form-box {
+  margin: 0 auto;
+  width: 300px;
+}
+
+.signin-signup-form-box input[type=submit] {
+  border-radius: 30px;
+  background-color: orange;
+  color: white;
+  border: none;
+}
+
+
+.signin-signup-header {
+  padding: 30px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  color: gray;
+}
+
+.signin-signup-header h1, p{
+  width: 100%;
+  text-align: center;
+}
+
+.signin-signup-header h1 {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.signin-signup-form input[type=submit], input[type=password] {
+  padding: 10px;
+  margin: 10px 0px;
+  width: 100%;
+  height: 50%;
+  font-size: 18px;
+}
+
+.signin-signup-form label, p {
+  float: left;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.signin-signup-form input[type=text], input[type=password] {
+  border: 1px solid gray;
+  border-radius: 3px;
+  text-align: left;
+}
+
+.signin-signup-names {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-signup-names input[type="text"]:first-child {
+  margin-left: 10px;
+}
+
+.signin-signup-names div:first-child {
+
+}
+
+.signin-signup-badge {
+  font-size: 30px;
+  padding: 15px 25px;
+  background: gray;
+  border-radius: 50%;
+  color: black;
+}

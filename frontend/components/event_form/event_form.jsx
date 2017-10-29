@@ -1,6 +1,6 @@
 import React from 'react';
 import EventApiUtil from '../../util/event_api_util';
-import NavBarContainer from "../navbar/navbar_container";
+import NavBarContainer from "../nav_bar/nav_bar_container";
 
 class EventForm extends React.Component {
   constructor(props){
@@ -20,6 +20,9 @@ class EventForm extends React.Component {
   }
 
   componentDidMount(){
+    this.props.fetchCategories();
+    this.props.fetchEventTypes();
+
     if(this.props.match.params.eventId){
       this.props.fetchEvent(this.props.match.params.eventId);
     }
@@ -146,7 +149,6 @@ class EventForm extends React.Component {
     let categoryOpts = this.props.categories.map((category, i) => {
       return <option key={i} value={`${category.name}`}>{category.name}</option>;
     });
-
     return(
       <div>
         <NavBarContainer/>

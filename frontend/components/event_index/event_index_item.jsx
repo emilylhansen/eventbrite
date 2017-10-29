@@ -3,17 +3,19 @@ import { Link, withRouter } from 'react-router-dom';
 
 const convertPrice = (price) => {
   const newPrice = price.toString().split(".");
-  if (newPrice[1].length === 0){
-    return newPrice[0] + ".00";
+  if (price === 0){
+    return "FREE";
+  } else if (newPrice.length === 1){
+    return `$${newPrice[0]}.00`;
   } else if (newPrice[1].length === 1){
-    return price.toString + "0";
+    return `$${price.toString()}.0`;
   } else {
-    return price;
+    return `$${price.toString()}`;
   }
 };
 
 const EventIndexItem = ({ event, router, history}) => {
-  const newPrice = convertPrice(event.price)
+  const newPrice = convertPrice(event.price);
   return (
     <li className="event-index-item-li">
       <div className="event-index-item-main">

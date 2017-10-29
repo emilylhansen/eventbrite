@@ -55,8 +55,8 @@ class SessionFormLogin extends React.Component {
           <span className="signin-login-badge">E</span>
 
           <div className="signin-login-header">
-            <h2>Welcome back</h2>
-            <h3>Please enter your password to log in.</h3>
+            <h1>Welcome back</h1>
+            <p>Please enter your password to log in.</p>
           </div>
 
           <div className="signin-login-form">

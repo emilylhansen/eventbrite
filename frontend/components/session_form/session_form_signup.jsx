@@ -57,27 +57,29 @@ class SessionFormSignup extends React.Component {
           <span className="signin-signup-badge">E</span>
 
           <div className="signin-signup-header">
-            <h2>Welcome</h2>
-            <h3>Create and account.</h3>
+            <h1>Welcome</h1>
+            <p>Create and account.</p>
           </div>
 
           <div className="signin-signup-form">
             <label>Email address</label>
             <p>{this.state.email}</p>
-            <div>
+
               <div className="signin-signup-names">
                 <div>
                   <label>First Name</label>
                   <br></br>
                   <input type="text" value={this.state.first_name} onChange={this.handleInput('first_name')}></input>
                 </div>
+
                 <div>
                   <label>Last Name</label>
                   <br></br>
                   <input type="text" value={this.state.last_name} onChange={this.handleInput('last_name')}></input>
                 </div>
+
               </div>
-            </div>
+
             <br></br>
             <label>Password</label>
             <br></br>

@@ -1,0 +1,53 @@
+.event-show-main {
+  width: 75%;
+  border: 1px solid black;
+  margin: 0 auto;
+  margin-top: 40px;
+  border-radius: 5px;
+  height: 1000px;
+}
+
+.event-show-top {
+  display: flex;
+  border: 1px solid black;
+  height: 350px;
+}
+
+.event-show-top-left {
+  width: 66%;
+  border: 1px solid black;
+  overflow: hidden;
+
+}
+
+.event-show-tickets {
+  border: 1px solid black;
+  height: 50px;
+}
+
+.event-show-tickets button{
+  float: right;
+  background-color: green;
+  font-size: 18px;
+  color: white;
+  width: 25%;
+  padding: 10px 30px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 5px;
+}
+
+.event-show-bottom {
+  border: 1px solid black;
+  display: flex;
+}
+
+.event-show-bottom-left {
+  border: 1px solid black;
+  width: 66%;
+}
+
+.event-show-bottom-right {
+  border: 1px solid black;
+  width: 33%;
+}

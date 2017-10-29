@@ -21,6 +21,7 @@ class Event < ApplicationRecord
   has_many :categories, through: :event_categories
   has_many :event_event_types
   has_many :event_types, through: :event_event_types
+  has_many :tickets
 
   has_attached_file :avatar, default_url: "leaf.jpg"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/

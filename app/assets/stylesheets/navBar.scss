@@ -9,6 +9,9 @@
 .login-signup-header a {
   display: block;
   padding: 20px 20px;
+}
+
+.login-signup-header a:first-child {
   color: orange;
 }
 

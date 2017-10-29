@@ -1,11 +1,15 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchEvent,
+import {
+  fetchEvent,
   createEvent,
   updateEvent,
   createEventCategory,
   createEventEventType } from '../../actions/event_actions';
+import { fetchCategories} from '../../actions/category_actions';
+import { fetchEventTypes} from '../../actions/event_type_actions';
+
 import EventForm from './event_form';
 
 const currentDateTime = () => {
@@ -23,7 +27,6 @@ const currentDateTime = () => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-
   let event = {
     title: "",
     lat: "",
@@ -59,7 +62,7 @@ const mapStateToProps = (state, ownProps) => {
   let errors = Object.values(state.errors.events);
 
   if (ownProps.match.path === '/events/:eventId/edit'){
-    event = state.events[ownProps.match.params.eventId];
+    event = state.entities.events[ownProps.match.params.eventId];
     dateTime = {
       startDate: event.start_date_time.split(" ")[0],
       startTime: event.start_date_time.split(" ")[1],
@@ -78,6 +81,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   let action = ownProps.match.path === '/events/new' ? createEvent : updateEvent;
 
   return ({
+    fetchCategories: () => dispatch(fetchCategories()),
+    fetchEventTypes: () => dispatch(fetchEventTypes()),
     fetchEvent: id => dispatch(fetchEvent(id)),
     action: event => dispatch(action(event)),
     createEventCategory: eventCategory => dispatch(createEventCategory(eventCategory)),

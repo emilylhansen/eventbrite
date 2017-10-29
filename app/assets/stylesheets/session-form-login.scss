@@ -1,0 +1,64 @@
+.signin-login-form-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+}
+
+
+.signin-login-form-box {
+  margin: 0 auto;
+  width: 300px;
+}
+
+.signin-login-form-box input[type=submit] {
+  border-radius: 30px;
+  background-color: orange;
+  color: white;
+  border: none;
+}
+
+
+.signin-login-header {
+  padding: 30px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  color: gray;
+}
+
+.signin-login-header h1, p{
+  width: 100%;
+}
+
+.signin-login-header h1 {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.signin-login-form input {
+  padding: 10px;
+  margin: 10px 0px;
+  width: 100%;
+  height: 50%;
+  font-size: 18px;
+}
+
+.signin-login-form label, p {
+  float: left;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.signin-login-form input[type=password] {
+  border: 1px solid gray;
+  border-radius: 3px;
+  text-align: left;
+}
+
+.signin-login-badge {
+  font-size: 30px;
+  padding: 15px 25px;
+  background: gray;
+  border-radius: 50%;
+  color: black;
+}

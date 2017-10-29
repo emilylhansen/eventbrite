@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NavBar from '../navBar/navBar';
+import NavBarContainer from '../nav_bar/nav_bar_container';
 import EventIndexItem from './event_index_item';
 
 class EventIndex extends React.Component{
@@ -15,8 +15,8 @@ class EventIndex extends React.Component{
     ));
 
     return (
-      <div>
-      <NavBar/>
+      <div className="event-index-main-page">
+      <NavBarContainer/>
       <div className="event-index-content">
         <div className="event-index-main">
 

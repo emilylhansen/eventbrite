@@ -6,7 +6,7 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-    debugger
+    # debugger
     @event = Event.new(event_params)
     if @event.save
       render :show
@@ -21,7 +21,7 @@ class Api::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    render json: @event
+    render :show
   end
 
   def update

@@ -103,3 +103,13 @@ event_event_type1 = EventEventType.create!(event_id: event1.id, event_type_id: e
 event_event_type2 = EventEventType.create!(event_id: event1.id, event_type_id: event_type2.id)
 event_event_type3 = EventEventType.create!(event_id: event2.id, event_type_id: event_type2.id)
 event_event_type4 = EventEventType.create!(event_id: event3.id, event_type_id: event_type2.id)
+
+Ticket.destroy_all
+
+ticket1 = Ticket.create!(event_id: event1.id, purchaser_id: user1.id)
+ticket1 = Ticket.create!(event_id: event1.id, purchaser_id: user2.id)
+ticket1 = Ticket.create!(event_id: event1.id, purchaser_id: user3.id)
+ticket1 = Ticket.create!(event_id: event2.id, purchaser_id: user1.id)
+ticket1 = Ticket.create!(event_id: event3.id, purchaser_id: user1.id)
+ticket1 = Ticket.create!(event_id: event4.id, purchaser_id: user2.id)
+ticket1 = Ticket.create!(event_id: event4.id, purchaser_id: user3.id)

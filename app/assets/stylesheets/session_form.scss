@@ -1,0 +1,70 @@
+.signin-form-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.signin-form-container-link, .signin-login-form-container-link, .signin-signup-form-container-link {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  text-decoration: none;
+  font-size: 20px;
+
+}
+
+.signin-form-box {
+  margin: 0 auto;
+  width: 300px;
+}
+
+.signin-form-box input {
+  padding: 10px;
+  margin: 10px 0px;
+  width: 100%;
+  height: 50%;
+  font-size: 18px;
+}
+
+.signin-form-box label {
+  float: left;
+}
+
+.signin-form-badge {
+  font-size: 30px;
+  padding: 20px 30px;
+  background: orange;
+  border-radius: 50%;
+  color: white;
+}
+
+.signin-form-header h1 {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.signin-form-header h1, p {
+  width: 100%;
+}
+
+
+
+.signin-form-header {
+  padding: 30px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.signin-form-box input[type=submit] {
+  border-radius: 30px;
+  background-color: orange;
+  color: white;
+  border: none;
+}
+
+.signin-form-box input[type=text] {
+  border: 1px solid gray;
+  border-radius: 3px;
+  text-align: left;
+}
