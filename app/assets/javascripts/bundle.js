@@ -32841,13 +32841,15 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
   var formType = "new";
 
-  var category = "Business";
-
-  var eventType = "Class";
-
   var categories = Object.values(state.entities.categories);
 
   var eventTypes = Object.values(state.entities.eventTypes);
+
+  var category = categories[0];
+
+  var eventType = eventTypes[0];
+
+  var currentDate = currentDateTime().currentDate;
 
   var errors = Object.values(state.errors.events);
 
@@ -32864,7 +32866,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     eventType = event.eventTypes[0];
   }
 
-  return { event: event, dateTime: dateTime, formType: formType, category: category, eventType: eventType, categories: categories, eventTypes: eventTypes, errors: errors };
+  return { event: event, dateTime: dateTime, formType: formType, category: category, eventType: eventType, categories: categories, eventTypes: eventTypes, currentDate: currentDate, errors: errors };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
@@ -32945,9 +32947,6 @@ var EventForm = function (_React$Component) {
       endTime: _this.props.dateTime.endTime
     };
 
-    // if(this.props.category === undefined){
-    //   this.category = Object.values(state.entities.categories)[0].name;
-    // }
     _this.category = _this.props.category;
     _this.eventType = _this.props.eventType;
 
@@ -33010,6 +33009,7 @@ var EventForm = function (_React$Component) {
   }, {
     key: 'findCategoryId',
     value: function findCategoryId() {
+      debugger;
       for (var i = 0; i < this.props.categories.length; i++) {
         if (this.props.categories[i].name === this.category) {
           return this.props.categories[i].id;
@@ -33019,6 +33019,7 @@ var EventForm = function (_React$Component) {
   }, {
     key: 'findEventTypeId',
     value: function findEventTypeId() {
+      debugger;
       for (var i = 0; i < this.props.eventTypes.length; i++) {
         if (this.props.eventTypes[i].name === this.eventType) {
           return this.props.eventTypes[i].id;
@@ -33038,6 +33039,7 @@ var EventForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
+      debugger;
       e.preventDefault();
 
       this.combineDateTime();
@@ -33049,10 +33051,14 @@ var EventForm = function (_React$Component) {
       if (this.state.avatarFile) {
         formData.append("event[avatar]", this.state.avatarFile);
       }
+
+      var category_id = this.findCategoryId();
+      var event_type_id = this.findEventTypeId();
+
       this.props.action(formData, this.goBack).then(function (event) {
-        return _this3.props.createEventCategory({ event_id: 10, category_id: _this3.findCategoryId() });
+        return _this3.props.createEventCategory({ event_id: 96, category_id: category_id });
       }).then(function (event) {
-        return _this3.props.createEventEventType({ event_id: 10, event_type_id: _this3.findEventTypeId() });
+        return _this3.props.createEventEventType({ event_id: 96, event_type_id: event_type_id });
       });
     }
   }, {
@@ -33107,13 +33113,21 @@ var EventForm = function (_React$Component) {
         return opt;
       });
 
-      // let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
-      //   return <option key={i} value={`${eventType.name}`}>{eventType.name}</option>;
-      // });
-      //
-      // let categoryOpts = this.props.categories.map((category, i) => {
-      //   return <option key={i} value={`${category.name}`}>{category.name}</option>;
-      // });
+      var eventTypeOpts = this.props.eventTypes.map(function (eventType, i) {
+        return _react2.default.createElement(
+          'option',
+          { key: i, value: '' + eventType.name },
+          eventType.name
+        );
+      });
+
+      var categoryOpts = this.props.categories.map(function (category, i) {
+        return _react2.default.createElement(
+          'option',
+          { key: i, value: '' + category.name },
+          category.name
+        );
+      });
 
       return _react2.default.createElement(
         'div',
@@ -33130,7 +33144,7 @@ var EventForm = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'div',
-                null,
+                { className: 'event-form-one' },
                 _react2.default.createElement(
                   'span',
                   null,
@@ -33182,6 +33196,7 @@ var EventForm = function (_React$Component) {
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'date',
+                min: this.props.currentDate,
                 onChange: this.handleInput('startDate')
               }),
               _react2.default.createElement(
@@ -33199,6 +33214,7 @@ var EventForm = function (_React$Component) {
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'date',
+                min: this.props.currentDate,
                 onChange: this.handleInput('endDate')
               }),
               _react2.default.createElement(
@@ -33250,7 +33266,7 @@ var EventForm = function (_React$Component) {
               }),
               _react2.default.createElement(
                 'div',
-                null,
+                { className: 'event-form-two' },
                 _react2.default.createElement(
                   'span',
                   null,
@@ -33304,7 +33320,7 @@ var EventForm = function (_React$Component) {
               }),
               _react2.default.createElement(
                 'div',
-                null,
+                { className: 'event-form-three' },
                 _react2.default.createElement(
                   'span',
                   null,
@@ -33344,9 +33360,13 @@ var EventForm = function (_React$Component) {
                 'EVENT TYPE'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement('select', { value: this.eventType,
-                onChange: this.handleInput('eventType')
-              }),
+              _react2.default.createElement(
+                'select',
+                { value: this.eventType,
+                  onChange: this.handleInput('eventType')
+                },
+                eventTypeOpts
+              ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'label',
@@ -33354,9 +33374,13 @@ var EventForm = function (_React$Component) {
                 'EVENT TOPIC'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement('select', { value: this.category,
-                onChange: this.handleInput('category')
-              }),
+              _react2.default.createElement(
+                'select',
+                { value: this.category,
+                  onChange: this.handleInput('category')
+                },
+                categoryOpts
+              ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'label',
@@ -33539,7 +33563,7 @@ var convertPrice = function convertPrice(price) {
   } else if (newPrice.length === 1) {
     return '$' + newPrice[0] + '.00';
   } else if (newPrice[1].length === 1) {
-    return '$' + price.toString() + '.0';
+    return '$' + price.toString() + '0';
   } else {
     return '$' + price.toString();
   }

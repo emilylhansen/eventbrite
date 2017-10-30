@@ -1,8 +1,30 @@
 .event-form-main-page {
   border: 1px solid black;
-  width: 70%;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 30px;
 }
 
-.event-form-main-page input{
+.event-form-main-page input, textarea{
   border: 1px solid black;
+  height: 30px;
+}
+
+.event-form-one, .event-form-two, .event-form-three {
+  display: flex;
+  border-bottom: 1px solid gray
+}
+
+.event-form-one span, .event-form-two span, .event-form-three span {
+  width: 50px;
+  background-color: blue;
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.event-form-one h1, .event-form-two h1, .event-form-three h1 {
+  font-size: 30px;
+  padding: 10px;
 }

@@ -51,13 +51,15 @@ const mapStateToProps = (state, ownProps) => {
 
   let formType = "new";
 
-  let category = "Business";
-
-  let eventType = "Class";
-
   let categories = Object.values(state.entities.categories);
 
   let eventTypes = Object.values(state.entities.eventTypes);
+
+  let category = categories[0];
+
+  let eventType = eventTypes[0];
+
+  let currentDate = currentDateTime().currentDate;
 
   let errors = Object.values(state.errors.events);
 
@@ -74,7 +76,7 @@ const mapStateToProps = (state, ownProps) => {
     eventType = event.eventTypes[0];
   }
 
-  return {event, dateTime, formType, category, eventType, categories, eventTypes, errors};
+  return {event, dateTime, formType, category, eventType, categories, eventTypes, currentDate, errors};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

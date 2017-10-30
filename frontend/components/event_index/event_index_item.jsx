@@ -8,7 +8,7 @@ const convertPrice = (price) => {
   } else if (newPrice.length === 1){
     return `$${newPrice[0]}.00`;
   } else if (newPrice[1].length === 1){
-    return `$${price.toString()}.0`;
+    return `$${price.toString()}0`;
   } else {
     return `$${price.toString()}`;
   }
