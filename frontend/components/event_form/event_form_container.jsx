@@ -51,9 +51,9 @@ const mapStateToProps = (state, ownProps) => {
 
   let formType = "new";
 
-  let category = Object.values(state.entities.categories)[0].name;
+  let category = "Business";
 
-  let eventType = Object.values(state.entities.eventTypes)[0].name;
+  let eventType = "Class";
 
   let categories = Object.values(state.entities.categories);
 

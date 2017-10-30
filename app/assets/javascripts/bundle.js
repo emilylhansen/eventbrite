@@ -32207,8 +32207,8 @@ var SessionFormLogin = function (_React$Component) {
     value: function componentWillReceiveProps(newProps) {
       if (newProps.loggedIn) {
         this.props.history.push('/');
-        this.props.fetchCategories();
-        this.props.fetchEventTypes();
+        // this.props.fetchCategories();
+        // this.props.fetchEventTypes();
       }
     }
   }, {
@@ -32420,8 +32420,8 @@ var SessionFormSignup = function (_React$Component) {
     value: function componentWillReceiveProps(newProps) {
       if (newProps.loggedIn) {
         this.props.history.push('/');
-        this.props.fetchCategories();
-        this.props.fetchEventTypes();
+        // this.props.fetchCategories();
+        // this.props.fetchEventTypes();
       }
     }
   }, {
@@ -32841,9 +32841,9 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
   var formType = "new";
 
-  var category = Object.values(state.entities.categories)[0].name;
+  var category = "Business";
 
-  var eventType = Object.values(state.entities.eventTypes)[0].name;
+  var eventType = "Class";
 
   var categories = Object.values(state.entities.categories);
 
@@ -32944,6 +32944,10 @@ var EventForm = function (_React$Component) {
       endDate: _this.props.dateTime.endDate,
       endTime: _this.props.dateTime.endTime
     };
+
+    // if(this.props.category === undefined){
+    //   this.category = Object.values(state.entities.categories)[0].name;
+    // }
     _this.category = _this.props.category;
     _this.eventType = _this.props.eventType;
 
@@ -33103,28 +33107,21 @@ var EventForm = function (_React$Component) {
         return opt;
       });
 
-      var eventTypeOpts = this.props.eventTypes.map(function (eventType, i) {
-        return _react2.default.createElement(
-          'option',
-          { key: i, value: '' + eventType.name },
-          eventType.name
-        );
-      });
+      // let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
+      //   return <option key={i} value={`${eventType.name}`}>{eventType.name}</option>;
+      // });
+      //
+      // let categoryOpts = this.props.categories.map((category, i) => {
+      //   return <option key={i} value={`${category.name}`}>{category.name}</option>;
+      // });
 
-      var categoryOpts = this.props.categories.map(function (category, i) {
-        return _react2.default.createElement(
-          'option',
-          { key: i, value: '' + category.name },
-          category.name
-        );
-      });
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_nav_bar_container2.default, null),
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'event-form-main-page' },
           _react2.default.createElement(
             'form',
             { onSubmit: this.handleSubmit },
@@ -33347,13 +33344,9 @@ var EventForm = function (_React$Component) {
                 'EVENT TYPE'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'select',
-                { value: this.eventType,
-                  onChange: this.handleInput('eventType')
-                },
-                eventTypeOpts
-              ),
+              _react2.default.createElement('select', { value: this.eventType,
+                onChange: this.handleInput('eventType')
+              }),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'label',
@@ -33361,13 +33354,9 @@ var EventForm = function (_React$Component) {
                 'EVENT TOPIC'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'select',
-                { value: this.category,
-                  onChange: this.handleInput('category')
-                },
-                categoryOpts
-              ),
+              _react2.default.createElement('select', { value: this.category,
+                onChange: this.handleInput('category')
+              }),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'label',

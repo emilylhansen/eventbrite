@@ -12,6 +12,10 @@ class EventForm extends React.Component {
       endDate: this.props.dateTime.endDate,
       endTime: this.props.dateTime.endTime
     };
+
+    // if(this.props.category === undefined){
+    //   this.category = Object.values(state.entities.categories)[0].name;
+    // }
     this.category  = this.props.category;
     this.eventType = this.props.eventType;
 
@@ -142,18 +146,19 @@ class EventForm extends React.Component {
       return opt;
     });
 
-    let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
-      return <option key={i} value={`${eventType.name}`}>{eventType.name}</option>;
-    });
+    // let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
+    //   return <option key={i} value={`${eventType.name}`}>{eventType.name}</option>;
+    // });
+    //
+    // let categoryOpts = this.props.categories.map((category, i) => {
+    //   return <option key={i} value={`${category.name}`}>{category.name}</option>;
+    // });
 
-    let categoryOpts = this.props.categories.map((category, i) => {
-      return <option key={i} value={`${category.name}`}>{category.name}</option>;
-    });
     return(
       <div>
         <NavBarContainer/>
 
-        <div>
+        <div className="event-form-main-page">
           <form onSubmit={this.handleSubmit}>
             <div>
               <div>
@@ -275,7 +280,7 @@ class EventForm extends React.Component {
                 <select value={this.eventType}
                   onChange={this.handleInput('eventType')}
                   >
-                  {eventTypeOpts}
+
                 </select>
                 <br></br>
 
@@ -284,7 +289,7 @@ class EventForm extends React.Component {
                 <select value={this.category}
                   onChange={this.handleInput('category')}
                   >
-                  {categoryOpts}
+                  
                 </select>
                 <br></br>
 
