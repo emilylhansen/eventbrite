@@ -15,5 +15,6 @@ Rails.application.routes.draw do
     resources :event_event_types, only: [:create, :show, :index]
     resources :event_categories, only: [:create, :show, :index]
     resources :tickets, only: [:create, :index, :show]
+    resources :saved_events, only: [:create, :index, :show, :destroy]
   end
 end

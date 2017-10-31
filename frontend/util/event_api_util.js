@@ -64,3 +64,18 @@ export const createEventEventType = eventEventType => (
     data: {eventEventType}
   })
 );
+
+export const createSavedEvent = savedEvent => (
+  $.ajax({
+    method: 'post',
+    url: 'api/saved_events',
+    data: {savedEvent}
+  })
+);
+
+export const deleteSavedEvent = id => (
+  $.ajax({
+    method: 'delete',
+    url: `api/saved_events/${id}`
+  })
+);

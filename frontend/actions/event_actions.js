@@ -6,6 +6,8 @@ export const RECEIVE_EVENTS = 'RECEIVE_EVENTS';
 export const RECEIVE_EVENT = 'RECEIVE_EVENT';
 export const RECEIVE_EVENT_CATEGORY = 'RECEIVE_EVENT_CATEGORY';
 export const RECEIVE_EVENT_EVENT_TYPE = 'RECEIVE_EVENT_EVENT_TYPE';
+export const RECEIVE_SAVED_EVENT = 'RECEIVE_SAVED_EVENT';
+export const REMOVE_SAVED_EVENT = 'REMOVE_SAVED_EVENT';
 
 export const receiveEvents = events => ({
   type: RECEIVE_EVENTS,
@@ -25,6 +27,16 @@ export const receiveEventCategory = eventCategory => ({
 export const receiveEventEventType = eventEventType => ({
   type: RECEIVE_EVENT_EVENT_TYPE,
   eventEventType
+});
+
+export const receiveSavedEvent = savedEvent => ({
+  type: RECEIVE_SAVED_EVENT,
+  savedEvent
+});
+
+export const removeSavedEvent = savedEventId => ({
+  type: REMOVE_SAVED_EVENT,
+  savedEventId
 });
 
 export const fetchEvents = () => dispatch => (
@@ -62,5 +74,18 @@ export const createEventEventType = eventEventType => dispatch => (
   EventApiUtil.createEventEventType(eventEventType).then(
     eventEventType => dispatch(receiveEventEventType(eventEventType)),
     errors => dispatch(receiveErrors(errors.responseJSON))
+  )
+);
+
+export const createSavedEvent = savedEvent => dispatch => (
+  EventApiUtil.createSavedEvent(savedEvent).then(
+    savedEvent => dispatch(receiveSavedEvent(savedEvent)),
+    errors => dispatch(receiveErrors(errors.responseJSON))
+  )
+);
+
+export const deleteSavedEvent = savedEventId => dispatch => (
+  EventApiUtil.deleteSavedEvent(savedEventId).then(
+    savedEvent => dispatch(removeSavedEvent(savedEventId))
   )
 );

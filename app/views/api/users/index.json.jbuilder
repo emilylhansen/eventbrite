@@ -1,1 +1,5 @@
-json.array! @users, :id, :email, :password, :first_name, :last_name
+@users.each do |user|
+  json.set! user.id do
+    json.partial! 'user', user: user
+  end
+end

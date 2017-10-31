@@ -1,5 +1,9 @@
-.event-index-main-page {
-  background-color: gray;
+.event-index-background {
+  position: absolute;
+  height: 1000px;
+  z-index: -100;
+  width: 100%;
+  background-color: #F8F8FA;
 }
 
 .event-index-content {
@@ -7,12 +11,10 @@
   width: 75%;
 }
 
-.event-index-main {
-}
-
 .event-index-main ul li{
   margin: 10px 10px;
-  border: 1px solid black;
+  // border: 1px solid black;
+  box-shadow: 1px 1px 5px #888888;
 }
 
 .event-index-info {

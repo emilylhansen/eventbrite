@@ -1,28 +1,87 @@
+.event-show-background {
+  position: absolute;
+  height: 1000px;
+  z-index: -100;
+  width: 100%;
+  background-color: #F8F8FA;
+}
+
+.event-show-background-img {
+  position: absolute;
+  height: 500px;
+  z-index: -50;
+  width: 100%;
+  overflow: hidden;
+  filter: blur(20px);
+}
+
 .event-show-main {
   width: 75%;
-  border: 1px solid black;
+  box-shadow: 1px 1px 5px #E0E0E0;
   margin: 0 auto;
   margin-top: 40px;
   border-radius: 5px;
   height: 1000px;
+  background-color: white;
 }
 
 .event-show-top {
   display: flex;
-  border: 1px solid black;
+  // border: 1px solid  #E0E0E0;
   height: 350px;
+}
+
+.event-show-top-right-background {
+  background-color: #FAF8F9;
+  width: 34%;
+}
+
+.event-show-top-right {
+  margin: 30px;
+}
+
+.event-show-top-right p{
+  color: gray;
+}
+
+.event-show-top-right h1{
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.event-show-top-right h3{
+  font-size: 18px;
+  font-weight: normal;
+  color: gray;
+}
+
+.event-show-top-right span{
+  position: absolute;
+  color: gray;
 }
 
 .event-show-top-left {
   width: 66%;
-  border: 1px solid black;
+  // border: 1px solid #E0E0E0;
   overflow: hidden;
 
 }
 
+.event-show-tickets-background {
+  background-color: white;
+}
+
 .event-show-tickets {
-  border: 1px solid black;
+  border: 1px solid #E0E0E0;
   height: 50px;
+  padding: 5px;
+  align-content: center;
+}
+
+.event-show-tickets span {
+  font-size: 30px;
+  color: blue;
+  font-weight: 100;
 }
 
 .event-show-tickets button{
@@ -38,16 +97,30 @@
 }
 
 .event-show-bottom {
-  border: 1px solid black;
+  // border: 1px solid black;
   display: flex;
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.event-show-bottom h1 {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.event-show-bottom p {
+  color: gray;
 }
 
 .event-show-bottom-left {
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 66%;
+  padding-right: 50px;
 }
 
 .event-show-bottom-right {
-  border: 1px solid black;
-  width: 33%;
+  // border: 1px solid black;
+  width: 34%;
 }

@@ -28,7 +28,10 @@ event1 = Event.create!(
   num_tickets: 50,
   organizer_id: 6,
   organizer_name: "Emily",
-  organizer_description: "I'm a great event organizer"
+  organizer_description: "I'm a great event organizer",
+  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar_content_type: "image/jpeg",
+  location: "New York, New York"
 )
 
 event2 = Event.create!(
@@ -42,7 +45,10 @@ event2 = Event.create!(
   num_tickets: 5,
   organizer_id: 5,
   organizer_name: "Joey",
-  organizer_description: "I'm a great event organizer"
+  organizer_description: "I'm a great event organizer",
+  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar_content_type: "image/jpeg",
+  location: "New York, New York"
 )
 
 event3 = Event.create!(
@@ -56,7 +62,10 @@ event3 = Event.create!(
   num_tickets: 500,
   organizer_id: 4,
   organizer_name: "App Academy",
-  organizer_description: "I'm a great event organizer"
+  organizer_description: "I'm a great event organizer",
+  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar_content_type: "image/jpeg",
+  location: "New York, New York"
 )
 
 event4 = Event.create!(
@@ -70,7 +79,10 @@ event4 = Event.create!(
   num_tickets: 500,
   organizer_id: 4,
   organizer_name: "Shake Shack",
-  organizer_description: "I'm a great event organizer"
+  organizer_description: "I'm a great event organizer",
+  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar_content_type: "image/jpeg",
+  location: "New York, New York"
 )
 
 Category.destroy_all
@@ -113,3 +125,17 @@ ticket1 = Ticket.create!(event_id: event2.id, purchaser_id: user1.id)
 ticket1 = Ticket.create!(event_id: event3.id, purchaser_id: user1.id)
 ticket1 = Ticket.create!(event_id: event4.id, purchaser_id: user2.id)
 ticket1 = Ticket.create!(event_id: event4.id, purchaser_id: user3.id)
+
+SavedEvent.destroy_all
+
+saved_event1 = SavedEvent.create!(user_id: user1.id, event_id: event1.id)
+saved_event1 = SavedEvent.create!(user_id: user1.id, event_id: event2.id)
+saved_event1 = SavedEvent.create!(user_id: user1.id, event_id: event3.id)
+saved_event1 = SavedEvent.create!(user_id: user1.id, event_id: event4.id)
+saved_event1 = SavedEvent.create!(user_id: user2.id, event_id: event1.id)
+saved_event1 = SavedEvent.create!(user_id: user2.id, event_id: event2.id)
+saved_event1 = SavedEvent.create!(user_id: user3.id, event_id: event1.id)
+saved_event1 = SavedEvent.create!(user_id: user3.id, event_id: event3.id)
+saved_event1 = SavedEvent.create!(user_id: user4.id, event_id: event3.id)
+saved_event1 = SavedEvent.create!(user_id: user5.id, event_id: event3.id)
+saved_event1 = SavedEvent.create!(user_id: user5.id, event_id: event4.id)

@@ -18,6 +18,7 @@ class EventForm extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.updateFile = this.updateFile.bind(this);
   }
 
   componentDidMount(){
@@ -66,7 +67,7 @@ class EventForm extends React.Component {
   }
 
   findCategoryId(){
-    debugger
+    // debugger
     for(let i = 0; i < this.props.categories.length; i++){
       if (this.props.categories[i].name === this.category){
         return this.props.categories[i].id;
@@ -75,7 +76,7 @@ class EventForm extends React.Component {
   }
 
   findEventTypeId(){
-    debugger
+    // debugger
     for(let i = 0; i < this.props.eventTypes.length; i++){
       if (this.props.eventTypes[i].name === this.eventType){
         return this.props.eventTypes[i].id;
@@ -93,13 +94,14 @@ class EventForm extends React.Component {
   }
 
   handleSubmit(e){
-    debugger
+    // debugger
     e.preventDefault();
 
     this.combineDateTime();
 
     const formData = new FormData();
     Object.keys(this.state).map(col => {
+      if (col === "avatarFile" || col === "avatarUrl"){return;}
       return formData.append(`event[${col}]`, this.state[col]);
     });
     if (this.state.avatarFile) {
@@ -161,7 +163,11 @@ class EventForm extends React.Component {
     return(
       <div>
         <NavBarContainer/>
-
+        <div className="event-form-create">
+          <h1>Create An Event</h1>
+        </div>
+        <div className="event-form-step"></div>
+        <div className="event-form-background"></div>
         <div className="event-form-main-page">
           <form onSubmit={this.handleSubmit}>
             <div>
@@ -304,10 +310,13 @@ class EventForm extends React.Component {
                 <input type="checkbox" name="remaining_tickets"></input>
                 <br></br>
 
-              <input type="submit" value="MAKE YOUR EVENT LIVE"/>
+                {this.renderErrors()}
 
-              {this.renderErrors()}
 
+              <div className="event-form-done">
+                <h1>Nice job! You're almost done.</h1>
+                <input type="submit" value="MAKE YOUR EVENT LIVE"/>
+              </div>
             </div>
           </form>
         </div>

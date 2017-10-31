@@ -1,3 +1,25 @@
+.event-form-create {
+  width: 100%;
+  height: 80px;
+  font-size: 30px;
+  padding: 20px;
+  align-content: center;
+}
+
+.event-form-step {
+  width: 100%;
+  height: 50px;
+  background-color: #45494F;
+}
+
+.event-form-background {
+  position: absolute;
+  height: 1000px;
+  z-index: -100;
+  width: 100%;
+  background-color: #F8F8FA;
+}
+
 .event-form-main-page {
   border: 1px solid black;
   width: 60%;
@@ -17,7 +39,7 @@
 
 .event-form-one span, .event-form-two span, .event-form-three span {
   width: 50px;
-  background-color: blue;
+  background-color: #0091DA;
   color: white;
   font-size: 40px;
   text-align: center;
@@ -27,4 +49,28 @@
 .event-form-one h1, .event-form-two h1, .event-form-three h1 {
   font-size: 30px;
   padding: 10px;
+  color: gray;
+}
+
+.event-form-done {
+  width: 100%;
+  height: 100px;
+  padding: 75px;
+  align-content: center;
+  border: 1px solid black;
+}
+
+.event-form-done h1{
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.event-form-done input{
+  color: white;
+  background-color: #00B646;
+  width: 220px;
+  padding: 5px;
+  border-radius: 3px;
+  text-align: center;
+  border: none;
 }

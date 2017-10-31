@@ -5,7 +5,7 @@ import Root from './components/root';
 import {signup, login, logout, emailExists} from './actions/session_actions';
 import {fetchUsers} from './actions/user_actions';
 import {fetchEvents, fetchEvent, createEvent, createEventCategory,
-  createEventEventType} from './actions/event_actions';
+  createEventEventType, receiveSaveEvent} from './actions/event_actions';
 import {fetchCategories} from './actions/category_actions';
 import {fetchEventTypes} from './actions/event_type_actions';
 
@@ -34,6 +34,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
   window.fetchEventTypes = fetchEventTypes;
   window.createEventCategory = createEventCategory;
   window.createEventEventType = createEventEventType;
-
+  window.receiveSaveEvent = receiveSaveEvent;
   ReactDOM.render(<Root store={store} />, root);
 });

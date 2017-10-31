@@ -1,9 +1,34 @@
+.homepage {
+  background-color: #E0E0E0;
+}
+
 .homepage-img-div {
   width: 100%;
-  height: 300px;
+  height: 425px;
   overflow: hidden;
   background: center center;
 }
 
-.homepage-img-div img{
+.homepage-search {
+  background-color: white;
+  position: relative;
+  width: 75%;
+  height: 125px;
+  border-radius: 3px;
+  margin:0 auto;
+  text-align: center;
+  margin-top: -150px;
+  z-index: 200;
+  padding: 40px;
+  opacity: .95;
+}
+
+.homepage-search h1 {
+  font-size: 50px;
+  color: orange;
+}
+
+.homepage-bottom {
+  height: 500px;
+  background-color: #E0E0E0;
 }

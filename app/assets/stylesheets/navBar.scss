@@ -11,8 +11,10 @@
   padding: 20px 20px;
 }
 
-.login-signup-header a:first-child {
+.login-signup-header h1 a{
   color: orange;
+  font-size: 25px;
+  padding: 15px;
 }
 
 .login-signup-nav {
@@ -37,25 +39,34 @@
   border-left: 1px solid #E0E0E0;
   position: relative;
   font-size: 14px;
+  color: gray;
+}
+
+.login-signup-header-list li:last-child {
+  color: #0091DA;
+}
+
+.login-signup-header-list li:last-child:hover {
+  color: navy;
 }
 
 .login-signup-header-list > li:not(:last-child):hover {
-  background: gray;
+  background: #E0E0E0;
 }
 
 .login-signup-dropdown {
   display: none;
   position: absolute;
-  left: -1px;
-  font-size: 14px;
+  left: -100px;
+  top: 59px;
+  font-size: 16px;
   white-space: nowrap;
   background: #fff;
   border-left: 1px solid #E0E0E0;
   border-right: 1px solid #E0E0E0;
   border-bottom: 1px solid #E0E0E0;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   overflow: hidden;
+  width: 200px;
 }
 
 li:hover .login-signup-dropdown {
@@ -64,9 +75,13 @@ li:hover .login-signup-dropdown {
 
 .login-signup-dropdown > li {
   border-top: 1px solid #E0E0E0;
-  color: #000;
+  color: gray;
+}
+
+.login-signup-dropdown > li:last-child {
+  color: gray;
 }
 
 .login-signup-dropdown > li:hover {
-  background: gray;
+  background: #E0E0E0;
 }

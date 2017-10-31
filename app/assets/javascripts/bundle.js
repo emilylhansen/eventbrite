@@ -841,7 +841,7 @@ module.exports = root;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createEventEventType = exports.createEventCategory = exports.updateEvent = exports.createEvent = exports.fetchEvent = exports.fetchEvents = exports.receiveEventEventType = exports.receiveEventCategory = exports.receiveEvent = exports.receiveEvents = exports.RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT = exports.RECEIVE_EVENTS = undefined;
+exports.deleteSavedEvent = exports.createSavedEvent = exports.createEventEventType = exports.createEventCategory = exports.updateEvent = exports.createEvent = exports.fetchEvent = exports.fetchEvents = exports.removeSavedEvent = exports.receiveSavedEvent = exports.receiveEventEventType = exports.receiveEventCategory = exports.receiveEvent = exports.receiveEvents = exports.REMOVE_SAVED_EVENT = exports.RECEIVE_SAVED_EVENT = exports.RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT = exports.RECEIVE_EVENTS = undefined;
 
 var _event_api_util = __webpack_require__(32);
 
@@ -855,6 +855,8 @@ var RECEIVE_EVENTS = exports.RECEIVE_EVENTS = 'RECEIVE_EVENTS';
 var RECEIVE_EVENT = exports.RECEIVE_EVENT = 'RECEIVE_EVENT';
 var RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT_CATEGORY = 'RECEIVE_EVENT_CATEGORY';
 var RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_EVENT_TYPE = 'RECEIVE_EVENT_EVENT_TYPE';
+var RECEIVE_SAVED_EVENT = exports.RECEIVE_SAVED_EVENT = 'RECEIVE_SAVED_EVENT';
+var REMOVE_SAVED_EVENT = exports.REMOVE_SAVED_EVENT = 'REMOVE_SAVED_EVENT';
 
 var receiveEvents = exports.receiveEvents = function receiveEvents(events) {
   return {
@@ -881,6 +883,20 @@ var receiveEventEventType = exports.receiveEventEventType = function receiveEven
   return {
     type: RECEIVE_EVENT_EVENT_TYPE,
     eventEventType: eventEventType
+  };
+};
+
+var receiveSavedEvent = exports.receiveSavedEvent = function receiveSavedEvent(savedEvent) {
+  return {
+    type: RECEIVE_SAVED_EVENT,
+    savedEvent: savedEvent
+  };
+};
+
+var removeSavedEvent = exports.removeSavedEvent = function removeSavedEvent(savedEventId) {
+  return {
+    type: REMOVE_SAVED_EVENT,
+    savedEventId: savedEventId
   };
 };
 
@@ -936,6 +952,24 @@ var createEventEventType = exports.createEventEventType = function createEventEv
       return dispatch(receiveEventEventType(eventEventType));
     }, function (errors) {
       return dispatch((0, _session_actions.receiveErrors)(errors.responseJSON));
+    });
+  };
+};
+
+var createSavedEvent = exports.createSavedEvent = function createSavedEvent(savedEvent) {
+  return function (dispatch) {
+    return EventApiUtil.createSavedEvent(savedEvent).then(function (savedEvent) {
+      return dispatch(receiveSavedEvent(savedEvent));
+    }, function (errors) {
+      return dispatch((0, _session_actions.receiveErrors)(errors.responseJSON));
+    });
+  };
+};
+
+var deleteSavedEvent = exports.deleteSavedEvent = function deleteSavedEvent(savedEventId) {
+  return function (dispatch) {
+    return EventApiUtil.deleteSavedEvent(savedEventId).then(function (savedEvent) {
+      return dispatch(removeSavedEvent(savedEventId));
     });
   };
 };
@@ -1718,6 +1752,21 @@ var createEventEventType = exports.createEventEventType = function createEventEv
     method: 'post',
     url: 'api/event_event_types',
     data: { eventEventType: eventEventType }
+  });
+};
+
+var createSavedEvent = exports.createSavedEvent = function createSavedEvent(savedEvent) {
+  return $.ajax({
+    method: 'post',
+    url: 'api/saved_events',
+    data: { savedEvent: savedEvent }
+  });
+};
+
+var deleteSavedEvent = exports.deleteSavedEvent = function deleteSavedEvent(id) {
+  return $.ajax({
+    method: 'delete',
+    url: 'api/saved_events/' + id
   });
 };
 
@@ -4778,7 +4827,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchEventTypes = _event_type_actions.fetchEventTypes;
   window.createEventCategory = _event_actions.createEventCategory;
   window.createEventEventType = _event_actions.createEventEventType;
-
+  window.receiveSaveEvent = _event_actions.receiveSaveEvent;
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
 
@@ -28009,9 +28058,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _merge2 = __webpack_require__(10);
+var _merge3 = __webpack_require__(10);
 
-var _merge3 = _interopRequireDefault(_merge2);
+var _merge4 = _interopRequireDefault(_merge3);
 
 var _event_actions = __webpack_require__(14);
 
@@ -28023,12 +28072,20 @@ var EventsReducer = function EventsReducer() {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
+  // debugger
   Object.freeze(oldState);
+  var newState = void 0;
   switch (action.type) {
     case _event_actions.RECEIVE_EVENTS:
-      return (0, _merge3.default)({}, action.events);
+      return (0, _merge4.default)({}, action.events);
     case _event_actions.RECEIVE_EVENT:
-      return (0, _merge3.default)({}, oldState, _defineProperty({}, action.event.id, action.event));
+      return (0, _merge4.default)({}, oldState, _defineProperty({}, action.event.id, action.event));
+    case _event_actions.RECEIVE_SAVED_EVENT:
+      return (0, _merge4.default)({}, oldState, _defineProperty({}, action.event.id, action.event));
+    case _event_actions.REMOVE_SAVED_EVENT:
+      newState = (0, _merge4.default)({}, oldState);
+      oldState[action.savedEventId];
+      return newState;
     default:
       return oldState;
   }
@@ -32763,13 +32820,23 @@ var Homepage = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         "div",
-        null,
+        { className: "homepage" },
         _react2.default.createElement(_nav_bar_container2.default, null),
         _react2.default.createElement(
           "div",
           { className: "homepage-img-div" },
           _react2.default.createElement("img", { src: window.img_outside })
-        )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "homepage-search" },
+          _react2.default.createElement(
+            "h1",
+            null,
+            "Find your next experience"
+          )
+        ),
+        _react2.default.createElement("div", { className: "homepage-bottom" })
       );
     }
   }]);
@@ -32952,6 +33019,7 @@ var EventForm = function (_React$Component) {
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
+    _this.updateFile = _this.updateFile.bind(_this);
     return _this;
   }
 
@@ -33009,7 +33077,7 @@ var EventForm = function (_React$Component) {
   }, {
     key: 'findCategoryId',
     value: function findCategoryId() {
-      debugger;
+      // debugger
       for (var i = 0; i < this.props.categories.length; i++) {
         if (this.props.categories[i].name === this.category) {
           return this.props.categories[i].id;
@@ -33019,7 +33087,7 @@ var EventForm = function (_React$Component) {
   }, {
     key: 'findEventTypeId',
     value: function findEventTypeId() {
-      debugger;
+      // debugger
       for (var i = 0; i < this.props.eventTypes.length; i++) {
         if (this.props.eventTypes[i].name === this.eventType) {
           return this.props.eventTypes[i].id;
@@ -33039,13 +33107,16 @@ var EventForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      debugger;
+      // debugger
       e.preventDefault();
 
       this.combineDateTime();
 
       var formData = new FormData();
       Object.keys(this.state).map(function (col) {
+        if (col === "avatarFile" || col === "avatarUrl") {
+          return;
+        }
         return formData.append('event[' + col + ']', _this3.state[col]);
       });
       if (this.state.avatarFile) {
@@ -33133,6 +33204,17 @@ var EventForm = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_nav_bar_container2.default, null),
+        _react2.default.createElement(
+          'div',
+          { className: 'event-form-create' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Create An Event'
+          )
+        ),
+        _react2.default.createElement('div', { className: 'event-form-step' }),
+        _react2.default.createElement('div', { className: 'event-form-background' }),
         _react2.default.createElement(
           'div',
           { className: 'event-form-main-page' },
@@ -33390,8 +33472,17 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'checkbox', name: 'remaining_tickets' }),
               _react2.default.createElement('br', null),
-              _react2.default.createElement('input', { type: 'submit', value: 'MAKE YOUR EVENT LIVE' }),
-              this.renderErrors()
+              this.renderErrors(),
+              _react2.default.createElement(
+                'div',
+                { className: 'event-form-done' },
+                _react2.default.createElement(
+                  'h1',
+                  null,
+                  'Nice job! You\'re almost done.'
+                ),
+                _react2.default.createElement('input', { type: 'submit', value: 'MAKE YOUR EVENT LIVE' })
+              )
             )
           )
         )
@@ -33501,6 +33592,7 @@ var EventIndex = function (_React$Component) {
         'div',
         { className: 'event-index-main-page' },
         _react2.default.createElement(_nav_bar_container2.default, null),
+        _react2.default.createElement('div', { className: 'event-index-background' }),
         _react2.default.createElement(
           'div',
           { className: 'event-index-content' },
@@ -33569,6 +33661,14 @@ var convertPrice = function convertPrice(price) {
   }
 };
 
+var convertDateTime = function convertDateTime(dateTime) {
+  var arr = dateTime.split(/-|T|:|\./);
+  var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
+  var timeArr = dateArr[4].split(":");
+  var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
+  return newDate.toUpperCase();
+};
+
 var EventIndexItem = function EventIndexItem(_ref) {
   var event = _ref.event,
       router = _ref.router,
@@ -33583,46 +33683,65 @@ var EventIndexItem = function EventIndexItem(_ref) {
       { className: 'event-index-item-main' },
       _react2.default.createElement(
         'div',
-        { className: 'event-index-item-img-div' },
+        { className: 'event-index-item-img' },
         _react2.default.createElement(
-          'a',
-          null,
-          _react2.default.createElement('img', { src: window.img_leaf })
+          'div',
+          { className: 'event-index-item-img-left' },
+          _react2.default.createElement(
+            'a',
+            null,
+            _react2.default.createElement('img', { src: window.img_leaf })
+          )
         ),
         _react2.default.createElement(
-          'p',
-          null,
-          newPrice
+          'div',
+          { className: 'event-index-item-img-right' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            convertDateTime(event.start_date_time)
+          ),
+          _react2.default.createElement(
+            'h1',
+            null,
+            _react2.default.createElement(
+              'a',
+              { href: '/#/events/' + event.id },
+              event.title
+            )
+          ),
+          _react2.default.createElement(
+            'h3',
+            null,
+            event.location
+          )
         )
       ),
       _react2.default.createElement(
         'div',
         { className: 'event-index-item-info' },
         _react2.default.createElement(
-          'h2',
-          null,
-          event.start_date_time
-        ),
-        _react2.default.createElement(
-          'h1',
-          null,
+          'div',
+          { className: 'event-index-item-info-left' },
           _react2.default.createElement(
-            'a',
-            { href: '/#/events/' + event.id },
-            event.title
+            'p',
+            null,
+            newPrice
           )
         ),
         _react2.default.createElement(
-          'h3',
-          null,
-          event.lat,
-          ' ',
-          event.lng
-        ),
-        _react2.default.createElement(
-          'span',
-          null,
-          'tags go here'
+          'div',
+          { className: 'event-index-item-info-right' },
+          _react2.default.createElement(
+            'span',
+            null,
+            'tags go here'
+          ),
+          _react2.default.createElement(
+            'span',
+            { className: 'glyphicon' },
+            '\uE044'
+          )
         )
       )
     )
@@ -33630,6 +33749,8 @@ var EventIndexItem = function EventIndexItem(_ref) {
 };
 
 exports.default = (0, _reactRouterDom.withRouter)(EventIndexItem);
+
+// comment
 
 /***/ }),
 /* 251 */
@@ -33650,6 +33771,8 @@ var _modal_actions = __webpack_require__(33);
 
 var _event_actions = __webpack_require__(14);
 
+var _user_actions = __webpack_require__(43);
+
 var _event_show = __webpack_require__(252);
 
 var _event_show2 = _interopRequireDefault(_event_show);
@@ -33660,9 +33783,14 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var eventId = parseInt(ownProps.match.params.eventId);
 
   var event = state.entities.events[eventId];
+
+  var users = state.entities.users;
+
   return {
     eventId: eventId,
-    event: event
+    event: event,
+    users: users,
+    current_user: state.session.currentUser
   };
 };
 
@@ -33670,6 +33798,15 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchEvent: function fetchEvent(id) {
       return dispatch((0, _event_actions.fetchEvent)(id));
+    },
+    fetchUsers: function fetchUsers() {
+      return dispatch((0, _user_actions.fetchUsers)());
+    },
+    receiveSaveEvent: function receiveSaveEvent(savedEvent) {
+      return dispatch((0, _event_actions.receiveSaveEvent)(savedEvent));
+    },
+    removeSavedEvent: function removeSavedEvent(id) {
+      return dispatch((0, _event_actions.removeSavedEvent)(id));
     },
     openModal: function openModal(modal) {
       return dispatch((0, _modal_actions.openModal)(modal));
@@ -33716,13 +33853,36 @@ var EventShow = function (_React$Component) {
   function EventShow(props) {
     _classCallCheck(this, EventShow);
 
-    return _possibleConstructorReturn(this, (EventShow.__proto__ || Object.getPrototypeOf(EventShow)).call(this, props));
+    // debugger
+    var _this = _possibleConstructorReturn(this, (EventShow.__proto__ || Object.getPrototypeOf(EventShow)).call(this, props));
+
+    _this.state;
+
+    _this.findUser = _this.findUser.bind(_this);
+    _this.handleSave = _this.handleSave.bind(_this);
+    return _this;
   }
 
   _createClass(EventShow, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.props.fetchEvent(this.props.eventId);
+      this.props.fetchUsers();
+    }
+  }, {
+    key: 'findUser',
+    value: function findUser(id) {
+      return this.props.users[id].first_name;
+    }
+  }, {
+    key: 'handleSave',
+    value: function handleSave() {
+      // debugger
+      if (this.state.current_user_saved === false) {
+        this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: this.props.event.id });
+      } else {
+        this.props.removeSavedEvent(this.props.current_user.saved_events[this.props.event.id]);
+      }
     }
   }, {
     key: 'render',
@@ -33732,11 +33892,20 @@ var EventShow = function (_React$Component) {
       if (this.props.event === undefined) {
         return null;
       } else {
-
+        this.state = { current_user_saved: this.props.event.current_user_saved };
+        // const attendeesOpts = Object.values(this.props.event.attendees).map( attendee => (
+        //   <li key={attendee.id}>{this.findUser(attendee.purchaser_id)}</li>
+        // ));
         return _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(_nav_bar_container2.default, null),
+          _react2.default.createElement('div', { className: 'event-show-background' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'event-show-background-img' },
+            _react2.default.createElement('img', { src: window.img_leaf })
+          ),
           _react2.default.createElement(
             'div',
             { className: 'event-show-main' },
@@ -33750,39 +33919,59 @@ var EventShow = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'event-show-top-right' },
+                { className: 'event-show-top-right-background' },
                 _react2.default.createElement(
-                  'p',
-                  null,
-                  this.props.event.start_date_time
-                ),
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  this.props.event.title
-                ),
-                _react2.default.createElement(
-                  'h3',
-                  null,
-                  'By ',
-                  this.props.event.organizer_name
-                ),
-                _react2.default.createElement(
-                  'span',
-                  null,
-                  this.props.event.price
+                  'div',
+                  { className: 'event-show-top-right' },
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    this.props.event.start_date_time
+                  ),
+                  _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.props.event.title
+                  ),
+                  _react2.default.createElement(
+                    'h3',
+                    null,
+                    _react2.default.createElement(
+                      'a',
+                      null,
+                      'by ',
+                      this.props.event.organizer_name
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    null,
+                    this.props.event.price
+                  )
                 )
               )
             ),
             _react2.default.createElement(
               'div',
-              { className: 'event-show-tickets' },
+              { className: 'event-show-tickets-background' },
               _react2.default.createElement(
-                'button',
-                { onClick: function onClick(e) {
-                    return _this2.props.openModal("tickets");
-                  } },
-                'TICKETS'
+                'div',
+                { className: 'event-show-tickets' },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'glyphicon',
+                    value: this.state.current_user_saved,
+                    onClick: this.handleSave
+                  },
+                  '\uE044'
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { onClick: function onClick(e) {
+                      return _this2.props.openModal("tickets");
+                    } },
+                  'REGISTER'
+                )
               )
             ),
             _react2.default.createElement(
@@ -33830,8 +34019,17 @@ var EventShow = function (_React$Component) {
                 _react2.default.createElement(
                   'p',
                   null,
-                  this.props.event.lat,
-                  this.props.event.lng
+                  this.props.event.location
+                ),
+                _react2.default.createElement(
+                  'h1',
+                  null,
+                  'FRIENDS WHO ARE GOING'
+                ),
+                _react2.default.createElement(
+                  'ul',
+                  null,
+                  Object.keys(this.props.event.attendees).length
                 )
               )
             )

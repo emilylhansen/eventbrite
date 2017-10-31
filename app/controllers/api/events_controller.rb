@@ -6,7 +6,6 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-    # debugger
     @event = Event.new(event_params)
     if @event.save
       render :show
@@ -45,7 +44,8 @@ class Api::EventsController < ApplicationController
       :organizer_id,
       :organizer_name,
       :organizer_description,
-      :avatar
+      :avatar,
+      :location
     )
   end
 end

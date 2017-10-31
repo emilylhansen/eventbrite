@@ -4,6 +4,9 @@ class User < ApplicationRecord
   validates :password, length: {minimum: 6, allow_nil: true}
   validates :first_name, :last_name, :email, length: {minimum: 1}
 
+  has_many :saved_events
+  has_many :events, through: :saved_events
+
   has_many :tickets,
   primary_key: :id,
   foreign_key: :purchaser_id,
