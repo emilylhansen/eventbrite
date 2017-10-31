@@ -6,7 +6,6 @@ class EventShow extends React.Component {
 
   constructor(props){
     super(props);
-    // debugger
     this.state;
 
     this.findUser = this.findUser.bind(this);
@@ -22,11 +21,13 @@ class EventShow extends React.Component {
   }
 
   handleSave(){
-    // debugger
+
     if (this.state.current_user_saved === false){
+      this.state["savedColor"] = "#0091DA";
       this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: this.props.event.id});
     } else {
-      this.props.removeSavedEvent(this.props.current_user.saved_events[this.props.event.id]);
+      this.state["savedColor"] = "white";
+      this.props.deleteSavedEvent(this.props.current_user.saved_events[this.props.event.id].saved_event_id);
     }
   }
 
@@ -35,7 +36,10 @@ class EventShow extends React.Component {
     if (this.props.event === undefined){
       return null;
     } else {
-      this.state = {current_user_saved: this.props.event.current_user_saved};
+      this.state = {
+        current_user_saved: this.props.event.current_user_saved,
+        savedColor: "#0091DA"
+      };
       // const attendeesOpts = Object.values(this.props.event.attendees).map( attendee => (
       //   <li key={attendee.id}>{this.findUser(attendee.purchaser_id)}</li>
       // ));
@@ -44,13 +48,13 @@ class EventShow extends React.Component {
         <NavBarContainer/>
         <div className="event-show-background"></div>
         <div className="event-show-background-img">
-          <img src={window.img_leaf}/>
+          <img src={this.props.event.avatar_url}/>
         </div>
         <div className="event-show-main">
 
           <div className="event-show-top">
             <div className="event-show-top-left">
-              <img src={window.img_leaf} />
+              <img src={this.props.event.avatar_url} />
             </div>
 
             <div className="event-show-top-right-background">
@@ -65,10 +69,11 @@ class EventShow extends React.Component {
 
           <div className="event-show-tickets-background">
             <div className="event-show-tickets">
-              <span className="glyphicon"
+              <div className="glyphicon"
                 value={this.state.current_user_saved}
                 onClick={this.handleSave}
-                >&#xe044;</span>
+                style={{backgroundColor:this.state.savedColor}}
+                ></div>
               <button onClick={e => this.props.openModal("tickets")}>REGISTER</button>
             </div>
           </div>

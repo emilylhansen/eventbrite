@@ -29,8 +29,7 @@ const currentDateTime = () => {
 const mapStateToProps = (state, ownProps) => {
   let event = {
     title: "",
-    lat: "",
-    lng: "",
+    location: "",
     start_date_time: "",
     end_date_time: "",
     avatarFile: null,

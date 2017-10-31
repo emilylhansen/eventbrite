@@ -1,4 +1,4 @@
-class SavedEventsController < ApplicationController
+class Api::SavedEventsController < ApplicationController
 
   def create
     @savedEvent = SavedEvent.new(saved_event_params)
@@ -21,8 +21,9 @@ class SavedEventsController < ApplicationController
   def destroy
     @savedEvent = SavedEvent.find(params[:id])
     @savedEvent.destroy
+    render json: @savedEvent
   end
-  def save_event_params
-    params.permit(:save_event).permit(:user_id, :event_id)
+  def saved_event_params
+    params.require(:saved_event).permit(:user_id, :event_id)
   end
 end

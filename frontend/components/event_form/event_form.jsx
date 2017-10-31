@@ -112,8 +112,8 @@ class EventForm extends React.Component {
     const event_type_id = this.findEventTypeId();
 
     this.props.action(formData, this.goBack).then(
-      event => this.props.createEventCategory({event_id: 96, category_id: category_id})).then (
-      event => this.props.createEventEventType({event_id: 96, event_type_id: event_type_id})
+      event => this.props.createEventCategory({event_id: 115, category_id: category_id})).then (
+      event => this.props.createEventEventType({event_id: 115, event_type_id: event_type_id})
     );
   }
 
@@ -168,8 +168,8 @@ class EventForm extends React.Component {
         </div>
         <div className="event-form-step"></div>
         <div className="event-form-background"></div>
-        <div className="event-form-main-page">
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} className="event-form-form">
+            <div className="event-form-main-page">
             <div>
               <div className="event-form-one">
                 <span>1</span>
@@ -179,52 +179,58 @@ class EventForm extends React.Component {
               <label>EVENT TITLE</label>
                 <br></br>
                 <input type="text"
+                  placeholder="Give it a short distinct name"
                   value={this.state.title}
                   onChange={this.handleInput('title')}
                   />
                 <br></br>
 
-              <label>LATITUDE</label>
+              <label>Location</label>
                 <br></br>
                 <input type="text"
-                  value={this.state.lat}
-                  onChange={this.handleInput('lat')}
+                  placeholder="Specify where it's held"
+                  value={this.state.location}
+                  onChange={this.handleInput('location')}
                   />
                 <br></br>
 
-              <label>LONGITUDE</label>
+              <div className="event-form-timedates">
+                <div className="event-form-timedates-start">
+                <label>STARTS</label>
                 <br></br>
-                <input type="text"
-                  value={this.state.lng}
-                  onChange={this.handleInput('lng')}
-                  />
-                <br></br>
+                <div className="event-form-timedates-start-top">
+                  <input type="date"
+                    min={this.props.currentDate}
+                    onChange={this.handleInput('startDate')}
+                    />
+                  <input list="times" name="times"/>
+                  <datalist id="times"
+                    value={this.dateTime.startTime}
+                    onChange={this.handleInput('startTime')}
+                    >
+                    {timeOpts}
+                  </datalist>
+                </div>
+              </div>
 
-              <label>STARTS</label>
+              <div className="event-form-timedates-end">
+                <label>ENDS</label>
                 <br></br>
-                <input type="date"
-                  min={this.props.currentDate}
-                  onChange={this.handleInput('startDate')}
-                  />
-                <select value={this.dateTime.startTime}
-                  onChange={this.handleInput('startTime')}
-                  >
-                  {timeOpts}
-                </select>
-                <br></br>
-
-              <label>ENDS</label>
-                <br></br>
-                <input type="date"
-                  min={this.props.currentDate}
-                  onChange={this.handleInput('endDate')}
-                  />
-                <select value={this.dateTime.endTime}
-                  onChange={this.handleInput('endTime')}
-                  >
-                  {timeOpts}
-                </select>
-                <br></br>
+                <div className="event-form-timedates-end-top">
+                  <input type="date"
+                    min={this.props.currentDate}
+                    onChange={this.handleInput('endDate')}
+                    />
+                  <input list="times" name="times"/>
+                    <datalist id="times"
+                      value={this.dateTime.endTime}
+                      onChange={this.handleInput('endTime')}
+                      >
+                      {timeOpts}
+                    </datalist>
+                </div>
+              </div>
+              </div>
 
               <label>EVENT IMAGE</label>
                 <br></br>
@@ -235,6 +241,7 @@ class EventForm extends React.Component {
               <label>EVENT DESCRIPTION</label>
                 <br></br>
                 <textarea value={this.state.description}
+                  cols="325" rows="150"
                   onChange={this.handleInput('description')}
                   />
                 <br></br>
@@ -290,8 +297,10 @@ class EventForm extends React.Component {
               <label>EVENT TYPE</label>
                 <br></br>
                 <select value={this.eventType}
+                  className="event-type-select"
                   onChange={this.handleInput('eventType')}
                   >
+                  <option>Select the type of event</option>
                   {eventTypeOpts}
                 </select>
                 <br></br>
@@ -299,8 +308,10 @@ class EventForm extends React.Component {
               <label>EVENT TOPIC</label>
                 <br></br>
                 <select value={this.category}
+                  className="event-topic-select"
                   onChange={this.handleInput('category')}
                   >
+                  <option>Select a topic</option>
                   {categoryOpts}
                 </select>
                 <br></br>
@@ -311,15 +322,15 @@ class EventForm extends React.Component {
                 <br></br>
 
                 {this.renderErrors()}
-
-
-              <div className="event-form-done">
-                <h1>Nice job! You're almost done.</h1>
-                <input type="submit" value="MAKE YOUR EVENT LIVE"/>
-              </div>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <div className="event-form-done">
+            <h1>Nice job! You're almost done.</h1>
+            <input type="submit" value="MAKE YOUR EVENT LIVE"/>
+          </div>
+
+        </form>
       </div>
     );
   }

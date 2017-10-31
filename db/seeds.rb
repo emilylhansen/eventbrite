@@ -19,8 +19,6 @@ Event.destroy_all
 
 event1 = Event.create!(
   title: "Visit this rock",
-  lat: 40.738695,
-  lng: -73.992742,
   start_date_time: "2017-10-01 18:30:00",
   end_date_time: "2017-10-01 23:30:00",
   description: "You'll have a great time!",
@@ -29,15 +27,13 @@ event1 = Event.create!(
   organizer_id: 6,
   organizer_name: "Emily",
   organizer_description: "I'm a great event organizer",
-  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
   avatar_content_type: "image/jpeg",
   location: "New York, New York"
 )
 
 event2 = Event.create!(
   title: "Visit this tree",
-  lat: 40.738695,
-  lng: -73.992742,
   start_date_time: "2017-10-01 18:30:00",
   end_date_time: "2017-10-01 23:30:00",
   description: "You'll have a great time!",
@@ -46,15 +42,13 @@ event2 = Event.create!(
   organizer_id: 5,
   organizer_name: "Joey",
   organizer_description: "I'm a great event organizer",
-  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
   avatar_content_type: "image/jpeg",
   location: "New York, New York"
 )
 
 event3 = Event.create!(
   title: "Visit this patch of grass",
-  lat: 40.738695,
-  lng: -73.992742,
   start_date_time: "2017-10-01 18:30:00",
   end_date_time: "2017-10-01 23:30:00",
   description: "You'll have a great time!",
@@ -63,15 +57,13 @@ event3 = Event.create!(
   organizer_id: 4,
   organizer_name: "App Academy",
   organizer_description: "I'm a great event organizer",
-  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
   avatar_content_type: "image/jpeg",
   location: "New York, New York"
 )
 
 event4 = Event.create!(
   title: "Visit this stick",
-  lat: 40.738695,
-  lng: -73.992742,
   start_date_time: "2017-10-01 18:30:00",
   end_date_time: "2017-10-01 23:30:00",
   description: "You'll have a great time!",
@@ -80,7 +72,7 @@ event4 = Event.create!(
   organizer_id: 4,
   organizer_name: "Shake Shack",
   organizer_description: "I'm a great event organizer",
-  avatar_file_name: "Ginkgo_biloba_scanned_leaf.jpg",
+  avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
   avatar_content_type: "image/jpeg",
   location: "New York, New York"
 )

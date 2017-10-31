@@ -1,8 +1,6 @@
 json.extract! event,
   :id,
   :title,
-  :lat,
-  :lng,
   :start_date_time,
   :end_date_time,
   :description,

@@ -1,7 +1,6 @@
 class Event < ApplicationRecord
   validates :title,
-            :lat,
-            :lng,
+            :location,
             :start_date_time,
             :end_date_time,
             :description,

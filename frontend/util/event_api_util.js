@@ -65,11 +65,11 @@ export const createEventEventType = eventEventType => (
   })
 );
 
-export const createSavedEvent = savedEvent => (
+export const createSavedEvent = saved_event => (
   $.ajax({
     method: 'post',
     url: 'api/saved_events',
-    data: {savedEvent}
+    data: {saved_event}
   })
 );
 

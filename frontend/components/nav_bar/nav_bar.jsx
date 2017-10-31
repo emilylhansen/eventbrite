@@ -8,8 +8,8 @@ class NavBar extends React.Component{
     <li>
       <a href="/">{this.props.currentUser.first_name.toUpperCase()} &#9660;</a>
       <ul className="login-signup-dropdown">
-        <li><a href="/">Tickets</a></li>
-        <li><a href="/">Saved</a></li>
+        <li><a href={`/#/users/${this.props.currentUser.id}`}>Tickets</a></li>
+        <li><a href={`/#/users/${this.props.currentUser.id}`}>Saved</a></li>
         <li><a onClick={this.props.logout}>Log out</a></li>
       </ul>
     </li>

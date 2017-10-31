@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import { openModal } from '../../actions/modal_actions';
 import {fetchEvent,
-  receiveSaveEvent,
-  removeSavedEvent} from '../../actions/event_actions';
+  createSavedEvent,
+  deleteSavedEvent} from '../../actions/event_actions';
 import {fetchUsers} from '../../actions/user_actions';
 
 import EventShow from './event_show';
@@ -28,8 +28,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   fetchEvent: id => dispatch(fetchEvent(id)),
   fetchUsers: () => dispatch(fetchUsers()),
-  receiveSaveEvent: savedEvent => dispatch(receiveSaveEvent(savedEvent)),
-  removeSavedEvent: id => dispatch(removeSavedEvent(id)),
+  createSavedEvent: savedEvent => dispatch(createSavedEvent(savedEvent)),
+  deleteSavedEvent: id => dispatch(deleteSavedEvent(id)),
   openModal: modal => dispatch(openModal(modal))
 });
 

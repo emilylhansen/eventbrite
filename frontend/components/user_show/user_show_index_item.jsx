@@ -31,45 +31,42 @@ const handleSave = (event, createSavedEvent, deleteSavedEvent, currentUser) => {
   }
 };
 
-const EventIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentUser, outer, history}) => {
+const UserShowIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentUser}) => {
+  // debugger
   const newPrice = convertPrice(event.price);
   return (
-    <li className="event-index-item-li">
-      <div className="event-index-item-main">
+    <li className="user-index-item-li">
+      <div className="user-index-item-main">
+        <div className="user-index-item-info-left">
+          <p>{newPrice}</p>
+        </div>
 
-        <div className="event-index-item-img">
-          <div className="event-index-item-img-left">
+          <div className="user-index-item-img-left">
             <a>
               <img src={event.avatar_url} />
             </a>
           </div>
 
-          <div className="event-index-item-img-right">
+
+          <div className="user-index-item-img-right">
             <h2>{convertDateTime(event.start_date_time)}</h2>
             <h1><a href={`/#/events/${event.id}`}>{event.title}</a></h1>
             <h3>{event.location}</h3>
           </div>
-        </div>
 
-        <div className="event-index-item-info">
-          <div className="event-index-item-info-left">
-            <p>{newPrice}</p>
-          </div>
-
-          <div className="event-index-item-info-right">
+          <div className="user-index-item-info-right">
             <span>tags go here</span>
             <div className="glyphicon"
               onClick={(e) => handleSave(event, createSavedEvent, deleteSavedEvent, currentUser)}
               ></div>
           </div>
-        </div>
 
       </div>
     </li>
   );
 };
 
-export default withRouter(EventIndexItem);
+export default withRouter(UserShowIndexItem);
 
 
 

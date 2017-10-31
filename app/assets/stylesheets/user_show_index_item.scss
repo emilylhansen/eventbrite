@@ -1,0 +1,53 @@
+.user-show-index-main {
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.user-show-index-main ul {
+  justify-content: space-between;
+  margin: 0 auto;
+  display: flex;
+
+}
+
+.user-index-item-li {
+  width: 31%;
+  height: 300px;
+  background-color: white;
+  box-shadow: 1px 1px 5px #888888;
+
+}
+
+.user-index-item-img-right {
+  border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 15px;
+  height: 75px;
+}
+
+.user-index-item-info-right {
+  display: flex;
+
+}
+
+.user-index-item-img-left {
+  height: 150px;
+  border: 1px solid red;
+}
+
+.user-index-item-info-left {
+  position: relative;
+  z-index: 100;
+  background-color: white;
+  opacity: .8;
+  border: 1px solid green;
+  padding: 5px;
+  padding-bottom: 5px;
+  float: right;
+  height: 15px;
+  font-size: 14px;
+  text-align: center;
+  margin: 10px;
+  opacity: .8;
+}
