@@ -46,7 +46,18 @@ json.saved_events do
             json.name event_type.name
           end
         end
-      end 
+      end
     end
   end
 end
+
+json.organized_events do
+  user.organized_events.each do |organized_event|
+    json.set! organized_event.id do
+      json.extract! organized_event,
+      :id,
+      :start_date_time,
+      :title
+    end
+  end
+end 

@@ -1,0 +1,26 @@
+.user-events-background {
+  width: 100%;
+  height: 1000px;
+  background-color: #F8F8FA;
+  position: absolute;
+}
+
+.user-events-main {
+  border: 1px solid black;
+  width: 70%;
+  margin-left: 200px;
+  margin-top: 30px;
+  background-color: white;
+  position: absolute;
+  z-index: 2
+}
+
+.user-events-main h1 {
+  text-align: left;
+  font-size: 40px;
+  padding-bottom: 30px;
+}
+
+.user-events-main ul {
+  border-bottom: 1px solid #E0E0E0;
+}
