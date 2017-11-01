@@ -22,6 +22,7 @@ import EventIndexContainer from './event_index/event_index_container';
 import EventShowContainer from './event_show/event_show_container';
 import TicketContainer from './ticket/ticket_container';
 import UserShowContainer from './user_show/user_show_container';
+import UserEventsContainer from './user_events/user_events_container';
 
 // <MyModal component={TicketContainer}
 //   modal={modal}
@@ -38,6 +39,7 @@ const App = () => (
       <Route exact path="/events/:eventId" component={EventShowContainer}/>
       <Route exact path="/events/:eventId/edit" component={EventFormContainer}/>
       <Route exact path="/users/:userId" component={UserShowContainer}/>
+      <Route exact path="/myevents" component={UserEventsContainer}/>
       <Route path="/" component={HomepageContainer}/>
     </Switch>
   </div>

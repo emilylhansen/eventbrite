@@ -55,7 +55,7 @@ const UserShowIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentU
           </div>
 
           <div className="user-index-item-info-right">
-            <span>tags go here</span>
+            <span>{`#${Object.values(event.category)[0].name}`} {`#${Object.values(event.eventType)[0].name}`}</span>
             <div className="glyphicon"
               onClick={(e) => handleSave(event, createSavedEvent, deleteSavedEvent, currentUser)}
               ></div>

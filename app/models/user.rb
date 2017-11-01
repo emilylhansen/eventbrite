@@ -12,6 +12,11 @@ class User < ApplicationRecord
   foreign_key: :purchaser_id,
   class_name: 'Ticket'
 
+  has_many :organized_events,
+  primary_key: :id,
+  foreign_key: :organizer_id,
+  class_name: 'Event'
+
   attr_reader :password
 
   after_initialize :ensure_session_token

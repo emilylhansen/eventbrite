@@ -31877,6 +31877,10 @@ var _user_show_container = __webpack_require__(256);
 
 var _user_show_container2 = _interopRequireDefault(_user_show_container);
 
+var _user_events_container = __webpack_require__(259);
+
+var _user_events_container2 = _interopRequireDefault(_user_events_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // <MyModal component={TicketContainer}
@@ -31898,6 +31902,7 @@ var App = function App() {
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId', component: _event_show_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId/edit', component: _event_form_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/users/:userId', component: _user_show_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/myevents', component: _user_events_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _homepage_container2.default })
     )
   );
@@ -32695,7 +32700,16 @@ var NavBar = function (_React$Component) {
             _react2.default.createElement(
               'a',
               { href: '/#/users/' + this.props.currentUser.id },
-              'Saved'
+              'Saved ' + Object.values(this.props.currentUser.saved_events).length
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              'a',
+              { href: "/#/myevents" },
+              'Manage Events'
             )
           ),
           _react2.default.createElement(
@@ -32827,15 +32841,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Homepage = function (_React$Component) {
   _inherits(Homepage, _React$Component);
 
-  function Homepage() {
+  function Homepage(props) {
     _classCallCheck(this, Homepage);
 
-    return _possibleConstructorReturn(this, (Homepage.__proto__ || Object.getPrototypeOf(Homepage)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Homepage.__proto__ || Object.getPrototypeOf(Homepage)).call(this, props));
+    // this.current = 0;
+    // this.slideShow = this.slideShow();
   }
+  // slideShow(){
+  //   const slides = document.getElementsByClassName("slides");
+  //   for(const i = 0; i < slides.length; i++){
+  //     slides[i].style.display = "none";
+  //   }
+  //   this.current += 1;
+  //   slides[this.current%slides.length].style.display = "block";
+  //   setTimeout(this.slideShow, 2000);
+  // }
 
   _createClass(Homepage, [{
     key: "render",
     value: function render() {
+      // <img className="slides" src={window.img_concert}/>
+      // <img className="slides" src={window.img_pride}/>
+      // <img className="slides" src={window.img_baking}/>
       return _react2.default.createElement(
         "div",
         { className: "homepage" },
@@ -32843,7 +32871,7 @@ var Homepage = function (_React$Component) {
         _react2.default.createElement(
           "div",
           { className: "homepage-img-div" },
-          _react2.default.createElement("img", { src: window.img_outside })
+          _react2.default.createElement("img", { className: "slides", src: window.img_outside })
         ),
         _react2.default.createElement(
           "div",
@@ -32852,6 +32880,53 @@ var Homepage = function (_React$Component) {
             "h1",
             null,
             "Find your next experience"
+          )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "homepage-categories" },
+          _react2.default.createElement(
+            "h1",
+            null,
+            "Browse by Top Categories"
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "homepage-categories-main" },
+            _react2.default.createElement(
+              "div",
+              { className: "homepage-categories-one" },
+              _react2.default.createElement(
+                "div",
+                { className: "homepage-categories-one-top" },
+                _react2.default.createElement("img", { src: window.img_outside }),
+                _react2.default.createElement(
+                  "h1",
+                  null,
+                  "Music"
+                ),
+                _react2.default.createElement(
+                  "p",
+                  null,
+                  "Intimate house concerts, major music festivals, and the occasional dance party"
+                )
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "homepage-categories-one-bottom" },
+                _react2.default.createElement("img", { src: window.img_outside }),
+                _react2.default.createElement(
+                  "h1",
+                  null,
+                  "Food & Drink"
+                ),
+                _react2.default.createElement(
+                  "p",
+                  null,
+                  "Dinner parties, tastings, and big-time festivals"
+                )
+              )
+            )
           )
         ),
         _react2.default.createElement("div", { className: "homepage-bottom" })
@@ -32863,6 +32938,37 @@ var Homepage = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Homepage;
+
+// <div className="homepage-categories-two">
+//   <div className="homepage-categories-one-top">
+//     <img src={window.img_outside}/>
+//     <h1>Food & Drink</h1>
+//     <p>Dinner parties, tastings, and big-time festivals</p>
+//   </div>
+//   <div className="homepage-categories-one-middle">
+//     <img src={window.img_outside}/>
+//     <h1>Food & Drink</h1>
+//     <p>Dinner parties, tastings, and big-time festivals</p>
+//   </div>
+//   <div className="homepage-categories-one-bottom">
+//     <img src={window.img_outside}/>
+//     <h1>Food & Drink</h1>
+//     <p>Dinner parties, tastings, and big-time festivals</p>
+//   </div>
+// </div>
+//
+// <div className="homepage-categories-three">
+//   <div className="homepage-categories-one-top">
+//     <img src={window.img_outside}/>
+//     <h1>Food & Drink</h1>
+//     <p>Dinner parties, tastings, and big-time festivals</p>
+//   </div>
+//   <div className="homepage-categories-one-bottom">
+//     <img src={window.img_outside}/>
+//     <h1>Food & Drink</h1>
+//     <p>Dinner parties, tastings, and big-time festivals</p>
+//   </div>
+// </div>
 
 /***/ }),
 /* 246 */
@@ -33805,7 +33911,9 @@ var EventIndexItem = function EventIndexItem(_ref) {
           _react2.default.createElement(
             'span',
             null,
-            'tags go here'
+            '#' + Object.values(event.category)[0].name,
+            ' ',
+            '#' + Object.values(event.eventType)[0].name
           ),
           _react2.default.createElement('div', { className: 'glyphicon',
             onClick: function onClick(e) {
@@ -34065,6 +34173,28 @@ var EventShow = function (_React$Component) {
                   'h1',
                   null,
                   'TAGS'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'event-show-tags' },
+                  _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                      'h1',
+                      null,
+                      Object.values(this.props.event.category)[0].name
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                      'h1',
+                      null,
+                      Object.values(this.props.event.eventType)[0].name
+                    )
+                  )
                 )
               ),
               _react2.default.createElement(
@@ -34668,7 +34798,9 @@ var UserShowIndexItem = function UserShowIndexItem(_ref) {
         _react2.default.createElement(
           'span',
           null,
-          'tags go here'
+          '#' + Object.values(event.category)[0].name,
+          ' ',
+          '#' + Object.values(event.eventType)[0].name
         ),
         _react2.default.createElement('div', { className: 'glyphicon',
           onClick: function onClick(e) {
@@ -34683,6 +34815,70 @@ var UserShowIndexItem = function UserShowIndexItem(_ref) {
 exports.default = (0, _reactRouterDom.withRouter)(UserShowIndexItem);
 
 // comment
+
+/***/ }),
+/* 259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(6);
+
+var _reactRouterDom = __webpack_require__(2);
+
+var _modal_actions = __webpack_require__(34);
+
+var _event_actions = __webpack_require__(14);
+
+var _user_actions = __webpack_require__(32);
+
+var _event_show = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./event_show\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+var _event_show2 = _interopRequireDefault(_event_show);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var eventId = parseInt(ownProps.match.params.eventId);
+
+  var event = state.entities.events[eventId];
+
+  var users = state.entities.users;
+
+  return {
+    eventId: eventId,
+    event: event,
+    users: users,
+    current_user: state.session.currentUser
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchEvent: function fetchEvent(id) {
+      return dispatch((0, _event_actions.fetchEvent)(id));
+    },
+    fetchUsers: function fetchUsers() {
+      return dispatch((0, _user_actions.fetchUsers)());
+    },
+    createSavedEvent: function createSavedEvent(savedEvent) {
+      return dispatch((0, _event_actions.createSavedEvent)(savedEvent));
+    },
+    deleteSavedEvent: function deleteSavedEvent(id) {
+      return dispatch((0, _event_actions.deleteSavedEvent)(id));
+    },
+    openModal: function openModal(modal) {
+      return dispatch((0, _modal_actions.openModal)(modal));
+    }
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_event_show2.default));
 
 /***/ })
 /******/ ]);

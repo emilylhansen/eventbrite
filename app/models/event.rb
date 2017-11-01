@@ -24,6 +24,11 @@ class Event < ApplicationRecord
   has_many :saved_events
   has_many :users, through: :saved_events
 
+  belongs_to :organizer,
+  primary_key: :id,
+  foreign_key: :organizer_id,
+  class_name: 'User'
+
 
   has_attached_file :avatar, default_url: "leaf.jpg"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/

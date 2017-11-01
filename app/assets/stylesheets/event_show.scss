@@ -130,3 +130,31 @@
   // border: 1px solid black;
   width: 34%;
 }
+
+.event-show-tags {
+  display: flex;
+  float: left;
+}
+
+.event-show-tags div{
+  margin-right: 20px;
+  border: 1px solid #E0E0E0;
+  border-radius: 20px;
+  font-size: 14px;
+  margin: 0 auto;
+  width: 100px;
+}
+
+.event-show-tags h1 {
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+.event-show-tags h1:hover {
+  color: #008EDD;
+}
+
+.event-show-tags div:hover {
+  border: 1px solid #008EDD;
+}

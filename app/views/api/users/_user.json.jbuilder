@@ -32,6 +32,21 @@ json.saved_events do
         :location,
         :avatar_file_name,
         :avatar
+      json.category do
+        user.events[i].categories.each do |category|
+          json.set! category.id do
+            json.name category.name
+          end
+        end
+      end
+
+      json.eventType do
+        user.events[i].event_types.each do |event_type|
+          json.set! event_type.id do
+            json.name event_type.name
+          end
+        end
+      end 
     end
   end
 end

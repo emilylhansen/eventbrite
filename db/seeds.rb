@@ -24,7 +24,7 @@ event1 = Event.create!(
   description: "You'll have a great time!",
   price: 0,
   num_tickets: 50,
-  organizer_id: 6,
+  organizer_id: user1.id,
   organizer_name: "Emily",
   organizer_description: "I'm a great event organizer",
   avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
@@ -39,7 +39,7 @@ event2 = Event.create!(
   description: "You'll have a great time!",
   price: 50.00,
   num_tickets: 5,
-  organizer_id: 5,
+  organizer_id: user1.id,
   organizer_name: "Joey",
   organizer_description: "I'm a great event organizer",
   avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
@@ -54,7 +54,7 @@ event3 = Event.create!(
   description: "You'll have a great time!",
   price: 15.50,
   num_tickets: 500,
-  organizer_id: 4,
+  organizer_id: user2.id,
   organizer_name: "App Academy",
   organizer_description: "I'm a great event organizer",
   avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
@@ -69,7 +69,7 @@ event4 = Event.create!(
   description: "You'll have a great time!",
   price: 15.50,
   num_tickets: 500,
-  organizer_id: 4,
+  organizer_id: user3.id,
   organizer_name: "Shake Shack",
   organizer_description: "I'm a great event organizer",
   avatar: File.open("app/assets/images/Ginkgo_biloba_scanned_leaf.jpg"),
@@ -98,15 +98,15 @@ EventCategory.destroy_all
 
 event_category1 = EventCategory.create!(event_id: event1.id, category_id: category1.id)
 event_category2 = EventCategory.create!(event_id: event2.id, category_id: category2.id)
-event_category3 = EventCategory.create!(event_id: event2.id, category_id: category3.id)
-event_category4 = EventCategory.create!(event_id: event3.id, category_id: category3.id)
+event_category3 = EventCategory.create!(event_id: event3.id, category_id: category3.id)
+event_category4 = EventCategory.create!(event_id: event4.id, category_id: category4.id)
 
 EventEventType.destroy_all
 
 event_event_type1 = EventEventType.create!(event_id: event1.id, event_type_id: event_type1.id)
-event_event_type2 = EventEventType.create!(event_id: event1.id, event_type_id: event_type2.id)
-event_event_type3 = EventEventType.create!(event_id: event2.id, event_type_id: event_type2.id)
-event_event_type4 = EventEventType.create!(event_id: event3.id, event_type_id: event_type2.id)
+event_event_type2 = EventEventType.create!(event_id: event2.id, event_type_id: event_type2.id)
+event_event_type3 = EventEventType.create!(event_id: event3.id, event_type_id: event_type2.id)
+event_event_type4 = EventEventType.create!(event_id: event4.id, event_type_id: event_type3.id)
 
 Ticket.destroy_all
 

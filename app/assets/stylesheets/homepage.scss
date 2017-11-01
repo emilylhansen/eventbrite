@@ -1,5 +1,5 @@
 .homepage {
-  background-color: #E0E0E0;
+  background-color: #F8F8FA;
 }
 
 .homepage-img-div {
@@ -12,7 +12,7 @@
 .homepage-search {
   background-color: white;
   position: relative;
-  width: 75%;
+  width: 65%;
   height: 125px;
   border-radius: 3px;
   margin:0 auto;
@@ -21,6 +21,7 @@
   z-index: 200;
   padding: 40px;
   opacity: .95;
+  vertical-align: middle;
 }
 
 .homepage-search h1 {
@@ -30,5 +31,59 @@
 
 .homepage-bottom {
   height: 500px;
-  background-color: #E0E0E0;
+  background-color: #F8F8FA;
+}
+
+.homepage-categories h1 {
+  font-size: 30px;
+  color: gray;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.homepage-categories-main {
+  height: 500px;
+  border: 1px solid black;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.homepage-categories-one {
+  display: flex;
+  height: 225px;
+  border: 1px solid black;
+}
+
+.homepage-categories-one-top {
+  border: 1px solid black;
+  border-radius: 5px;
+  overflow: hidden;
+  text-align: center;
+  width: 60%;
+}
+
+.homepage-categories-one-top h1{
+  position: absolute;
+  color:white;
+  width: 100px;
+  top: 700px;
+  left: 100px;
+}
+.homepage-categories-one-top img{
+  position: relative;
+  width: 100%;
+}
+
+.homepage-categories-one-bottom {
+  border: 1px solid black;
+  border-radius: 5px;
+  overflow: hidden;
+  text-align: center;
+  width: 30%;
+}
+
+.homepage-categories-one-bottom img{
+  position: relative;
+  width: 100%;
 }
