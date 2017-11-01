@@ -30,6 +30,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'jquery-rails'
 
+gem "paperclip", '~> 5.0.0'
+gem 'aws-sdk', '< 3.0'
+gem 'figaro'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -43,9 +46,6 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.5'
   gem 'rails_12factor'
-  gem 'aws-sdk', '< 3.0'
-  gem "paperclip", '~> 5.0.0'
-  gem 'figaro'
 
 end
 
