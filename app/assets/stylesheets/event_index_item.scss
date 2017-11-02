@@ -10,7 +10,7 @@
 
 .event-index-item-img-left{
   width: 25%;
-  height: 80%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -62,15 +62,17 @@
 .event-index-item-info-right {
   width: 75%;
   background-color: white;
+  display: flex;
 }
 
 .event-index-item-info-right span:first-child{
   font-size: 16px;
-  border-left: 1px solid #E0E0E0;
+  border-right: 1px solid #E0E0E0;
   height: 100%;
-  padding-top: 30px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  // padding-bottom: 20px;
   padding-left: 10px;
+  padding-right: 430px;
 }
 
 .event-index-item-info-right span:last-child{

@@ -11,6 +11,9 @@ class User < ApplicationRecord
   primary_key: :id,
   foreign_key: :purchaser_id,
   class_name: 'Ticket'
+  has_many :purchased_events,
+  through: :tickets,
+  source: :event
 
   has_many :organized_events,
   primary_key: :id,

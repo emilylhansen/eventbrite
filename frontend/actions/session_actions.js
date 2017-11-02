@@ -3,7 +3,7 @@ import * as SessionApiUtil from '../util/session_api_util';
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 export const RECEIVE_EMAIL = 'RECEIVE_EMAIL';
-export const RECEIVE_EMAIL_EXISTS = 'RECEIVE_EMAIL_EXISTS';
+// export const RECEIVE_EMAIL_EXISTS = 'RECEIVE_EMAIL_EXISTS';
 
 export const receiveCurrentUser = currentUser => ({
   type: RECEIVE_CURRENT_USER,
@@ -20,10 +20,10 @@ export const receiveEmail = email => ({
   email
 });
 
-export const receiveEmailExists = emailBool => ({
-  type: RECEIVE_EMAIL_EXISTS,
-  emailBool
-})
+// export const receiveEmailExists = emailBool => ({
+//   type: RECEIVE_EMAIL_EXISTS,
+//   emailBool
+// })
 
 export const signup = user => dispatch => (
   SessionApiUtil.signup(user).then(

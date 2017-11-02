@@ -518,7 +518,7 @@ module.exports = invariant;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.emailExists = exports.logout = exports.login = exports.signup = exports.receiveEmailExists = exports.receiveEmail = exports.receiveErrors = exports.receiveCurrentUser = exports.RECEIVE_EMAIL_EXISTS = exports.RECEIVE_EMAIL = exports.RECEIVE_ERRORS = exports.RECEIVE_CURRENT_USER = undefined;
+exports.emailExists = exports.logout = exports.login = exports.signup = exports.receiveEmail = exports.receiveErrors = exports.receiveCurrentUser = exports.RECEIVE_EMAIL = exports.RECEIVE_ERRORS = exports.RECEIVE_CURRENT_USER = undefined;
 
 var _session_api_util = __webpack_require__(188);
 
@@ -529,7 +529,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var RECEIVE_ERRORS = exports.RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 var RECEIVE_EMAIL = exports.RECEIVE_EMAIL = 'RECEIVE_EMAIL';
-var RECEIVE_EMAIL_EXISTS = exports.RECEIVE_EMAIL_EXISTS = 'RECEIVE_EMAIL_EXISTS';
+// export const RECEIVE_EMAIL_EXISTS = 'RECEIVE_EMAIL_EXISTS';
 
 var receiveCurrentUser = exports.receiveCurrentUser = function receiveCurrentUser(currentUser) {
   return {
@@ -552,12 +552,10 @@ var receiveEmail = exports.receiveEmail = function receiveEmail(email) {
   };
 };
 
-var receiveEmailExists = exports.receiveEmailExists = function receiveEmailExists(emailBool) {
-  return {
-    type: RECEIVE_EMAIL_EXISTS,
-    emailBool: emailBool
-  };
-};
+// export const receiveEmailExists = emailBool => ({
+//   type: RECEIVE_EMAIL_EXISTS,
+//   emailBool
+// })
 
 var signup = exports.signup = function signup(user) {
   return function (dispatch) {
@@ -605,7 +603,7 @@ var emailExists = exports.emailExists = function emailExists(email) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteSavedEvent = exports.createSavedEvent = exports.createEventEventType = exports.createEventCategory = exports.updateEvent = exports.createEvent = exports.fetchEvent = exports.fetchEvents = exports.removeSavedEvent = exports.receiveSavedEvent = exports.receiveEventEventType = exports.receiveEventCategory = exports.receiveEvent = exports.receiveEvents = exports.REMOVE_SAVED_EVENT = exports.RECEIVE_SAVED_EVENT = exports.RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT = exports.RECEIVE_EVENTS = undefined;
+exports.createTicket = exports.deleteSavedEvent = exports.createSavedEvent = exports.createEventEventType = exports.createEventCategory = exports.updateEvent = exports.createEvent = exports.fetchEvent = exports.fetchEvents = exports.receiveTicket = exports.removeSavedEvent = exports.receiveSavedEvent = exports.receiveEventEventType = exports.receiveEventCategory = exports.receiveEvent = exports.receiveEvents = exports.RECEIVE_TICKET = exports.REMOVE_SAVED_EVENT = exports.RECEIVE_SAVED_EVENT = exports.RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT = exports.RECEIVE_EVENTS = undefined;
 
 var _event_api_util = __webpack_require__(34);
 
@@ -621,6 +619,7 @@ var RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT_CATEGORY = 'RECEIVE_EVENT_CAT
 var RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_EVENT_TYPE = 'RECEIVE_EVENT_EVENT_TYPE';
 var RECEIVE_SAVED_EVENT = exports.RECEIVE_SAVED_EVENT = 'RECEIVE_SAVED_EVENT';
 var REMOVE_SAVED_EVENT = exports.REMOVE_SAVED_EVENT = 'REMOVE_SAVED_EVENT';
+var RECEIVE_TICKET = exports.RECEIVE_TICKET = 'RECEIVE_TICKET';
 
 var receiveEvents = exports.receiveEvents = function receiveEvents(events) {
   return {
@@ -661,6 +660,13 @@ var removeSavedEvent = exports.removeSavedEvent = function removeSavedEvent(save
   return {
     type: REMOVE_SAVED_EVENT,
     savedEventId: savedEventId
+  };
+};
+
+var receiveTicket = exports.receiveTicket = function receiveTicket(ticket) {
+  return {
+    type: RECEIVE_TICKET,
+    ticket: ticket
   };
 };
 
@@ -709,6 +715,13 @@ var createEventCategory = exports.createEventCategory = function createEventCate
     });
   };
 };
+//
+// export const updateEventCategory = eventCategory => dispatch => (
+//   EventApiUtil.updateEventCategory(eventCategory).then(
+//     eventCategory => dispatch(receiveEventCategory(eventCategory)),
+//     errors => dispatch(receiveErrors(errors.responseJSON))
+//   )
+// )
 
 var createEventEventType = exports.createEventEventType = function createEventEventType(eventEventType) {
   return function (dispatch) {
@@ -719,6 +732,13 @@ var createEventEventType = exports.createEventEventType = function createEventEv
     });
   };
 };
+
+// export const updateEventEventType = eventEventType => dispatch => (
+//   EventApiUtil.updateEventEventType(eventEventType).then(
+//     eventEventType => dispatch(receiveEventEventType(eventEventType)),
+//     errors => dispatch(receiveErrors(errors.responseJSON))
+//   )
+// );
 
 var createSavedEvent = exports.createSavedEvent = function createSavedEvent(savedEvent) {
   return function (dispatch) {
@@ -734,6 +754,16 @@ var deleteSavedEvent = exports.deleteSavedEvent = function deleteSavedEvent(save
   return function (dispatch) {
     return EventApiUtil.deleteSavedEvent(savedEventId).then(function (savedEvent) {
       return dispatch(removeSavedEvent(savedEventId));
+    });
+  };
+};
+
+var createTicket = exports.createTicket = function createTicket(ticket) {
+  return function (dispatch) {
+    return EventApiUtil.createTicket(ticket).then(function (ticket) {
+      return dispatch(receiveTicket(ticket));
+    }, function (errors) {
+      return dispatch((0, _session_actions.receiveErrors)(errors.responseJSON));
     });
   };
 };
@@ -1783,16 +1813,13 @@ var createEvent = exports.createEvent = function createEvent(formData, callback)
   });
 };
 
-// dataType: 'json',
-// success: function() {
-//   callback();
-// }
-
-var updateEvent = exports.updateEvent = function updateEvent(event) {
+var updateEvent = exports.updateEvent = function updateEvent(formData) {
   return $.ajax({
     method: 'patch',
-    url: 'api/events/' + event.id,
-    data: { event: event }
+    url: 'api/events/' + formData.get('event[id]'),
+    data: formData,
+    processData: false,
+    contentType: false
   });
 };
 
@@ -1811,6 +1838,14 @@ var createEventCategory = exports.createEventCategory = function createEventCate
   });
 };
 
+// export const updateEventCategory = eventCategory => (
+//   $.ajax({
+//     method: 'patch',
+//     url: `api/event_categories/${eventCategory.id}`,
+//     data: {eventCategory}
+//   })
+// );
+
 var fetchEventTypes = exports.fetchEventTypes = function fetchEventTypes() {
   return $.ajax({
     method: 'get',
@@ -1826,6 +1861,14 @@ var createEventEventType = exports.createEventEventType = function createEventEv
   });
 };
 
+// export const updateEventEventType = eventEventType => (
+//   $.ajax({
+//     method: 'patch',
+//     url: `api/event_event_types/${eventEventType.id}`,
+//     data: {eventEventType}
+//   })
+// );
+
 var createSavedEvent = exports.createSavedEvent = function createSavedEvent(saved_event) {
   return $.ajax({
     method: 'post',
@@ -1838,6 +1881,14 @@ var deleteSavedEvent = exports.deleteSavedEvent = function deleteSavedEvent(id) 
   return $.ajax({
     method: 'delete',
     url: 'api/saved_events/' + id
+  });
+};
+
+var createTicket = exports.createTicket = function createTicket(ticket) {
+  return $.ajax({
+    method: 'post',
+    url: 'api/tickets',
+    data: { ticket: ticket }
   });
 };
 
@@ -4823,12 +4874,15 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchEvents = _event_actions.fetchEvents;
   window.fetchEvent = _event_actions.fetchEvent;
   window.createEvent = _event_actions.createEvent;
+  window.updateEvent = _event_actions.updateEvent;
   window.fetchCategories = _category_actions.fetchCategories;
   window.fetchEventTypes = _event_type_actions.fetchEventTypes;
   window.createEventCategory = _event_actions.createEventCategory;
   window.createEventEventType = _event_actions.createEventEventType;
   window.createSavedEvent = _event_actions.createSavedEvent;
   window.deleteSavedEvent = _event_actions.deleteSavedEvent;
+  window.updateEventCategory = _event_actions.updateEventCategory;
+  window.updateEventEventType = _event_actions.updateEventEventType;
 
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
@@ -25692,8 +25746,6 @@ var SessionReducer = function SessionReducer() {
       return (0, _merge2.default)({}, action.users);
     case _session_actions.RECEIVE_EMAIL:
       return (0, _merge2.default)({}, { email: action.email });
-    case _session_actions.RECEIVE_EMAIL_EXISTS:
-      return (0, _merge2.default)({}, action.emailBool);
     case _event_actions.RECEIVE_SAVED_EVENT:
       newState = (0, _merge2.default)({}, oldState);
       newState.currentUser.saved_events[action.savedEvent.event_id] = action.savedEvent;
@@ -25708,6 +25760,10 @@ var SessionReducer = function SessionReducer() {
       });
       delete oldState.currentUser.saved_events[eventId];
       return newState;
+    case _event_actions.RECEIVE_TICKET:
+      newState = (0, _merge2.default)({}, oldState);
+      newState.currentUser.tickets = action.ticket.tickets;
+      return (0, _merge2.default)({}, oldState, newState);
     default:
       return oldState;
   }
@@ -32691,7 +32747,7 @@ var NavBar = function (_React$Component) {
             _react2.default.createElement(
               'a',
               { href: '/#/users/' + this.props.currentUser.id },
-              'Tickets'
+              'Tickets ' + Object.values(this.props.currentUser.tickets).length
             )
           ),
           _react2.default.createElement(
@@ -33022,6 +33078,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     organizer_name: "",
     organizer_description: ""
   };
+
   var dateTime = {
     startDate: currentDateTime().currentDate,
     startTime: "19:00:00",
@@ -33044,19 +33101,24 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var errors = Object.values(state.errors.events);
 
   if (ownProps.match.path === '/events/:eventId/edit') {
-    event = state.entities.events[ownProps.match.params.eventId];
-    dateTime = {
-      startDate: event.start_date_time.split(" ")[0],
-      startTime: event.start_date_time.split(" ")[1],
-      endDate: event.end_date_time.split(" ")[0],
-      endTime: event.end_date_time.split(" ")[1]
-    };
+    var potentialEvent = state.entities.events[ownProps.match.params.eventId];
+    if (potentialEvent) {
+      event = potentialEvent;
+      dateTime = {
+        startDate: event.start_date_time,
+        startTime: event.start_date_time,
+        endDate: event.end_date_time,
+        endTime: event.end_date_time
+      };
+      category = Object.values(event.category)[0].name;
+      eventType = Object.values(event.eventType)[0].name;
+    }
     formType = "edit";
-    category = event.categories[0];
-    eventType = event.eventTypes[0];
   }
 
-  return { event: event, dateTime: dateTime, formType: formType, category: category, eventType: eventType, categories: categories, eventTypes: eventTypes, currentDate: currentDate, errors: errors };
+  return { event: event, dateTime: dateTime, formType: formType, category: category, eventType: eventType, categories: categories,
+    eventTypes: eventTypes, currentDate: currentDate, errors: errors
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
@@ -33072,6 +33134,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     fetchEvent: function fetchEvent(id) {
       return dispatch((0, _event_actions.fetchEvent)(id));
     },
+    fetchEvents: function fetchEvents() {
+      return dispatch((0, _event_actions.fetchEvents)());
+    },
     action: function action(event) {
       return dispatch(_action(event));
     },
@@ -33085,6 +33150,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 };
 
 exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_event_form2.default));
+
+// comment
 
 /***/ }),
 /* 247 */
@@ -33136,7 +33203,6 @@ var EventForm = function (_React$Component) {
       endDate: _this.props.dateTime.endDate,
       endTime: _this.props.dateTime.endTime
     };
-
     _this.category = _this.props.category;
     _this.eventType = _this.props.eventType;
 
@@ -33151,6 +33217,7 @@ var EventForm = function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchCategories();
       this.props.fetchEventTypes();
+      // this.props.fetchEvents();
 
       if (this.props.match.params.eventId) {
         this.props.fetchEvent(this.props.match.params.eventId);
@@ -33230,10 +33297,20 @@ var EventForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      // debugger
+      debugger;
       e.preventDefault();
 
       this.combineDateTime();
+
+      delete this.state["category"];
+      delete this.state["current_user_saved"];
+      delete this.state["eventType"];
+      delete this.state["attendees"];
+      // delete this.state["id"];
+      delete this.state["avatar_file_name"];
+      delete this.state["avatar_url"];
+      delete this.state["eventCategory"];
+      delete this.state["eventEventType"];
 
       var formData = new FormData();
       Object.keys(this.state).map(function (col) {
@@ -33248,12 +33325,17 @@ var EventForm = function (_React$Component) {
 
       var category_id = this.findCategoryId();
       var event_type_id = this.findEventTypeId();
+      debugger;
+      if (this.props.match.path === '/events/new') {
+        this.props.action(formData, this.goBack).then(function (_ref) {
+          var event = _ref.event;
 
-      this.props.action(formData, this.goBack).then(function (event) {
-        return _this3.props.createEventCategory({ event_id: 115, category_id: category_id });
-      }).then(function (event) {
-        return _this3.props.createEventEventType({ event_id: 115, event_type_id: event_type_id });
-      });
+          _this3.props.createEventCategory({ event_id: event.id, category_id: category_id });
+          _this3.props.createEventEventType({ event_id: event.id, event_type_id: event_type_id });
+        });
+      } else {
+        this.props.action(formData, this.goBack);
+      }
     }
   }, {
     key: 'goBack',
@@ -33323,6 +33405,8 @@ var EventForm = function (_React$Component) {
         );
       });
 
+      var text = this.props.formType === "new" ? "Create an Event" : "Edit Your Event";
+
       return _react2.default.createElement(
         'div',
         null,
@@ -33333,7 +33417,7 @@ var EventForm = function (_React$Component) {
           _react2.default.createElement(
             'h1',
             null,
-            'Create An Event'
+            text
           )
         ),
         _react2.default.createElement('div', { className: 'event-form-step' }),
@@ -33549,28 +33633,6 @@ var EventForm = function (_React$Component) {
                   'h1',
                   null,
                   'Additional Settings'
-                )
-              ),
-              _react2.default.createElement(
-                'label',
-                null,
-                'LISTING PRIVACY'
-              ),
-              _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'ul',
-                null,
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
-                  'Public page'
-                ),
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement('input', { type: 'radio', name: 'privacy' }),
-                  'Private page'
                 )
               ),
               _react2.default.createElement(
@@ -33834,7 +33896,6 @@ var convertDateTime = function convertDateTime(dateTime) {
 };
 
 var handleSave = function handleSave(event, createSavedEvent, deleteSavedEvent, currentUser) {
-
   if (event.current_user_saved === false) {
     createSavedEvent({ user_id: currentUser.id, event_id: event.id });
   } else {
@@ -33986,6 +34047,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     deleteSavedEvent: function deleteSavedEvent(id) {
       return dispatch((0, _event_actions.deleteSavedEvent)(id));
     },
+    createTicket: function createTicket(ticket) {
+      return dispatch((0, _event_actions.createTicket)(ticket));
+    },
     openModal: function openModal(modal) {
       return dispatch((0, _modal_actions.openModal)(modal));
     }
@@ -34037,6 +34101,7 @@ var EventShow = function (_React$Component) {
 
     _this.findUser = _this.findUser.bind(_this);
     _this.handleSave = _this.handleSave.bind(_this);
+    _this.handleRegister = _this.handleRegister.bind(_this);
     return _this;
   }
 
@@ -34054,30 +34119,41 @@ var EventShow = function (_React$Component) {
   }, {
     key: 'handleSave',
     value: function handleSave() {
+      this.setState({ savedColor: !this.state.borderColor });
 
       if (this.state.current_user_saved === false) {
-        this.state["savedColor"] = "#0091DA";
-        this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: this.props.event.id });
+        this.props.createSavedEvent({
+          user_id: this.props.current_user.id,
+          event_id: this.props.event.id
+        });
       } else {
-        this.state["savedColor"] = "white";
+        // this.setState({savedColor: !this.state.borderColor});
         this.props.deleteSavedEvent(this.props.current_user.saved_events[this.props.event.id].saved_event_id);
       }
     }
   }, {
+    key: 'handleRegister',
+    value: function handleRegister() {
+      this.props.createTicket({
+        purchaser_id: this.props.current_user.id,
+        event_id: this.props.event.id
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
 
       if (this.props.event === undefined) {
         return null;
       } else {
         this.state = {
           current_user_saved: this.props.event.current_user_saved,
-          savedColor: "#0091DA"
+          savedColor: true
         };
         // const attendeesOpts = Object.values(this.props.event.attendees).map( attendee => (
         //   <li key={attendee.id}>{this.findUser(attendee.purchaser_id)}</li>
         // ));
+        var savedColor = this.state.savedColor ? "white" : "#0091DA";
         return _react2.default.createElement(
           'div',
           null,
@@ -34146,9 +34222,7 @@ var EventShow = function (_React$Component) {
                 }),
                 _react2.default.createElement(
                   'button',
-                  { onClick: function onClick(e) {
-                      return _this2.props.openModal("tickets");
-                    } },
+                  { onClick: this.handleRegister },
                   'REGISTER'
                 )
               )
@@ -34504,6 +34578,10 @@ var _user_show_index = __webpack_require__(257);
 
 var _user_show_index2 = _interopRequireDefault(_user_show_index);
 
+var _user_show_ticket_index = __webpack_require__(261);
+
+var _user_show_ticket_index2 = _interopRequireDefault(_user_show_ticket_index);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34521,9 +34599,11 @@ var UserShow = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (UserShow.__proto__ || Object.getPrototypeOf(UserShow)).call(this, props));
 
     _this.state = {
-      borderColor: true
+      borderColor: true,
+      active: false
     };
     _this.changeSection = _this.changeSection.bind(_this);
+
     return _this;
   }
 
@@ -34531,6 +34611,9 @@ var UserShow = function (_React$Component) {
     key: 'changeSection',
     value: function changeSection(e) {
       this.setState({ borderColor: !this.state.borderColor });
+      this.setState(function (prevState) {
+        active: !prevState.active;
+      });
     }
   }, {
     key: 'render',
@@ -34565,7 +34648,11 @@ var UserShow = function (_React$Component) {
                 },
                 style: { borderBottom: '4px solid ' + borderColor }
               },
-              _react2.default.createElement('span', null),
+              _react2.default.createElement(
+                'span',
+                null,
+                Object.values(this.props.currentUser.tickets).length
+              ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'span',
@@ -34615,9 +34702,14 @@ var UserShow = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(_user_show_index2.default, {
+            active: this.state.active,
             currentUser: this.props.currentUser,
             deleteSavedEvent: this.props.deleteSavedEvent,
             createSavedEvent: this.props.createSavedEvent
+          }),
+          _react2.default.createElement(_user_show_ticket_index2.default, {
+            active: this.state.active,
+            currentUser: this.props.currentUser
           })
         ),
         _react2.default.createElement('div', { className: 'user-show-background' })
@@ -34729,7 +34821,7 @@ var convertDateTime = function convertDateTime(dateTime) {
 };
 
 var handleSave = function handleSave(event, createSavedEvent, deleteSavedEvent, currentUser) {
-
+  debugger;
   if (event.current_user_saved === false) {
     createSavedEvent({ user_id: currentUser.id, event_id: event.id });
   } else {
@@ -34743,7 +34835,6 @@ var UserShowIndexItem = function UserShowIndexItem(_ref) {
       deleteSavedEvent = _ref.deleteSavedEvent,
       currentUser = _ref.currentUser;
 
-  // debugger
   var newPrice = convertPrice(event.price);
   return _react2.default.createElement(
     'li',
@@ -34782,7 +34873,7 @@ var UserShowIndexItem = function UserShowIndexItem(_ref) {
           null,
           _react2.default.createElement(
             'a',
-            { href: '/#/events/' + event.id },
+            { href: '/#/events/' + event.event_id },
             event.title
           )
         ),
@@ -34958,7 +35049,7 @@ var UserEvents = function (_React$Component) {
           ),
           _react2.default.createElement(
             'ul',
-            null,
+            { className: 'user-events-list' },
             events
           )
         ),
@@ -34971,6 +35062,127 @@ var UserEvents = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = UserEvents;
+
+/***/ }),
+/* 261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(1);
+
+var _user_show_ticket_index_item = __webpack_require__(262);
+
+var _user_show_ticket_index_item2 = _interopRequireDefault(_user_show_ticket_index_item);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UserShowTicketIndex = function UserShowTicketIndex(_ref) {
+  var currentUser = _ref.currentUser,
+      outer = _ref.outer,
+      history = _ref.history;
+
+  var items = Object.values(currentUser.tickets).map(function (ticket) {
+    return _react2.default.createElement(_user_show_ticket_index_item2.default, {
+      key: ticket.id,
+      ticket: ticket,
+      currentUser: currentUser
+    });
+  });
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'div',
+      { className: 'user-show-ticket-index-main' },
+      _react2.default.createElement(
+        'ul',
+        null,
+        items
+      )
+    )
+  );
+};
+
+exports.default = (0, _reactRouterDom.withRouter)(UserShowTicketIndex);
+
+// comment
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var convertDateTime = function convertDateTime(dateTime) {
+  var arr = dateTime.split(/-|T|:|\./);
+  var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
+  var timeArr = dateArr[4].split(":");
+  var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
+  return newDate.toUpperCase();
+};
+
+var UserShowTicketIndexItem = function UserShowTicketIndexItem(_ref) {
+  var ticket = _ref.ticket,
+      currentUser = _ref.currentUser;
+
+  return _react2.default.createElement(
+    'li',
+    null,
+    _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('img', { scr: ticket.avatar_url })
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('h2', null),
+        _react2.default.createElement(
+          'h1',
+          null,
+          _react2.default.createElement(
+            'a',
+            { src: '/#/events/' + ticket.id },
+            ticket.title
+          )
+        ),
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Ticket order #' + ticket.ticket_id + ' purchased on ' + ticket.created_at
+        )
+      )
+    )
+  );
+};
+
+exports.default = UserShowTicketIndexItem;
 
 /***/ })
 /******/ ]);

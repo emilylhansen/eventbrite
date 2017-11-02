@@ -1,19 +1,5 @@
 json.extract! user, :id, :email, :first_name, :last_name
 
-# json.tickets json.array! user.tickets, :id, :event_id
-
-# json.saved_events do
-#   user.events.each do |event|
-#     user.saved_events.each do |saved_event|
-#       json.set! event.id do
-#          json.event_id event.id
-#          json.title event.title
-#          json.saved_event_id saved_event.id
-#        end
-#      end
-#    end
-#  end
-
 json.saved_events do
   (0...user.events.length).each do |i|
     json.set! user.events[i].id do
@@ -60,4 +46,16 @@ json.organized_events do
       :title
     end
   end
-end 
+end
+
+json.tickets do
+  (0...user.tickets.length).each do |i|
+    json.set! user.tickets[i].id do
+      json.id user.tickets[i].id
+      json.event_id user.purchased_events[i].id
+      json.start_date_time user.purchased_events[i].start_date_time
+      json.title user.purchased_events[i].title
+      json.created_at user.tickets[i].created_at
+    end
+  end
+end

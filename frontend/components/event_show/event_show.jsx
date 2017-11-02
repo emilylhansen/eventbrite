@@ -10,6 +10,7 @@ class EventShow extends React.Component {
 
     this.findUser = this.findUser.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
   }
   componentDidMount(){
     this.props.fetchEvent(this.props.eventId);
@@ -21,14 +22,24 @@ class EventShow extends React.Component {
   }
 
   handleSave(){
+    this.setState({savedColor: !this.state.borderColor});
 
     if (this.state.current_user_saved === false){
-      this.state["savedColor"] = "#0091DA";
-      this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: this.props.event.id});
+      this.props.createSavedEvent({
+        user_id: this.props.current_user.id,
+        event_id: this.props.event.id
+      });
     } else {
-      this.state["savedColor"] = "white";
+      // this.setState({savedColor: !this.state.borderColor});
       this.props.deleteSavedEvent(this.props.current_user.saved_events[this.props.event.id].saved_event_id);
     }
+  }
+
+  handleRegister(){
+    this.props.createTicket({
+      purchaser_id: this.props.current_user.id,
+      event_id: this.props.event.id
+    });
   }
 
   render(){
@@ -38,11 +49,12 @@ class EventShow extends React.Component {
     } else {
       this.state = {
         current_user_saved: this.props.event.current_user_saved,
-        savedColor: "#0091DA"
+        savedColor: true
       };
       // const attendeesOpts = Object.values(this.props.event.attendees).map( attendee => (
       //   <li key={attendee.id}>{this.findUser(attendee.purchaser_id)}</li>
       // ));
+      let savedColor = this.state.savedColor ? "white" : "#0091DA";
     return (
       <div>
         <NavBarContainer/>
@@ -74,7 +86,7 @@ class EventShow extends React.Component {
                 onClick={this.handleSave}
                 style={{backgroundColor:this.state.savedColor}}
                 ></div>
-              <button onClick={e => this.props.openModal("tickets")}>REGISTER</button>
+              <button onClick={this.handleRegister}>REGISTER</button>
             </div>
           </div>
 

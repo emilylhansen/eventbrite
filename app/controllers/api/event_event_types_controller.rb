@@ -6,6 +6,7 @@ class Api::EventEventTypesController < ApplicationController
   end
 
   def create
+    debugger
     @eventEventType = EventEventType.new(eventEventType_params)
     if @eventEventType.save
       render :show
@@ -24,7 +25,13 @@ class Api::EventEventTypesController < ApplicationController
   end
 
   def update
+    @eventEventType = EventEventType.find(params[:id])
 
+    if @eventEventType.update(eventEventType_params)
+      render :show
+    else
+      render json: @eventEventType.errors.full_messages, status: 422
+    end
   end
 
   def destroy

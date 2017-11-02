@@ -41,3 +41,19 @@ json.eventType do
     end
   end
 end
+
+# json.eventCategory do
+#   event.event_categories.each do |event_category|
+#     json.set! event_category.id do
+#       json.extract! event_category, :id, :event_id, :category_id
+#     end
+#   end
+# end
+#
+# json.eventEventType do
+#   event.event_event_types.each do |event_event_type|
+#     json.set! event_event_type.id do
+#       json.extract! event_event_type, :id, :event_id, :event_type_id
+#     end
+#   end
+# end 

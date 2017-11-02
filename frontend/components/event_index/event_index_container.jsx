@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import {fetchEvents,
   createSavedEvent,
-  deleteSavedEvent} from '../../actions/event_actions';
+  deleteSavedEvent
+} from '../../actions/event_actions';
 import EventIndex from './event_index.jsx';
 
 const mapStateToProps = state => ({
@@ -14,7 +15,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchEvents: () => dispatch(fetchEvents()),
   createSavedEvent: savedEvent => dispatch(createSavedEvent(savedEvent)),
-  deleteSavedEvent: id => dispatch(deleteSavedEvent(id)),
+  deleteSavedEvent: id => dispatch(deleteSavedEvent(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventIndex);

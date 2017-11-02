@@ -6,6 +6,7 @@ class Api::EventCategoriesController < ApplicationController
   end
 
   def create
+    debugger
     @eventCategory = EventCategory.new(eventCategory_params)
     if @eventCategory.save
       render :show
@@ -24,7 +25,13 @@ class Api::EventCategoriesController < ApplicationController
   end
 
   def update
+    @eventCategory = EventCategory.find(params[:id])
 
+    if @eventCategory.update(eventCategory_params)
+      render :show
+    else
+      render json: @eventCategory.errors.full_messages, status: 422
+    end
   end
 
   def destroy

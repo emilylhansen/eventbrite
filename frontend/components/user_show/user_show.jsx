@@ -2,18 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBarContainer from '../nav_bar/nav_bar_container';
 import UserShowIndex from './user_show_index';
+import UserShowTicketIndex from './user_show_ticket_index';
 
 class UserShow extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      borderColor: true
+      borderColor: true,
+      active: false
     };
     this.changeSection = this.changeSection.bind(this);
-  }
+
+    }
 
   changeSection(e){
     this.setState({borderColor: !this.state.borderColor});
+    this.setState((prevState) => {active: !prevState.active});
   }
 
   render(){
@@ -32,7 +36,7 @@ class UserShow extends React.Component {
               onClick={(e) => this.changeSection()}
               style={{borderBottom: `4px solid ${borderColor}`}}
               >
-              <span></span>
+              <span>{Object.values(this.props.currentUser.tickets).length}</span>
               <br></br>
               <span>UPCOMING EVENTS</span>
             </li>
@@ -56,9 +60,14 @@ class UserShow extends React.Component {
         </div>
         <div>
           <UserShowIndex
+            active={this.state.active}
             currentUser={this.props.currentUser}
             deleteSavedEvent={this.props.deleteSavedEvent}
             createSavedEvent={this.props.createSavedEvent}
+            />
+          <UserShowTicketIndex
+            active={this.state.active}
+            currentUser={this.props.currentUser}
             />
         </div>
 

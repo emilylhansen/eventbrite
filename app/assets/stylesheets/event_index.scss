@@ -9,6 +9,7 @@
 .event-index-content {
   margin: 0 auto;
   width: 75%;
+  margin-top: 40px;
 }
 
 .event-index-main ul li{
@@ -19,15 +20,23 @@
 
 .event-index-info {
   margin-top: 50px;
+  padding-bottom: 30px;
 }
 
 .event-index-info h1 {
   font-size: 40px;
 }
 
+.event-index-info p {
+  padding-top: 20px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
 .event-index-list, .event-index-info {
   width: 75%;
   height: 150px;
-  float: right
+  margin: 0 auto;
+  // float: right
 
 }

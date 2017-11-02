@@ -8,6 +8,7 @@ export const RECEIVE_EVENT_CATEGORY = 'RECEIVE_EVENT_CATEGORY';
 export const RECEIVE_EVENT_EVENT_TYPE = 'RECEIVE_EVENT_EVENT_TYPE';
 export const RECEIVE_SAVED_EVENT = 'RECEIVE_SAVED_EVENT';
 export const REMOVE_SAVED_EVENT = 'REMOVE_SAVED_EVENT';
+export const RECEIVE_TICKET = 'RECEIVE_TICKET';
 
 export const receiveEvents = events => ({
   type: RECEIVE_EVENTS,
@@ -37,6 +38,11 @@ export const receiveSavedEvent = savedEvent => ({
 export const removeSavedEvent = savedEventId => ({
   type: REMOVE_SAVED_EVENT,
   savedEventId
+});
+
+export const receiveTicket = ticket => ({
+  type: RECEIVE_TICKET,
+  ticket
 });
 
 export const fetchEvents = () => dispatch => (
@@ -69,6 +75,13 @@ export const createEventCategory = eventCategory => dispatch => (
     errors => dispatch(receiveErrors(errors.responseJSON))
   )
 );
+//
+// export const updateEventCategory = eventCategory => dispatch => (
+//   EventApiUtil.updateEventCategory(eventCategory).then(
+//     eventCategory => dispatch(receiveEventCategory(eventCategory)),
+//     errors => dispatch(receiveErrors(errors.responseJSON))
+//   )
+// )
 
 export const createEventEventType = eventEventType => dispatch => (
   EventApiUtil.createEventEventType(eventEventType).then(
@@ -76,6 +89,13 @@ export const createEventEventType = eventEventType => dispatch => (
     errors => dispatch(receiveErrors(errors.responseJSON))
   )
 );
+
+// export const updateEventEventType = eventEventType => dispatch => (
+//   EventApiUtil.updateEventEventType(eventEventType).then(
+//     eventEventType => dispatch(receiveEventEventType(eventEventType)),
+//     errors => dispatch(receiveErrors(errors.responseJSON))
+//   )
+// );
 
 export const createSavedEvent = savedEvent => dispatch => (
   EventApiUtil.createSavedEvent(savedEvent).then(
@@ -87,5 +107,12 @@ export const createSavedEvent = savedEvent => dispatch => (
 export const deleteSavedEvent = savedEventId => dispatch => (
   EventApiUtil.deleteSavedEvent(savedEventId).then(
     savedEvent => dispatch(removeSavedEvent(savedEventId))
+  )
+);
+
+export const createTicket = ticket => dispatch => (
+  EventApiUtil.createTicket(ticket).then(
+    ticket => dispatch(receiveTicket(ticket)),
+    errors => dispatch(receiveErrors(errors.responseJSON))
   )
 );

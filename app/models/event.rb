@@ -18,9 +18,15 @@ class Event < ApplicationRecord
 
   has_many :event_categories
   has_many :categories, through: :event_categories
+
   has_many :event_event_types
   has_many :event_types, through: :event_event_types
+
   has_many :tickets
+  has_many :purchasers,
+  through: :tickets,
+  source: :user
+
   has_many :saved_events
   has_many :users, through: :saved_events
 

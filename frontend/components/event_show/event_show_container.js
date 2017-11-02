@@ -4,7 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { openModal } from '../../actions/modal_actions';
 import {fetchEvent,
   createSavedEvent,
-  deleteSavedEvent} from '../../actions/event_actions';
+  deleteSavedEvent,
+  createTicket
+} from '../../actions/event_actions';
 import {fetchUsers} from '../../actions/user_actions';
 
 import EventShow from './event_show';
@@ -30,6 +32,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsers()),
   createSavedEvent: savedEvent => dispatch(createSavedEvent(savedEvent)),
   deleteSavedEvent: id => dispatch(deleteSavedEvent(id)),
+  createTicket: ticket => dispatch(createTicket(ticket)),
   openModal: modal => dispatch(openModal(modal))
 });
 

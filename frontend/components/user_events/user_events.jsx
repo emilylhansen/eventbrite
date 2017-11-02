@@ -46,7 +46,7 @@ class UserEvents extends React.Component {
             </li>
           </ul>
 
-          <ul>
+          <ul className="user-events-list">
             {events}
           </ul>
         </div>

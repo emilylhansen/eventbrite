@@ -1,9 +1,11 @@
-class TicketsController < ApplicationController
+class Api::TicketsController < ApplicationController
+
 
   def create
+    @user = current_user
     @ticket = Ticket.new(ticket_params)
     if @ticket.save
-      render :show
+      render :template => "api/users/show"
     else
       render json: @ticket.errors.full_messages, status: 422
     end

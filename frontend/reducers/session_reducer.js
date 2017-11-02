@@ -2,13 +2,14 @@ import merge from 'lodash/merge';
 
 import {RECEIVE_CURRENT_USER,
   RECEIVE_USERS,
-  RECEIVE_EMAIL,
-  RECEIVE_EMAIL_EXISTS
+  RECEIVE_EMAIL
 } from '../actions/session_actions';
 import {
   RECEIVE_SAVED_EVENT,
-  REMOVE_SAVED_EVENT
+  REMOVE_SAVED_EVENT,
+  RECEIVE_TICKET
 } from '../actions/event_actions';
+
 const defaultState = {
   currentUser: null,
   email: ""
@@ -24,8 +25,6 @@ const SessionReducer = (oldState=defaultState, action) => {
     return merge({}, action.users);
     case RECEIVE_EMAIL:
     return merge({}, {email: action.email});
-    case RECEIVE_EMAIL_EXISTS:
-    return merge({}, action.emailBool);
     case RECEIVE_SAVED_EVENT:
     newState = merge({}, oldState);
     newState.currentUser.saved_events[action.savedEvent.event_id] = action.savedEvent;
@@ -40,6 +39,10 @@ const SessionReducer = (oldState=defaultState, action) => {
     });
     delete oldState.currentUser.saved_events[eventId];
     return newState;
+    case RECEIVE_TICKET:
+    newState = merge({}, oldState);
+    newState.currentUser.tickets = action.ticket.tickets;
+    return merge({}, oldState, newState);
     default:
     return oldState;
   }

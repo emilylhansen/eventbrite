@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import {
   createSavedEvent,
-  deleteSavedEvent} from '../../actions/event_actions';
+  deleteSavedEvent
+} from '../../actions/event_actions';
 import UserShow from './user_show';
 
 const mapStateToProps = (state, ownProps) => {

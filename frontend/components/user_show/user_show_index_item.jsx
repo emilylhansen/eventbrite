@@ -16,14 +16,15 @@ const convertPrice = (price) => {
 
 const convertDateTime = dateTime => {
   const arr = dateTime.split(/-|T|:|\./);
-  const dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
+  const dateArr = new Date(arr[0], arr[1], arr[2],
+    arr[3], arr[4], arr[5]).toString().split(" ");
   const timeArr = dateArr[4].split(":");
   const newDate = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]} ${timeArr[0]}:${timeArr[1]}`;
   return newDate.toUpperCase();
 };
 
 const handleSave = (event, createSavedEvent, deleteSavedEvent, currentUser) => {
-
+  debugger
   if (event.current_user_saved === false){
     createSavedEvent({user_id: currentUser.id, event_id: event.id});
   } else {
@@ -32,7 +33,6 @@ const handleSave = (event, createSavedEvent, deleteSavedEvent, currentUser) => {
 };
 
 const UserShowIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentUser}) => {
-  // debugger
   const newPrice = convertPrice(event.price);
   return (
     <li className="user-index-item-li">
@@ -50,7 +50,7 @@ const UserShowIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentU
 
           <div className="user-index-item-img-right">
             <h2>{convertDateTime(event.start_date_time)}</h2>
-            <h1><a href={`/#/events/${event.id}`}>{event.title}</a></h1>
+            <h1><a href={`/#/events/${event.event_id}`}>{event.title}</a></h1>
             <h3>{event.location}</h3>
           </div>
 

@@ -3,10 +3,14 @@ import { withRouter } from 'react-router-dom';
 
 import {
   fetchEvent,
+  fetchEvents,
   createEvent,
   updateEvent,
   createEventCategory,
-  createEventEventType } from '../../actions/event_actions';
+  updateEventCategory,
+  createEventEventType,
+  updateEventEventType
+ } from '../../actions/event_actions';
 import { fetchCategories} from '../../actions/category_actions';
 import { fetchEventTypes} from '../../actions/event_type_actions';
 
@@ -41,6 +45,7 @@ const mapStateToProps = (state, ownProps) => {
     organizer_name: "",
     organizer_description: ""
   };
+
   let dateTime = {
     startDate: currentDateTime().currentDate,
     startTime: "19:00:00",
@@ -63,19 +68,24 @@ const mapStateToProps = (state, ownProps) => {
   let errors = Object.values(state.errors.events);
 
   if (ownProps.match.path === '/events/:eventId/edit'){
-    event = state.entities.events[ownProps.match.params.eventId];
-    dateTime = {
-      startDate: event.start_date_time.split(" ")[0],
-      startTime: event.start_date_time.split(" ")[1],
-      endDate: event.end_date_time.split(" ")[0],
-      endTime: event.end_date_time.split(" ")[1]
-    };
+    const potentialEvent = state.entities.events[ownProps.match.params.eventId];
+    if (potentialEvent) {
+      event = potentialEvent;
+      dateTime = {
+        startDate: event.start_date_time,
+        startTime: event.start_date_time,
+        endDate: event.end_date_time,
+        endTime: event.end_date_time
+      };
+      category = Object.values(event.category)[0].name;
+      eventType = Object.values(event.eventType)[0].name;
+    }
     formType = "edit";
-    category = event.categories[0];
-    eventType = event.eventTypes[0];
   }
 
-  return {event, dateTime, formType, category, eventType, categories, eventTypes, currentDate, errors};
+  return {event, dateTime, formType, category, eventType, categories,
+    eventTypes, currentDate, errors
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -85,10 +95,35 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchCategories: () => dispatch(fetchCategories()),
     fetchEventTypes: () => dispatch(fetchEventTypes()),
     fetchEvent: id => dispatch(fetchEvent(id)),
+    fetchEvents: () => dispatch(fetchEvents()),
     action: event => dispatch(action(event)),
     createEventCategory: eventCategory => dispatch(createEventCategory(eventCategory)),
-    createEventEventType: eventEventType => dispatch(createEventEventType(eventEventType))
+    createEventEventType: eventEventType => dispatch(createEventEventType(eventEventType)),
   });
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EventForm));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// comment

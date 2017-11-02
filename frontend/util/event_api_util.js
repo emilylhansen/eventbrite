@@ -22,18 +22,16 @@ export const createEvent = (formData, callback) => (
   })
 );
 
-// dataType: 'json',
-// success: function() {
-//   callback();
-// }
-
-export const updateEvent = event => (
-  $.ajax({
-    method: 'patch',
-    url: `api/events/${event.id}`,
-    data: {event}
-  })
-);
+export const updateEvent = formData => {
+  return(
+    $.ajax({
+      method: 'patch',
+      url: `api/events/${formData.get('event[id]')}`,
+      data: formData,
+      processData: false,
+      contentType: false,
+    }));
+};
 
 export const fetchCategories = () => (
   $.ajax({
@@ -50,6 +48,14 @@ export const createEventCategory = eventCategory => (
   })
 );
 
+// export const updateEventCategory = eventCategory => (
+//   $.ajax({
+//     method: 'patch',
+//     url: `api/event_categories/${eventCategory.id}`,
+//     data: {eventCategory}
+//   })
+// );
+
 export const fetchEventTypes = () => (
   $.ajax({
     method: 'get',
@@ -65,6 +71,14 @@ export const createEventEventType = eventEventType => (
   })
 );
 
+// export const updateEventEventType = eventEventType => (
+//   $.ajax({
+//     method: 'patch',
+//     url: `api/event_event_types/${eventEventType.id}`,
+//     data: {eventEventType}
+//   })
+// );
+
 export const createSavedEvent = saved_event => (
   $.ajax({
     method: 'post',
@@ -77,5 +91,13 @@ export const deleteSavedEvent = id => (
   $.ajax({
     method: 'delete',
     url: `api/saved_events/${id}`
+  })
+);
+
+export const createTicket = ticket => (
+  $.ajax({
+    method: 'post',
+    url: 'api/tickets',
+    data: {ticket}
   })
 );

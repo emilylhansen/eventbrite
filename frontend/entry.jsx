@@ -7,8 +7,11 @@ import {fetchUsers} from './actions/user_actions';
 import {fetchEvents,
   fetchEvent,
   createEvent,
+  updateEvent,
   createEventCategory,
+  updateEventCategory,
   createEventEventType,
+  updateEventEventType,
   createSavedEvent,
   deleteSavedEvent} from './actions/event_actions';
 import {fetchCategories} from './actions/category_actions';
@@ -35,12 +38,15 @@ document.addEventListener("DOMContentLoaded", ()=> {
   window.fetchEvents = fetchEvents;
   window.fetchEvent = fetchEvent;
   window.createEvent = createEvent;
+  window.updateEvent = updateEvent;
   window.fetchCategories = fetchCategories;
   window.fetchEventTypes = fetchEventTypes;
   window.createEventCategory = createEventCategory;
   window.createEventEventType = createEventEventType;
   window.createSavedEvent = createSavedEvent;
   window.deleteSavedEvent = deleteSavedEvent;
+  window.updateEventCategory = updateEventCategory;
+  window.updateEventEventType = updateEventEventType;
 
   ReactDOM.render(<Root store={store} />, root);
 });

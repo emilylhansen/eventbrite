@@ -5,16 +5,15 @@ import NavBarContainer from "../nav_bar/nav_bar_container";
 class EventForm extends React.Component {
   constructor(props){
     super(props);
-    this.state = this.props.event;
-    this.dateTime = {
-      startDate: this.props.dateTime.startDate,
-      startTime: this.props.dateTime.startTime,
-      endDate: this.props.dateTime.endDate,
-      endTime: this.props.dateTime.endTime
-    };
-
-    this.category  = this.props.category;
-    this.eventType = this.props.eventType;
+      this.state = this.props.event;
+      this.dateTime = {
+        startDate: this.props.dateTime.startDate,
+        startTime: this.props.dateTime.startTime,
+        endDate: this.props.dateTime.endDate,
+        endTime: this.props.dateTime.endTime
+      };
+      this.category  = this.props.category;
+      this.eventType = this.props.eventType;
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -24,6 +23,7 @@ class EventForm extends React.Component {
   componentDidMount(){
     this.props.fetchCategories();
     this.props.fetchEventTypes();
+    // this.props.fetchEvents();
 
     if(this.props.match.params.eventId){
       this.props.fetchEvent(this.props.match.params.eventId);
@@ -94,10 +94,20 @@ class EventForm extends React.Component {
   }
 
   handleSubmit(e){
-    // debugger
+    debugger
     e.preventDefault();
 
     this.combineDateTime();
+
+    delete this.state["category"];
+    delete this.state["current_user_saved"];
+    delete this.state["eventType"];
+    delete this.state["attendees"];
+    // delete this.state["id"];
+    delete this.state["avatar_file_name"];
+    delete this.state["avatar_url"];
+    delete this.state["eventCategory"];
+    delete this.state["eventEventType"];
 
     const formData = new FormData();
     Object.keys(this.state).map(col => {
@@ -110,11 +120,16 @@ class EventForm extends React.Component {
 
     const category_id = this.findCategoryId();
     const event_type_id = this.findEventTypeId();
-
-    this.props.action(formData, this.goBack).then(
-      event => this.props.createEventCategory({event_id: 115, category_id: category_id})).then (
-      event => this.props.createEventEventType({event_id: 115, event_type_id: event_type_id})
-    );
+    debugger
+    if(this.props.match.path === '/events/new'){
+      this.props.action(formData, this.goBack).then(
+        ({event}) => {
+        this.props.createEventCategory({event_id: event.id, category_id: category_id});
+        this.props.createEventEventType({event_id: event.id, event_type_id: event_type_id});
+      });
+    } else {
+      this.props.action(formData, this.goBack);
+    }
   }
 
   goBack(){
@@ -160,11 +175,13 @@ class EventForm extends React.Component {
       return <option key={i} value={`${category.name}`}>{category.name}</option>;
     });
 
+    let text = this.props.formType === "new" ? "Create an Event" : "Edit Your Event";
+
     return(
       <div>
         <NavBarContainer/>
         <div className="event-form-create">
-          <h1>Create An Event</h1>
+          <h1>{text}</h1>
         </div>
         <div className="event-form-step"></div>
         <div className="event-form-background"></div>
@@ -287,13 +304,6 @@ class EventForm extends React.Component {
                 <h1>Additional Settings</h1>
               </div>
 
-              <label>LISTING PRIVACY</label>
-                <br></br>
-                <ul>
-                  <li><input type="radio" name="privacy"/>Public page</li>
-                  <li><input type="radio" name="privacy"/>Private page</li>
-                </ul>
-
               <label>EVENT TYPE</label>
                 <br></br>
                 <select value={this.eventType}
@@ -333,6 +343,7 @@ class EventForm extends React.Component {
         </form>
       </div>
     );
+
   }
 
 }
