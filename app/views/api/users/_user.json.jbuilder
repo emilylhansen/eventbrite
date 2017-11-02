@@ -26,6 +26,11 @@ json.saved_events do
         end
       end
 
+      if current_user
+        json.current_user_saved user.events[i].users.exists?(id: current_user.id)
+      end
+
+
       json.eventType do
         user.events[i].event_types.each do |event_type|
           json.set! event_type.id do

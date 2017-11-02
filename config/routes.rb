@@ -8,6 +8,13 @@ Rails.application.routes.draw do
         get "email_exists"
       end
     end
+
+    resources :categories do
+      collection do
+        get "search"
+      end
+    end
+    
     resource :session, only: [:create, :destroy, :show]
     resources :events
     resources :categories, only: [:create, :show, :index]

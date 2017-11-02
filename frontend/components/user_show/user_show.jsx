@@ -8,20 +8,36 @@ class UserShow extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      borderColor: true,
-      active: false
+      active: null,
+      activeComponent: null
     };
-    this.changeSection = this.changeSection.bind(this);
-
+    this.toggleSelection = this.toggleSelection.bind(this);
+    this.selectionColor = this.selectionColor.bind(this);
     }
 
-  changeSection(e){
-    this.setState({borderColor: !this.state.borderColor});
-    this.setState((prevState) => {active: !prevState.active});
+  toggleSelection(position, component){
+    if (this.state.active === position) {
+      this.setState({
+        active : null,
+        activeComponent: null
+      });
+    } else {
+      this.setState({
+        active : position,
+        activeComponent: position
+      });
+    }
+  }
+
+  selectionColor(position) {
+    if (this.state.active === position) {
+      return "#0091DA";
+    }
+    return "white";
   }
 
   render(){
-    let borderColor = this.state.borderColor ? "white" : "#0091DA";
+    // let borderColor = this.state.borderColor ? "white" : "#0091DA";
 
     return (
       <div>
@@ -33,24 +49,26 @@ class UserShow extends React.Component {
           </h1>
           <ul>
             <li value="upcomingEvents"
-              onClick={(e) => this.changeSection()}
-              style={{borderBottom: `4px solid ${borderColor}`}}
+              onClick={() => this.toggleSelection(0)}
+              style={{borderBottom: `4px solid ${this.selectionColor(0)}`}}
+              active={this.state.activeComponent}
               >
               <span>{Object.values(this.props.currentUser.tickets).length}</span>
               <br></br>
               <span>UPCOMING EVENTS</span>
             </li>
             <li value="savedEvents"
-              onClick={(e) => this.changeSection()}
-              style={{borderBottom: `4px solid ${borderColor}`}}
+              onClick={() => this.toggleSelection(1)}
+              style={{borderBottom: `4px solid ${this.selectionColor(1)}`}}
+              active={this.state.activeComponent}
               >
               <span>{Object.values(this.props.currentUser.saved_events).length}</span>
               <br></br>
               <span>SAVED EVENTS</span>
             </li>
             <li value="pastEvents"
-              onClick={(e) => this.changeSection()}
-              style={{borderBottom: `4px solid ${borderColor}`}}
+              onClick={() => this.toggleSelection(2)}
+              style={{borderBottom: `4px solid ${this.selectionColor(2)}`}}
               >
               <span></span>
               <br></br>
@@ -60,13 +78,13 @@ class UserShow extends React.Component {
         </div>
         <div>
           <UserShowIndex
-            active={this.state.active}
+            activeComponent={this.state.activeComponent}
             currentUser={this.props.currentUser}
             deleteSavedEvent={this.props.deleteSavedEvent}
             createSavedEvent={this.props.createSavedEvent}
             />
           <UserShowTicketIndex
-            active={this.state.active}
+            activeComponent={this.state.activeComponent}
             currentUser={this.props.currentUser}
             />
         </div>

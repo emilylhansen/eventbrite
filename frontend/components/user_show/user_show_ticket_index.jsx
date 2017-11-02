@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import UserShowTicketIndexItem from './user_show_ticket_index_item';
 
-const UserShowTicketIndex = ({currentUser, outer, history}) => {
+const UserShowTicketIndex = ({activeComponent, currentUser, outer, history}) => {
   const items = Object.values(currentUser.tickets).map(ticket => (
     <UserShowTicketIndexItem
       key={ticket.id}
@@ -10,15 +10,20 @@ const UserShowTicketIndex = ({currentUser, outer, history}) => {
       currentUser={currentUser}
       />
   ));
-  return (
-    <div>
-      <div className="user-show-ticket-index-main">
-        <ul>
-          {items}
-        </ul>
+
+  if(activeComponent === 0) {
+    return (
+      <div>
+        <div className="user-show-ticket-index-main">
+          <ul>
+            {items}
+          </ul>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
 };
 
 export default withRouter(UserShowTicketIndex);

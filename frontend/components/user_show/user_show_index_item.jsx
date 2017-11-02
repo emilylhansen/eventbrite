@@ -26,9 +26,11 @@ const convertDateTime = dateTime => {
 const handleSave = (event, createSavedEvent, deleteSavedEvent, currentUser) => {
   debugger
   if (event.current_user_saved === false){
-    createSavedEvent({user_id: currentUser.id, event_id: event.id});
+    debugger
+    createSavedEvent({user_id: currentUser.id, event_id: event.event_id});
   } else {
-    deleteSavedEvent(currentUser.saved_events[event.id].saved_event_id);
+    debugger
+    deleteSavedEvent(event.saved_event_id);
   }
 };
 

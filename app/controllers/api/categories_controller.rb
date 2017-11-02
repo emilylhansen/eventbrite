@@ -31,6 +31,13 @@ class Api::CategoriesController < ApplicationController
 
   end
 
+  def search
+    debugger
+    category = Category.find_by(name: params[:name])
+    @events = category.events
+    render "api/events/index"
+  end
+
   def category_params
     params.require(:category).permit(:name)
   end

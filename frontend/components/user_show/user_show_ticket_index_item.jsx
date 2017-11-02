@@ -13,15 +13,17 @@ const convertDateTime = dateTime => {
 const UserShowTicketIndexItem = ({ticket, currentUser}) => {
   return (
     <li>
-      <div>
+      <div className="user-show-ticket-index-item-main">
 
-        <div>
-          <img scr={ticket.avatar_url}/>
+        <div className="user-show-ticket-index-item-img">
+          <div>
+            <img src={window.img_leaf}/>
+          </div>
         </div>
 
-        <div>
+        <div className="user-show-ticket-index-item-info">
 
-          <h2></h2>
+          <h2>{convertDateTime(ticket.start_date_time)}</h2>
 
           <h1>
             <a src={`/#/events/${ticket.id}`}>
@@ -30,7 +32,7 @@ const UserShowTicketIndexItem = ({ticket, currentUser}) => {
           </h1>
 
           <h3>
-            {`Ticket order #${ticket.ticket_id} purchased on ${ticket.created_at}`}
+            {`Ticket order #${ticket.id} purchased on ${convertDateTime(ticket.created_at)}`}
           </h3>
         </div>
       </div>

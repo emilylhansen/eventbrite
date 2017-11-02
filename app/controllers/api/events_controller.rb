@@ -34,10 +34,6 @@ class Api::EventsController < ApplicationController
     end
   end
 
-  def destroy
-
-  end
-
   def event_params
     params.require(:event).permit(
       :title,

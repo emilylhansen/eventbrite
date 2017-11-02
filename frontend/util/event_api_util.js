@@ -101,3 +101,11 @@ export const createTicket = ticket => (
     data: {ticket}
   })
 );
+
+export const fetchByCategory = category => (
+  $.ajax({
+    method: 'get',
+    url: 'api/categories/search',
+    data: {category: category.name}
+  })
+);
