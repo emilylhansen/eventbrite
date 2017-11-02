@@ -157,11 +157,11 @@ event_type20 = EventType.create!(name: "Rally")
 
 EventCategory.destroy_all
 
-event_category1 = EventCategory.create!(event_id: event1.id, category_id: category1.id)
+event_category1 = EventCategory.create!(event_id: event1.id, category_id: category2.id)
 event_category2 = EventCategory.create!(event_id: event2.id, category_id: category2.id)
-event_category3 = EventCategory.create!(event_id: event3.id, category_id: category3.id)
-event_category4 = EventCategory.create!(event_id: event4.id, category_id: category4.id)
-event_category4 = EventCategory.create!(event_id: event5.id, category_id: category5.id)
+event_category3 = EventCategory.create!(event_id: event3.id, category_id: category2.id)
+event_category4 = EventCategory.create!(event_id: event4.id, category_id: category3.id)
+event_category4 = EventCategory.create!(event_id: event5.id, category_id: category3.id)
 event_category4 = EventCategory.create!(event_id: event6.id, category_id: category6.id)
 
 EventEventType.destroy_all

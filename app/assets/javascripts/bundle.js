@@ -603,7 +603,7 @@ var emailExists = exports.emailExists = function emailExists(email) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createTicket = exports.deleteSavedEvent = exports.createSavedEvent = exports.createEventEventType = exports.createEventCategory = exports.updateEvent = exports.createEvent = exports.fetchEvent = exports.fetchEvents = exports.receiveTicket = exports.removeSavedEvent = exports.receiveSavedEvent = exports.receiveEventEventType = exports.receiveEventCategory = exports.receiveEvent = exports.receiveEvents = exports.RECEIVE_TICKET = exports.REMOVE_SAVED_EVENT = exports.RECEIVE_SAVED_EVENT = exports.RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT = exports.RECEIVE_EVENTS = undefined;
+exports.fetchByEventType = exports.fetchByCategory = exports.createTicket = exports.deleteSavedEvent = exports.createSavedEvent = exports.createEventEventType = exports.createEventCategory = exports.updateEvent = exports.createEvent = exports.fetchEvent = exports.fetchEvents = exports.receiveTicket = exports.removeSavedEvent = exports.receiveSavedEvent = exports.receiveEventEventType = exports.receiveEventCategory = exports.receiveEvent = exports.receiveEvents = exports.RECEIVE_TICKET = exports.REMOVE_SAVED_EVENT = exports.RECEIVE_SAVED_EVENT = exports.RECEIVE_EVENT_EVENT_TYPE = exports.RECEIVE_EVENT_CATEGORY = exports.RECEIVE_EVENT = exports.RECEIVE_EVENTS = undefined;
 
 var _event_api_util = __webpack_require__(33);
 
@@ -764,6 +764,21 @@ var createTicket = exports.createTicket = function createTicket(ticket) {
       return dispatch(receiveTicket(ticket));
     }, function (errors) {
       return dispatch((0, _session_actions.receiveErrors)(errors.responseJSON));
+    });
+  };
+};
+
+var fetchByCategory = exports.fetchByCategory = function fetchByCategory(category) {
+  return function (dispatch) {
+    return EventApiUtil.fetchByCategory(category).then(function (events) {
+      return dispatch(receiveEvents(events));
+    });
+  };
+};
+var fetchByEventType = exports.fetchByEventType = function fetchByEventType(eventType) {
+  return function (dispatch) {
+    return EventApiUtil.fetchByCategory(eventType).then(function (events) {
+      return dispatch(receiveEvents(events));
     });
   };
 };
@@ -1871,6 +1886,14 @@ var fetchByCategory = exports.fetchByCategory = function fetchByCategory(categor
     method: 'get',
     url: 'api/categories/search',
     data: { category: category.name }
+  });
+};
+
+var fetchByEventType = exports.fetchByEventType = function fetchByEventType(eventType) {
+  return $.ajax({
+    method: 'get',
+    url: 'api/event_types/search',
+    data: { eventType: eventType.name }
   });
 };
 
@@ -4891,6 +4914,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.deleteSavedEvent = _event_actions.deleteSavedEvent;
   window.updateEventCategory = _event_actions.updateEventCategory;
   window.updateEventEventType = _event_actions.updateEventEventType;
+  window.fetchByCategory = _event_actions.fetchByCategory;
 
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
@@ -25755,12 +25779,12 @@ var SessionReducer = function SessionReducer() {
     case _session_actions.RECEIVE_EMAIL:
       return (0, _merge2.default)({}, { email: action.email });
     case _event_actions.RECEIVE_SAVED_EVENT:
-      debugger;
+      // debugger
       newState = (0, _merge2.default)({}, oldState);
       newState.currentUser.saved_events[action.savedEvent.event_id] = action.savedEvent;
       return newState;
     case _event_actions.REMOVE_SAVED_EVENT:
-      debugger;
+      // debugger
       newState = (0, _merge2.default)({}, oldState);
       var eventId = void 0;
       Object.values(oldState.currentUser.saved_events).map(function (e) {
@@ -31964,6 +31988,8 @@ var App = function App() {
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/login', component: _session_form_login_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/signup', component: _session_form_signup_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events', component: _event_index_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:categoryName', component: _event_index_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventTypeName', component: _event_index_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/new', component: _event_form_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId', component: _event_show_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId/edit', component: _event_form_container2.default }),
@@ -32859,6 +32885,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(5);
 
+var _event_actions = __webpack_require__(8);
+
 var _homepage = __webpack_require__(245);
 
 var _homepage2 = _interopRequireDefault(_homepage);
@@ -32870,7 +32898,11 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    fetchByCategory: function fetchByCategory(category) {
+      return dispatch((0, _event_actions.fetchByCategory)(category));
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_homepage2.default);
@@ -32891,6 +32923,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(1);
 
 var _nav_bar_container = __webpack_require__(13);
 
@@ -32914,46 +32948,87 @@ var Homepage = function (_React$Component) {
   }
 
   _createClass(Homepage, [{
-    key: "render",
+    key: 'render',
     value: function render() {
 
       return _react2.default.createElement(
-        "div",
-        { className: "homepage" },
+        'div',
+        { className: 'homepage' },
         _react2.default.createElement(_nav_bar_container2.default, null),
         _react2.default.createElement(
-          "div",
-          { className: "homepage-img-div" },
-          _react2.default.createElement("img", { className: "slides", src: window.img_outside })
+          'div',
+          { className: 'homepage-img-div' },
+          _react2.default.createElement('img', { className: 'slides', src: window.img_outside })
         ),
         _react2.default.createElement(
-          "div",
-          { className: "homepage-search" },
+          'div',
+          { className: 'homepage-search' },
           _react2.default.createElement(
-            "h1",
+            'h1',
             null,
-            "Find your next experience"
+            'Find your next experience'
           )
         ),
         _react2.default.createElement(
-          "div",
-          { className: "homepage-categories" },
+          'div',
+          { className: 'homepage-categories' },
           _react2.default.createElement(
-            "h1",
+            'h1',
             null,
-            "Browse by Top Categories"
+            'Browse by Top Categories'
           ),
           _react2.default.createElement(
-            "div",
-            { className: "homepage-categories-main" },
+            'div',
+            { className: 'homepage-categories-main' },
             _react2.default.createElement(
-              "div",
-              { className: "homepage-categories-one" },
-              _react2.default.createElement(Link, { to: "/events/music" })
+              'div',
+              { className: 'homepage-categories-one' },
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: { pathname: '/events/music' },
+                  value: 'Music' },
+                'Music'
+              ),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: { pathname: '/events/food-and-drink', state: { category: "Food & Drink" } },
+                  value: 'Food & Drink' },
+                'Food & Drink'
+              ),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: { pathname: '/events/classes', state: { category: "Classes" } },
+                  value: 'Classes' },
+                'Classes'
+              ),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: { pathname: '/events/arts', state: { category: "Arts" } },
+                  value: 'Arts' },
+                'Arts'
+              ),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: { pathname: '/events/parties', state: { category: "Parties" } },
+                  value: 'Parties' },
+                'Parties'
+              ),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: { pathname: '/events/sports-and-wellness', state: { category: "Sports & Wellness" } },
+                  value: 'Sports & Wellness' },
+                'Sports & Wellness'
+              ),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: { pathname: '/events/networking', state: { category: "Networking" } },
+                  value: 'Networking' },
+                'Networking'
+              )
             )
           )
         ),
-        _react2.default.createElement("div", { className: "homepage-bottom" })
+        _react2.default.createElement('div', { className: 'homepage-bottom' })
       );
     }
   }]);
@@ -33265,7 +33340,7 @@ var EventForm = function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      debugger;
+      // debugger
       e.preventDefault();
 
       this.combineDateTime();
@@ -33293,7 +33368,7 @@ var EventForm = function (_React$Component) {
 
       var category_id = this.findCategoryId();
       var event_type_id = this.findEventTypeId();
-      debugger;
+      // debugger
       if (this.props.match.path === '/events/new') {
         this.props.action(formData, this.goBack).then(function (_ref) {
           var event = _ref.event;
@@ -33691,6 +33766,10 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _event_actions = __webpack_require__(8);
 
+var _category_actions = __webpack_require__(19);
+
+var _event_type_actions = __webpack_require__(20);
+
 var _event_index = __webpack_require__(249);
 
 var _event_index2 = _interopRequireDefault(_event_index);
@@ -33700,7 +33779,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   return {
     events: Object.values(state.entities.events),
-    currentUser: state.session.currentUser
+    currentUser: state.session.currentUser,
+    categories: Object.values(state.entities.categories),
+    eventTypes: Object.values(state.entities.eventTypes)
   };
 };
 
@@ -33709,16 +33790,28 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchEvents: function fetchEvents() {
       return dispatch((0, _event_actions.fetchEvents)());
     },
+    fetchByCategory: function fetchByCategory(category) {
+      return dispatch((0, _event_actions.fetchByCategory)(category));
+    },
+    fetchByEventType: function fetchByEventType(eventType) {
+      return dispatch((0, _event_actions.fetchByEventType)(eventType));
+    },
     createSavedEvent: function createSavedEvent(savedEvent) {
       return dispatch((0, _event_actions.createSavedEvent)(savedEvent));
     },
     deleteSavedEvent: function deleteSavedEvent(id) {
       return dispatch((0, _event_actions.deleteSavedEvent)(id));
+    },
+    fetchCategories: function fetchCategories() {
+      return dispatch((0, _category_actions.fetchCategories)());
+    },
+    fetchEventTypes: function fetchEventTypes() {
+      return dispatch((0, _event_type_actions.fetchEventTypes)());
     }
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_event_index2.default);
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_event_index2.default));
 
 /***/ }),
 /* 249 */
@@ -33736,6 +33829,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(1);
 
 var _nav_bar_container = __webpack_require__(13);
 
@@ -33765,7 +33860,26 @@ var EventIndex = function (_React$Component) {
   _createClass(EventIndex, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.fetchEvents();
+      this.props.fetchCategories();
+      this.props.fetchEventTypes();
+
+      if (this.props.match.params.categoryName) {
+        // debugger
+        this.props.fetchByCategory({ name: this.props.match.params.categoryName });
+      } else if (this.props.match.params.eventTypeName) {
+        this.props.fetchByEventType({ name: this.props.location.state.eventType });
+      } else {
+        this.props.fetchEvents();
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.match.params.categoryName !== nextProps.match.params.categoryName) {
+        nextProps.fetchByCategory({ name: nextProps.match.params.categoryName });
+      } else if (this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName) {
+        nextProps.fetchByEventType({ name: nextProps.match.params.eventTypeName });
+      }
     }
   }, {
     key: 'render',
@@ -33782,11 +33896,48 @@ var EventIndex = function (_React$Component) {
         });
       });
 
+      var eventTypeOpts = this.props.eventTypes.map(function (eventType, i) {
+        return _react2.default.createElement(
+          _reactRouterDom.Link,
+          {
+            to: { pathname: '/events/' + eventType.name.split(" & ").join("-and-").toLowerCase(),
+              state: { eventType: '' + eventType.name } },
+            value: '' + eventType.name },
+          eventType.name
+        );
+      });
+
+      var categoryOpts = this.props.categories.map(function (category, i) {
+        return _react2.default.createElement(
+          _reactRouterDom.Link,
+          {
+            to: { pathname: '/events/' + category.name.split(" & ").join("-and-").toLowerCase(),
+              state: { category: '' + category.name } },
+            value: '' + category.name },
+          category.name
+        );
+      });
+
       return _react2.default.createElement(
         'div',
         { className: 'event-index-main-page' },
         _react2.default.createElement(_nav_bar_container2.default, null),
         _react2.default.createElement('div', { className: 'event-index-background' }),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            eventTypeOpts
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'div',
+            null,
+            categoryOpts
+          )
+        ),
         _react2.default.createElement(
           'div',
           { className: 'event-index-content' },
@@ -33864,7 +34015,7 @@ var convertDateTime = function convertDateTime(dateTime) {
 };
 
 var handleSave = function handleSave(event, createSavedEvent, deleteSavedEvent, currentUser) {
-  debugger;
+  // debugger
   if (event.current_user_saved === false) {
     createSavedEvent({ user_id: currentUser.id, event_id: event.id });
   } else {
@@ -34813,12 +34964,12 @@ var convertDateTime = function convertDateTime(dateTime) {
 };
 
 var handleSave = function handleSave(event, createSavedEvent, deleteSavedEvent, currentUser) {
-  debugger;
+  // debugger
   if (event.current_user_saved === false) {
-    debugger;
+    // debugger
     createSavedEvent({ user_id: currentUser.id, event_id: event.event_id });
   } else {
-    debugger;
+    // debugger
     deleteSavedEvent(event.saved_event_id);
   }
 };

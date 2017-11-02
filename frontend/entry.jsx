@@ -13,7 +13,9 @@ import {fetchEvents,
   createEventEventType,
   updateEventEventType,
   createSavedEvent,
-  deleteSavedEvent} from './actions/event_actions';
+  deleteSavedEvent,
+  fetchByCategory
+} from './actions/event_actions';
 import {fetchCategories} from './actions/category_actions';
 import {fetchEventTypes} from './actions/event_type_actions';
 
@@ -47,6 +49,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
   window.deleteSavedEvent = deleteSavedEvent;
   window.updateEventCategory = updateEventCategory;
   window.updateEventEventType = updateEventEventType;
+  window.fetchByCategory = fetchByCategory;
 
   ReactDOM.render(<Root store={store} />, root);
 });

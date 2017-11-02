@@ -6,7 +6,7 @@ class Api::EventEventTypesController < ApplicationController
   end
 
   def create
-    debugger
+    # debugger
     @eventEventType = EventEventType.new(eventEventType_params)
     if @eventEventType.save
       render :show

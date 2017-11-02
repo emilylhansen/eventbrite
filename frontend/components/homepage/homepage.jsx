@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import NavBarContainer from "../nav_bar/nav_bar_container";
 
 class Homepage extends React.Component{
@@ -24,7 +26,20 @@ class Homepage extends React.Component{
           <div className="homepage-categories-main">
 
             <div className="homepage-categories-one">
-              <Link to={`/events/music`}></Link>
+              <Link to={{pathname: `/events/music`}}
+                value="Music" >Music</Link>
+              <Link to={{pathname: `/events/food-and-drink`, state:{category: "Food & Drink"}}}
+                value="Food & Drink" >Food & Drink</Link>
+              <Link to={{pathname: `/events/classes`, state:{category: "Classes"}}}
+                value="Classes" >Classes</Link>
+              <Link to={{pathname: `/events/arts`, state:{category: "Arts"}}}
+                value="Arts" >Arts</Link>
+              <Link to={{pathname: `/events/parties`, state:{category: "Parties"}}}
+                value="Parties" >Parties</Link>
+              <Link to={{pathname: `/events/sports-and-wellness`, state:{category: "Sports & Wellness"}}}
+                value="Sports & Wellness" >Sports & Wellness</Link>
+              <Link to={{pathname: `/events/networking`, state:{category: "Networking"}}}
+                value="Networking" >Networking</Link>
             </div>
 
           </div>

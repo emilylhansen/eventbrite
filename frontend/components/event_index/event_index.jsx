@@ -1,12 +1,32 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import NavBarContainer from '../nav_bar/nav_bar_container';
 import EventIndexItem from './event_index_item';
 
 class EventIndex extends React.Component{
 
   componentDidMount(){
-    this.props.fetchEvents();
+    this.props.fetchCategories();
+    this.props.fetchEventTypes();
+
+    if(this.props.match.params.categoryName){
+      // debugger
+      this.props.fetchByCategory({name: this.props.match.params.categoryName});
+    } else if (this.props.match.params.eventTypeName){
+      this.props.fetchByEventType({name: this.props.location.state.eventType});
+    } else {
+      this.props.fetchEvents();
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.props.match.params.categoryName !== nextProps.match.params.categoryName){
+      nextProps.fetchByCategory({name: nextProps.match.params.categoryName});
+    } else if (this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName){
+      nextProps.fetchByEventType({name: nextProps.match.params.eventTypeName});
+    }
   }
 
   render(){
@@ -20,12 +40,43 @@ class EventIndex extends React.Component{
          />
     ));
 
+    let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
+      return (<Link
+          to={{pathname: `/events/${eventType.name.split(" & ").join("-and-").toLowerCase()}`,
+          state:{eventType: `${eventType.name}`}}}
+          value={`${eventType.name}`} >
+          {eventType.name}
+        </Link>);
+
+    });
+
+    let categoryOpts = this.props.categories.map((category, i) => {
+      return(<Link
+          to={{pathname: `/events/${category.name.split(" & ").join("-and-").toLowerCase()}`,
+          state:{category: `${category.name}`}}}
+          value={`${category.name}`} >
+          {category.name}
+        </Link>);
+
+    });
+
     return (
       <div className="event-index-main-page">
       <NavBarContainer/>
       <div className="event-index-background">
 
       </div>
+
+      <div>
+        <div>
+          {eventTypeOpts}
+        </div>
+        <br></br>
+        <div>
+          {categoryOpts}
+        </div>
+      </div>
+
       <div className="event-index-content">
         <div className="event-index-main">
 

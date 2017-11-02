@@ -32,10 +32,17 @@ class Api::CategoriesController < ApplicationController
   end
 
   def search
-    debugger
-    category = Category.find_by(name: params[:name])
+    hash = {"music" => "Music",
+    "food-and-drink" => "Food & Drink",
+    "performance" => "Performance",
+    "seminar" => "Seminar"}
+    category = Category.find_by(name: hash[params[:category]])
     @events = category.events
-    render "api/events/index"
+    if @events
+      render "api/events/index"
+    else
+      render json: ["No events found for this category"]
+    end
   end
 
   def category_params

@@ -116,3 +116,15 @@ export const createTicket = ticket => dispatch => (
     errors => dispatch(receiveErrors(errors.responseJSON))
   )
 );
+
+export const fetchByCategory = category => dispatch => (
+  EventApiUtil.fetchByCategory(category).then(
+    events => dispatch(receiveEvents(events))
+  )
+)
+;
+export const fetchByEventType = eventType => dispatch => (
+  EventApiUtil.fetchByCategory(eventType).then(
+    events => dispatch(receiveEvents(events))
+  )
+);

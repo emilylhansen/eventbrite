@@ -109,3 +109,11 @@ export const fetchByCategory = category => (
     data: {category: category.name}
   })
 );
+
+export const fetchByEventType = eventType => (
+  $.ajax({
+    method: 'get',
+    url: 'api/event_types/search',
+    data: {eventType: eventType.name}
+  })
+);

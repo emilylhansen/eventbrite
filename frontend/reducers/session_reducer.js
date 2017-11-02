@@ -26,12 +26,12 @@ const SessionReducer = (oldState=defaultState, action) => {
     case RECEIVE_EMAIL:
     return merge({}, {email: action.email});
     case RECEIVE_SAVED_EVENT:
-    debugger
+    // debugger
     newState = merge({}, oldState);
     newState.currentUser.saved_events[action.savedEvent.event_id] = action.savedEvent;
     return newState;
     case REMOVE_SAVED_EVENT:
-    debugger
+    // debugger
     newState = merge({}, oldState);
     let eventId;
     Object.values(oldState.currentUser.saved_events).map(e => {
