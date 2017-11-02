@@ -26,19 +26,19 @@ class Homepage extends React.Component{
           <div className="homepage-categories-main">
 
             <div className="homepage-categories-one">
-              <Link to={{pathname: `/events/music`}}
+              <Link to={{pathname: `/events/category/music`}}
                 value="Music" >Music</Link>
-              <Link to={{pathname: `/events/food-and-drink`, state:{category: "Food & Drink"}}}
+              <Link to={{pathname: `/events/category/food-and-drink`, state:{category: "Food & Drink"}}}
                 value="Food & Drink" >Food & Drink</Link>
-              <Link to={{pathname: `/events/classes`, state:{category: "Classes"}}}
+              <Link to={{pathname: `/events/category/classes`, state:{category: "Classes"}}}
                 value="Classes" >Classes</Link>
-              <Link to={{pathname: `/events/arts`, state:{category: "Arts"}}}
+              <Link to={{pathname: `/events/category/arts`, state:{category: "Arts"}}}
                 value="Arts" >Arts</Link>
-              <Link to={{pathname: `/events/parties`, state:{category: "Parties"}}}
+              <Link to={{pathname: `/events/category/parties`, state:{category: "Parties"}}}
                 value="Parties" >Parties</Link>
-              <Link to={{pathname: `/events/sports-and-wellness`, state:{category: "Sports & Wellness"}}}
+              <Link to={{pathname: `/events/category/sports-and-wellness`, state:{category: "Sports & Wellness"}}}
                 value="Sports & Wellness" >Sports & Wellness</Link>
-              <Link to={{pathname: `/events/networking`, state:{category: "Networking"}}}
+              <Link to={{pathname: `/events/category/networking`, state:{category: "Networking"}}}
                 value="Networking" >Networking</Link>
             </div>
 

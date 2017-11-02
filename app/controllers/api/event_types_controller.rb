@@ -32,9 +32,31 @@ class Api::EventTypesController < ApplicationController
   end
 
   def search
-    eventType = EventType.find_by(name: params[:eventType])
+    hash = {
+      "class" => "Class",
+      "party" => "Party",
+      "performance" => "Performance",
+      "tour" => "Tour",
+      "networking" => "Networking",
+      "seminar" => "Seminar",
+      "other" => "Other",
+      "conference" => "Conference",
+      "race" => "Race",
+      "gala" => "Gala",
+      "game" => "Game",
+      "attraction" => "Attraction",
+      "festival" => "Festival",
+      "screening" => "Screening",
+      "expo" => "Expo",
+      "retreat" => "Retreat",
+      "appearance" => "Appearance",
+      "tournament" => "Tournament",
+      "convention" => "Convention",
+      "rally" => "Rally"
+    }
+    eventType = EventType.find_by(name: hash[params[:eventType]])
     @eventTypes = eventType.events
-    if @eventType
+    if @eventTypes
       render "api/events/index"
     else
       render json: ["No events found for this event type"]

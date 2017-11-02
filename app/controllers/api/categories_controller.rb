@@ -32,10 +32,31 @@ class Api::CategoriesController < ApplicationController
   end
 
   def search
-    hash = {"music" => "Music",
+    debugger
+    hash = {
+    "business" => "Business",
+    "music" => "Music",
     "food-and-drink" => "Food & Drink",
-    "performance" => "Performance",
-    "seminar" => "Seminar"}
+    "arts" => "Arts",
+    "other" => "Other",
+    "health" => "Health",
+    "community" => "Community",
+    "family-and-education" => "Family & Education",
+    "film-and-media" => "Film & Media",
+    "science-and-tech" => "Science & Tech",
+    "sports-and-fitness" => "Sports & Fitness",
+    "hobbies" => "Hobbies",
+    "charity-and-causes" => "Charity & Causes",
+    "fashion" => "Fashion",
+    "holiday" => "Holiday",
+    "spirituality" => "Spirituality",
+    "travel-and-outdoor" => "Travel & Outdoor",
+    "home-and-lifestyle" => "Home & Lifestyle",
+    "government" => "Government",
+    "auto-boat-and-air" => "Auto, Boat & Air",
+    "school-activities" => "School Activities"
+    }
+
     category = Category.find_by(name: hash[params[:category]])
     @events = category.events
     if @events

@@ -8,7 +8,7 @@ class EventShow extends React.Component {
     super(props);
     this.state;
 
-    this.findUser = this.findUser.bind(this);
+    // this.findUser = this.findUser.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
   }
@@ -17,9 +17,9 @@ class EventShow extends React.Component {
     this.props.fetchUsers();
   }
 
-  findUser(id){
-    return this.props.users[id].first_name;
-  }
+  // findUser(id){
+  //   return this.props.users[id].first_name;
+  // }
 
   handleSave(){
     this.setState({savedColor: !this.state.borderColor});
@@ -43,7 +43,6 @@ class EventShow extends React.Component {
   }
 
   render(){
-
     if (this.props.event === undefined){
       return null;
     } else {
@@ -51,10 +50,22 @@ class EventShow extends React.Component {
         current_user_saved: this.props.event.current_user_saved,
         savedColor: true
       };
-      // const attendeesOpts = Object.values(this.props.event.attendees).map( attendee => (
-      //   <li key={attendee.id}>{this.findUser(attendee.purchaser_id)}</li>
-      // ));
-      let savedColor = this.state.savedColor ? "white" : "#0091DA";
+
+    const attendees = this.props.event.attendees === undefined ?
+    null
+    :
+    Object.values(this.props.event.attendees).map( attendee => (
+      <li key={attendee.id}>{attendee.purchaser_name}</li>
+    ));
+
+    const num_tickets = this.props.event.attendees === undefined ?
+    this.props.event.num_tickets
+    :
+    this.props.event.num_tickets - Object.keys(this.props.event.attendees).length;
+
+
+    let savedColor = this.state.savedColor ? "white" : "#0091DA";
+
     return (
       <div>
         <NavBarContainer/>
@@ -119,9 +130,13 @@ class EventShow extends React.Component {
               <p>
                 {this.props.event.location}
               </p>
+              <h1>REMAINING TICKETS</h1>
+              <p>
+                {num_tickets}
+              </p>
               <h1>FRIENDS WHO ARE GOING</h1>
               <ul>
-                {Object.keys(this.props.event.attendees).length}
+                {attendees}
               </ul>
             </div>
           </div>

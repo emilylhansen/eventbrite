@@ -31988,8 +31988,8 @@ var App = function App() {
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/login', component: _session_form_login_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signin/signup', component: _session_form_signup_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events', component: _event_index_container2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:categoryName', component: _event_index_container2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventTypeName', component: _event_index_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/category/:categoryName', component: _event_index_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/event-type/:eventTypeName', component: _event_index_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/new', component: _event_form_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId', component: _event_show_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId/edit', component: _event_form_container2.default }),
@@ -32985,43 +32985,43 @@ var Homepage = function (_React$Component) {
               { className: 'homepage-categories-one' },
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: { pathname: '/events/music' },
+                { to: { pathname: '/events/category/music' },
                   value: 'Music' },
                 'Music'
               ),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: { pathname: '/events/food-and-drink', state: { category: "Food & Drink" } },
+                { to: { pathname: '/events/category/food-and-drink', state: { category: "Food & Drink" } },
                   value: 'Food & Drink' },
                 'Food & Drink'
               ),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: { pathname: '/events/classes', state: { category: "Classes" } },
+                { to: { pathname: '/events/category/classes', state: { category: "Classes" } },
                   value: 'Classes' },
                 'Classes'
               ),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: { pathname: '/events/arts', state: { category: "Arts" } },
+                { to: { pathname: '/events/category/arts', state: { category: "Arts" } },
                   value: 'Arts' },
                 'Arts'
               ),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: { pathname: '/events/parties', state: { category: "Parties" } },
+                { to: { pathname: '/events/category/parties', state: { category: "Parties" } },
                   value: 'Parties' },
                 'Parties'
               ),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: { pathname: '/events/sports-and-wellness', state: { category: "Sports & Wellness" } },
+                { to: { pathname: '/events/category/sports-and-wellness', state: { category: "Sports & Wellness" } },
                   value: 'Sports & Wellness' },
                 'Sports & Wellness'
               ),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: { pathname: '/events/networking', state: { category: "Networking" } },
+                { to: { pathname: '/events/category/networking', state: { category: "Networking" } },
                   value: 'Networking' },
                 'Networking'
               )
@@ -33867,7 +33867,7 @@ var EventIndex = function (_React$Component) {
         // debugger
         this.props.fetchByCategory({ name: this.props.match.params.categoryName });
       } else if (this.props.match.params.eventTypeName) {
-        this.props.fetchByEventType({ name: this.props.location.state.eventType });
+        this.props.fetchByEventType({ name: this.props.match.params.eventTypeName });
       } else {
         this.props.fetchEvents();
       }
@@ -33898,23 +33898,33 @@ var EventIndex = function (_React$Component) {
 
       var eventTypeOpts = this.props.eventTypes.map(function (eventType, i) {
         return _react2.default.createElement(
-          _reactRouterDom.Link,
-          {
-            to: { pathname: '/events/' + eventType.name.split(" & ").join("-and-").toLowerCase(),
-              state: { eventType: '' + eventType.name } },
-            value: '' + eventType.name },
-          eventType.name
+          'div',
+          { key: i },
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            {
+              to: { pathname: '/events/event-type/' + eventType.name.split(" & ").join("-and-").toLowerCase(),
+                state: { eventType: '' + eventType.name } },
+              value: '' + eventType.name },
+            eventType.name
+          ),
+          _react2.default.createElement('br', null)
         );
       });
 
       var categoryOpts = this.props.categories.map(function (category, i) {
         return _react2.default.createElement(
-          _reactRouterDom.Link,
-          {
-            to: { pathname: '/events/' + category.name.split(" & ").join("-and-").toLowerCase(),
-              state: { category: '' + category.name } },
-            value: '' + category.name },
-          category.name
+          'div',
+          { key: i },
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            {
+              to: { pathname: '/events/category/' + category.name.split(" & ").join("-and-").toLowerCase(),
+                state: { category: '' + category.name } },
+              value: '' + category.name },
+            category.name
+          ),
+          _react2.default.createElement('br', null)
         );
       });
 
@@ -34219,7 +34229,7 @@ var EventShow = function (_React$Component) {
 
     _this.state;
 
-    _this.findUser = _this.findUser.bind(_this);
+    // this.findUser = this.findUser.bind(this);
     _this.handleSave = _this.handleSave.bind(_this);
     _this.handleRegister = _this.handleRegister.bind(_this);
     return _this;
@@ -34231,11 +34241,11 @@ var EventShow = function (_React$Component) {
       this.props.fetchEvent(this.props.eventId);
       this.props.fetchUsers();
     }
-  }, {
-    key: 'findUser',
-    value: function findUser(id) {
-      return this.props.users[id].first_name;
-    }
+
+    // findUser(id){
+    //   return this.props.users[id].first_name;
+    // }
+
   }, {
     key: 'handleSave',
     value: function handleSave() {
@@ -34262,7 +34272,6 @@ var EventShow = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-
       if (this.props.event === undefined) {
         return null;
       } else {
@@ -34270,10 +34279,19 @@ var EventShow = function (_React$Component) {
           current_user_saved: this.props.event.current_user_saved,
           savedColor: true
         };
-        // const attendeesOpts = Object.values(this.props.event.attendees).map( attendee => (
-        //   <li key={attendee.id}>{this.findUser(attendee.purchaser_id)}</li>
-        // ));
+
+        var attendees = this.props.event.attendees === undefined ? null : Object.values(this.props.event.attendees).map(function (attendee) {
+          return _react2.default.createElement(
+            'li',
+            { key: attendee.id },
+            attendee.purchaser_name
+          );
+        });
+
+        var num_tickets = this.props.event.attendees === undefined ? this.props.event.num_tickets : this.props.event.num_tickets - Object.keys(this.props.event.attendees).length;
+
         var savedColor = this.state.savedColor ? "white" : "#0091DA";
+
         return _react2.default.createElement(
           'div',
           null,
@@ -34419,12 +34437,22 @@ var EventShow = function (_React$Component) {
                 _react2.default.createElement(
                   'h1',
                   null,
+                  'REMAINING TICKETS'
+                ),
+                _react2.default.createElement(
+                  'p',
+                  null,
+                  num_tickets
+                ),
+                _react2.default.createElement(
+                  'h1',
+                  null,
                   'FRIENDS WHO ARE GOING'
                 ),
                 _react2.default.createElement(
                   'ul',
                   null,
-                  Object.keys(this.props.event.attendees).length
+                  attendees
                 )
               )
             )

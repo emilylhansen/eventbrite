@@ -20,11 +20,16 @@ json.attendees do
     json.set! ticket.id do
        json.id ticket.id
        json.purchaser_id ticket.purchaser_id
+       json.purchaser_name User.find(ticket.purchaser_id).first_name
      end
    end
  end
 
-json.current_user_saved event.users.exists?(id: current_user.id)
+if current_user
+  json.current_user_saved event.users.exists?(id: current_user.id)
+else
+  json.current_user_saved false
+end
 
 json.category do
   event.categories.each do |category|
@@ -56,4 +61,4 @@ end
 #       json.extract! event_event_type, :id, :event_id, :event_type_id
 #     end
 #   end
-# end 
+# end

@@ -15,7 +15,7 @@ class EventIndex extends React.Component{
       // debugger
       this.props.fetchByCategory({name: this.props.match.params.categoryName});
     } else if (this.props.match.params.eventTypeName){
-      this.props.fetchByEventType({name: this.props.location.state.eventType});
+      this.props.fetchByEventType({name: this.props.match.params.eventTypeName});
     } else {
       this.props.fetchEvents();
     }
@@ -41,22 +41,34 @@ class EventIndex extends React.Component{
     ));
 
     let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
-      return (<Link
-          to={{pathname: `/events/${eventType.name.split(" & ").join("-and-").toLowerCase()}`,
+      return (
+        <div key={i}>
+        <Link
+          to={{pathname: `/events/event-type/${eventType.name.split(" & ").join("-and-").toLowerCase()}`,
           state:{eventType: `${eventType.name}`}}}
           value={`${eventType.name}`} >
           {eventType.name}
-        </Link>);
+        </Link>
+
+        <br></br>
+        </div>
+      );
 
     });
 
     let categoryOpts = this.props.categories.map((category, i) => {
-      return(<Link
-          to={{pathname: `/events/${category.name.split(" & ").join("-and-").toLowerCase()}`,
+      return(
+        <div key={i}>
+        <Link
+          to={{pathname: `/events/category/${category.name.split(" & ").join("-and-").toLowerCase()}`,
           state:{category: `${category.name}`}}}
           value={`${category.name}`} >
           {category.name}
-        </Link>);
+        </Link>
+
+        <br></br>
+        </div>
+      );
 
     });
 
