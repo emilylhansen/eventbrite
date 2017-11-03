@@ -4,19 +4,20 @@
   margin-top: 30px;
 }
 
-.user-show-index-main ul {
-  justify-content: space-between;
-  margin: 0 auto;
-  display: flex;
-
-}
+// .user-show-index-main ul {
+//   justify-content: space-between;
+//   margin: 0 auto;
+//   display: flex;
+//
+// }
 
 .user-index-item-li {
-  width: 31%;
+  width: 29%;
   height: 300px;
   background-color: white;
   box-shadow: 1px 1px 5px #888888;
-
+  float:left;
+  margin: 20px;
 }
 
 .user-index-item-img-right {
@@ -28,18 +29,19 @@
 
 .user-index-item-img-right h2 {
   color: gray;
-  font-size: 14px;
+  font-size: 12px;
+  // font-weight: 100;
 }
 
 .user-index-item-img-right h1 {
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 5px;
 }
 
 .user-index-item-img-right h3 {
   color: gray;
   font-size: 14px;
-  font-weight: normal;
+  font-weight: 100;
   margin-top: 5px;
 }
 
@@ -50,36 +52,46 @@
 }
 
 .user-index-item-info-right div:first-child{
-  height: 35px;
+  // height: 35px;
   padding-top: 10px;
   margin-left: 10px;
-  padding-right: 180px;
-  border-right: 1px solid #E0E0E0;
+  // padding-right: 180px;
 }
 
 .user-index-item-info-right div:last-child{
-  margin-top: 10px;
-  margin-left: 10px;
+  border-left: 1px solid #E0E0E0;
+  // margin-top: 10px;
+  // margin-left: 10px;
+  text-align: right;
+  float:right;
+
 }
 
 
 .user-index-item-img-left {
   height: 150px;
-  border: 1px solid red;
-  background-color: red;
+  // border: 1px solid red;
+  // background-color: red;
+  overflow: hidden;
+  width: 100%;
+  // position:absolute;
+}
+
+.user-index-item-img-left-inner {
+
 }
 
 .user-index-item-info-left {
-  position: relative;
-  z-index: 100;
-  background-color: white;
-  opacity: .8;
-  padding: 5px;
-  padding-bottom: 5px;
-  float: right;
-  height: 15px;
-  font-size: 14px;
-  text-align: center;
-  margin: 10px;
-  opacity: .8;
+  // position: relative;
+  // z-index: 100;
+  // background-color: white;
+  // opacity: .8;
+  // padding: 5px;
+  // padding-bottom: 5px;
+  // float: right;
+  // height: 15px;
+  // font-size: 14px;
+  // text-align: center;
+  // margin: 10px;
+  // opacity: .8;
 }

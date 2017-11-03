@@ -12,9 +12,10 @@
 }
 
 .login-signup-header h1 a{
-  color: orange;
+  color: #FF5200;
   font-size: 25px;
   padding: 15px;
+  // font-weight: 400;
 }
 
 .login-signup-nav {
@@ -38,8 +39,21 @@
 .login-signup-header-list > li {
   border-left: 1px solid #E0E0E0;
   position: relative;
+  font-size: 13px;
+  color: #666A73;
+  font-weight: 300;
+
+}
+
+.login-signup-header-list button{
+  // border-left: 1px solid #E0E0E0;
+  position: relative;
   font-size: 14px;
-  color: gray;
+  color: #666A73;
+  font-weight: 300;
+  margin-top: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .login-signup-header-list li:last-child {
@@ -75,7 +89,9 @@ li:hover .login-signup-dropdown {
 
 .login-signup-dropdown > li {
   border-top: 1px solid #E0E0E0;
-  color: gray;
+  font-size: 14px;
+  color: #666A73;
+  font-weight: 300;
 }
 
 .login-signup-dropdown > li:last-child {

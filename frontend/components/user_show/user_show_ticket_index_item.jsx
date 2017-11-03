@@ -11,13 +11,14 @@ const convertDateTime = dateTime => {
 };
 
 const UserShowTicketIndexItem = ({ticket, currentUser}) => {
+  
   return (
-    <li>
+    <li className="user-show-ticket-index-item-li">
       <div className="user-show-ticket-index-item-main">
 
         <div className="user-show-ticket-index-item-img">
           <div>
-            <img src={window.img_leaf}/>
+            <img src={ticket.avatar}/>
           </div>
         </div>
 

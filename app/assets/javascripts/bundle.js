@@ -999,6 +999,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     logout: function logout() {
       return dispatch((0, _session_actions.logout)());
+    },
+    login: function login(user) {
+      return dispatch((0, _session_actions.login)(user));
     }
   };
 };
@@ -1059,6 +1062,76 @@ module.exports = root;
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchCategories = exports.receiveCategories = exports.RECEIVE_CATEGORIES = undefined;
+
+var _event_api_util = __webpack_require__(33);
+
+var EventApiUtil = _interopRequireWildcard(_event_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_CATEGORIES = exports.RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+
+var receiveCategories = exports.receiveCategories = function receiveCategories(categories) {
+  return {
+    type: RECEIVE_CATEGORIES,
+    categories: categories
+  };
+};
+
+var fetchCategories = exports.fetchCategories = function fetchCategories() {
+  return function (dispatch) {
+    return EventApiUtil.fetchCategories().then(function (categories) {
+      return dispatch(receiveCategories(categories));
+    });
+  };
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchEventTypes = exports.receiveEventTypes = exports.RECEIVE_EVENT_TYPES = undefined;
+
+var _event_api_util = __webpack_require__(33);
+
+var EventApiUtil = _interopRequireWildcard(_event_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_EVENT_TYPES = exports.RECEIVE_EVENT_TYPES = 'RECEIVE_EVENT_TYPES';
+
+var receiveEventTypes = exports.receiveEventTypes = function receiveEventTypes(eventTypes) {
+  return {
+    type: RECEIVE_EVENT_TYPES,
+    eventTypes: eventTypes
+  };
+};
+
+var fetchEventTypes = exports.fetchEventTypes = function fetchEventTypes() {
+  return function (dispatch) {
+    return EventApiUtil.fetchEventTypes().then(function (eventTypes) {
+      return dispatch(receiveEventTypes(eventTypes));
+    });
+  };
+};
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1155,7 +1228,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 /**
@@ -1190,7 +1263,7 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1230,76 +1303,6 @@ var fetchUser = exports.fetchUser = function fetchUser(id) {
   return function (dispatch) {
     return UserApiUtil.fetchUser(id).then(function (user) {
       return dispatch((0, _session_actions.receiveCurrentUser)(user));
-    });
-  };
-};
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.fetchCategories = exports.receiveCategories = exports.RECEIVE_CATEGORIES = undefined;
-
-var _event_api_util = __webpack_require__(33);
-
-var EventApiUtil = _interopRequireWildcard(_event_api_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var RECEIVE_CATEGORIES = exports.RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
-
-var receiveCategories = exports.receiveCategories = function receiveCategories(categories) {
-  return {
-    type: RECEIVE_CATEGORIES,
-    categories: categories
-  };
-};
-
-var fetchCategories = exports.fetchCategories = function fetchCategories() {
-  return function (dispatch) {
-    return EventApiUtil.fetchCategories().then(function (categories) {
-      return dispatch(receiveCategories(categories));
-    });
-  };
-};
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.fetchEventTypes = exports.receiveEventTypes = exports.RECEIVE_EVENT_TYPES = undefined;
-
-var _event_api_util = __webpack_require__(33);
-
-var EventApiUtil = _interopRequireWildcard(_event_api_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var RECEIVE_EVENT_TYPES = exports.RECEIVE_EVENT_TYPES = 'RECEIVE_EVENT_TYPES';
-
-var receiveEventTypes = exports.receiveEventTypes = function receiveEventTypes(eventTypes) {
-  return {
-    type: RECEIVE_EVENT_TYPES,
-    eventTypes: eventTypes
-  };
-};
-
-var fetchEventTypes = exports.fetchEventTypes = function fetchEventTypes() {
-  return function (dispatch) {
-    return EventApiUtil.fetchEventTypes().then(function (eventTypes) {
-      return dispatch(receiveEventTypes(eventTypes));
     });
   };
 };
@@ -3554,7 +3557,7 @@ module.exports = isPrototype;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsArguments = __webpack_require__(165),
-    isObjectLike = __webpack_require__(17);
+    isObjectLike = __webpack_require__(19);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -4875,13 +4878,13 @@ var _root2 = _interopRequireDefault(_root);
 
 var _session_actions = __webpack_require__(7);
 
-var _user_actions = __webpack_require__(18);
+var _user_actions = __webpack_require__(20);
 
 var _event_actions = __webpack_require__(8);
 
-var _category_actions = __webpack_require__(19);
+var _category_actions = __webpack_require__(16);
 
-var _event_type_actions = __webpack_require__(20);
+var _event_type_actions = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4933,7 +4936,7 @@ document.addEventListener("DOMContentLoaded", function () {
  This source code is licensed under the MIT license found in the
  LICENSE file in the root directory of this source tree.
 */
-var f=__webpack_require__(16),p=__webpack_require__(23);__webpack_require__(10);var r=__webpack_require__(9);
+var f=__webpack_require__(18),p=__webpack_require__(23);__webpack_require__(10);var r=__webpack_require__(9);
 function t(a){for(var b=arguments.length-1,d="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,e=0;e<b;e++)d+="\x26args[]\x3d"+encodeURIComponent(arguments[e+1]);b=Error(d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var u={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function v(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}v.prototype.isReactComponent={};v.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?t("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};v.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function w(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}function x(){}x.prototype=v.prototype;var y=w.prototype=new x;y.constructor=w;f(y,v.prototype);y.isPureReactComponent=!0;function z(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}var A=z.prototype=new x;A.constructor=z;f(A,v.prototype);A.unstable_isAsyncReactComponent=!0;A.render=function(){return this.props.children};
@@ -4970,7 +4973,7 @@ if (process.env.NODE_ENV !== "production") {
 
 'use strict';
 
-var objectAssign$1 = __webpack_require__(16);
+var objectAssign$1 = __webpack_require__(18);
 var require$$0 = __webpack_require__(24);
 var emptyObject = __webpack_require__(23);
 var invariant = __webpack_require__(10);
@@ -6716,7 +6719,7 @@ if (process.env.NODE_ENV === 'production') {
  LICENSE file in the root directory of this source tree.
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0);__webpack_require__(10);var l=__webpack_require__(38),n=__webpack_require__(16),ba=__webpack_require__(51),ca=__webpack_require__(9),da=__webpack_require__(23),ea=__webpack_require__(52),fa=__webpack_require__(53),ha=__webpack_require__(54),ia=__webpack_require__(55);
+var aa=__webpack_require__(0);__webpack_require__(10);var l=__webpack_require__(38),n=__webpack_require__(18),ba=__webpack_require__(51),ca=__webpack_require__(9),da=__webpack_require__(23),ea=__webpack_require__(52),fa=__webpack_require__(53),ha=__webpack_require__(54),ia=__webpack_require__(55);
 function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -7044,7 +7047,7 @@ if (process.env.NODE_ENV !== "production") {
 var react = __webpack_require__(0);
 var invariant = __webpack_require__(10);
 var ExecutionEnvironment = __webpack_require__(38);
-var _assign = __webpack_require__(16);
+var _assign = __webpack_require__(18);
 var EventListener = __webpack_require__(51);
 var require$$0 = __webpack_require__(24);
 var hyphenateStyleName = __webpack_require__(95);
@@ -24485,7 +24488,7 @@ module.exports = performance || {};
 var emptyFunction = __webpack_require__(9);
 var invariant = __webpack_require__(10);
 var warning = __webpack_require__(24);
-var assign = __webpack_require__(16);
+var assign = __webpack_require__(18);
 
 var ReactPropTypesSecret = __webpack_require__(37);
 var checkPropTypes = __webpack_require__(36);
@@ -27091,7 +27094,7 @@ module.exports = overArg;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(30),
-    isObjectLike = __webpack_require__(17);
+    isObjectLike = __webpack_require__(19);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -27115,7 +27118,7 @@ module.exports = baseIsArguments;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArrayLike = __webpack_require__(43),
-    isObjectLike = __webpack_require__(17);
+    isObjectLike = __webpack_require__(19);
 
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -27179,7 +27182,7 @@ module.exports = stubFalse;
 
 var baseGetTag = __webpack_require__(30),
     getPrototype = __webpack_require__(65),
-    isObjectLike = __webpack_require__(17);
+    isObjectLike = __webpack_require__(19);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -27247,7 +27250,7 @@ module.exports = isPlainObject;
 
 var baseGetTag = __webpack_require__(30),
     isLength = __webpack_require__(69),
-    isObjectLike = __webpack_require__(17);
+    isObjectLike = __webpack_require__(19);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -28112,7 +28115,7 @@ var _merge = __webpack_require__(11);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _user_actions = __webpack_require__(18);
+var _user_actions = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28211,7 +28214,7 @@ var _merge = __webpack_require__(11);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _category_actions = __webpack_require__(19);
+var _category_actions = __webpack_require__(16);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28246,7 +28249,7 @@ var _merge = __webpack_require__(11);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _event_type_actions = __webpack_require__(20);
+var _event_type_actions = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32067,7 +32070,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _session_actions = __webpack_require__(7);
 
-var _user_actions = __webpack_require__(18);
+var _user_actions = __webpack_require__(20);
 
 var _session_form = __webpack_require__(238);
 
@@ -32294,9 +32297,9 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _session_actions = __webpack_require__(7);
 
-var _category_actions = __webpack_require__(19);
+var _category_actions = __webpack_require__(16);
 
-var _event_type_actions = __webpack_require__(20);
+var _event_type_actions = __webpack_require__(17);
 
 var _session_form_login = __webpack_require__(240);
 
@@ -32505,9 +32508,9 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _session_actions = __webpack_require__(7);
 
-var _category_actions = __webpack_require__(19);
+var _category_actions = __webpack_require__(16);
 
-var _event_type_actions = __webpack_require__(20);
+var _event_type_actions = __webpack_require__(17);
 
 var _session_form_signup = __webpack_require__(242);
 
@@ -32763,8 +32766,17 @@ var NavBar = function (_React$Component) {
   }
 
   _createClass(NavBar, [{
+    key: 'demoLogin',
+    value: function demoLogin(e) {
+      e.preventDefault();
+      var user = { email: "demo@gmail.com", password: "password" };
+      this.props.login(user);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var signinLogout = this.props.currentUser ? _react2.default.createElement(
         'li',
         null,
@@ -32849,6 +32861,17 @@ var NavBar = function (_React$Component) {
                 'a',
                 { href: '/#/events' },
                 'BROWSE EVENTS'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'button',
+                { onClick: function onClick(e) {
+                    return _this2.demoLogin(e);
+                  } },
+                'DEMO'
               )
             ),
             signinLogout,
@@ -32986,7 +33009,7 @@ var Homepage = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'homepage-categories-one-top' },
-                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement('img', { src: window.img_music }),
                 _react2.default.createElement(
                   'div',
                   { className: 'homepage-categories-one-top-info' },
@@ -33010,7 +33033,7 @@ var Homepage = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'homepage-categories-one-bottom' },
-                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement('img', { src: window.img_food }),
                 _react2.default.createElement(
                   'div',
                   { className: 'homepage-categories-one-bottom-info' },
@@ -33038,7 +33061,7 @@ var Homepage = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'homepage-categories-two-top' },
-                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement('img', { src: window.img_yoga2 }),
                 _react2.default.createElement(
                   'div',
                   { className: 'homepage-categories-two-top-info' },
@@ -33062,7 +33085,7 @@ var Homepage = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'homepage-categories-two-middle' },
-                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement('img', { src: window.img_arts }),
                 _react2.default.createElement(
                   'div',
                   { className: 'homepage-categories-two-middle-info' },
@@ -33086,7 +33109,7 @@ var Homepage = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'homepage-categories-two-bottom' },
-                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement('img', { src: window.img_party }),
                 _react2.default.createElement(
                   'div',
                   { className: 'homepage-categories-two-bottom-info' },
@@ -33114,7 +33137,7 @@ var Homepage = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'homepage-categories-three-top' },
-                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement('img', { src: window.img_sports2 }),
                 _react2.default.createElement(
                   'div',
                   { className: 'homepage-categories-three-top-info' },
@@ -33138,7 +33161,7 @@ var Homepage = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'homepage-categories-three-bottom' },
-                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement('img', { src: window.img_networking }),
                 _react2.default.createElement(
                   'div',
                   { className: 'homepage-categories-three-bottom-info' },
@@ -33220,9 +33243,9 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _event_actions = __webpack_require__(8);
 
-var _category_actions = __webpack_require__(19);
+var _category_actions = __webpack_require__(16);
 
-var _event_type_actions = __webpack_require__(20);
+var _event_type_actions = __webpack_require__(17);
 
 var _event_form = __webpack_require__(247);
 
@@ -33765,35 +33788,22 @@ var EventForm = function (_React$Component) {
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
-                'button',
-                null,
-                'FREE TICKET'
-              ),
-              _react2.default.createElement(
-                'button',
-                null,
-                'PAID TICKET'
-              ),
-              _react2.default.createElement(
-                'button',
-                null,
-                'DONATION'
-              ),
-              _react2.default.createElement('br', null),
-              _react2.default.createElement(
                 'label',
                 null,
                 'Quantity available'
               ),
+              _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'text',
                 value: this.state.num_tickets,
                 onChange: this.handleInput("num_tickets")
               }),
+              _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'label',
                 null,
                 'Price'
               ),
+              _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'text',
                 value: this.state.price,
                 onChange: this.handleInput("price")
@@ -33852,14 +33862,6 @@ var EventForm = function (_React$Component) {
                 categoryOpts
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'label',
-                null,
-                'REMAINING TICKETS'
-              ),
-              _react2.default.createElement('br', null),
-              _react2.default.createElement('input', { type: 'checkbox', name: 'remaining_tickets' }),
-              _react2.default.createElement('br', null),
               this.renderErrors()
             )
           ),
@@ -33900,9 +33902,9 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _event_actions = __webpack_require__(8);
 
-var _category_actions = __webpack_require__(19);
+var _category_actions = __webpack_require__(16);
 
-var _event_type_actions = __webpack_require__(20);
+var _event_type_actions = __webpack_require__(17);
 
 var _event_index = __webpack_require__(249);
 
@@ -34016,6 +34018,11 @@ var EventIndex = function (_React$Component) {
       }
     }
   }, {
+    key: 'toggleSelections',
+    value: function toggleSelections(field) {
+      document.getElementById(field).classList.toggle("show");
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -34032,33 +34039,25 @@ var EventIndex = function (_React$Component) {
 
       var eventTypeOpts = this.props.eventTypes.map(function (eventType, i) {
         return _react2.default.createElement(
-          'div',
-          { key: i },
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            {
-              to: { pathname: '/events/event-type/' + eventType.name.split(" & ").join("-and-").toLowerCase(),
-                state: { eventType: '' + eventType.name } },
-              value: '' + eventType.name },
-            eventType.name
-          ),
-          _react2.default.createElement('br', null)
+          _reactRouterDom.Link,
+          {
+            key: i,
+            to: { pathname: '/events/event-type/' + eventType.name.split(" & ").join("-and-").toLowerCase(),
+              state: { eventType: '' + eventType.name } },
+            value: '' + eventType.name },
+          eventType.name
         );
       });
 
       var categoryOpts = this.props.categories.map(function (category, i) {
         return _react2.default.createElement(
-          'div',
-          { key: i },
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            {
-              to: { pathname: '/events/category/' + category.name.split(" & ").join("-and-").toLowerCase(),
-                state: { category: '' + category.name } },
-              value: '' + category.name },
-            category.name
-          ),
-          _react2.default.createElement('br', null)
+          _reactRouterDom.Link,
+          {
+            key: i,
+            to: { pathname: '/events/category/' + category.name.split(" & ").join("-and-").toLowerCase(),
+              state: { category: '' + category.name } },
+            value: '' + category.name },
+          category.name
         );
       });
 
@@ -34069,43 +34068,79 @@ var EventIndex = function (_React$Component) {
         _react2.default.createElement('div', { className: 'event-index-background' }),
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'event-index-flex' },
           _react2.default.createElement(
             'div',
-            null,
-            eventTypeOpts
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'div',
-            null,
-            categoryOpts
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'event-index-content' },
-          _react2.default.createElement(
-            'div',
-            { className: 'event-index-main' },
+            { className: 'event-index-options-main' },
             _react2.default.createElement(
               'div',
-              { className: 'event-index-info' },
+              { className: 'event-index-options' },
               _react2.default.createElement(
-                'h1',
-                null,
-                'Events For You'
+                'div',
+                { className: 'event-index-options-event-type' },
+                _react2.default.createElement(
+                  'button',
+                  { onClick: function onClick(e) {
+                      return _this2.toggleSelections("event-index-event-type-dropdown");
+                    },
+                    className: 'event-index-event-type-btn' },
+                  'EVENT TYPE'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { id: 'event-index-event-type-dropdown',
+                    className: 'event-index-event-type-dropdown-content'
+                  },
+                  eventTypeOpts
+                )
+              ),
+              _react2.default.createElement('br', null),
+              _react2.default.createElement(
+                'div',
+                { className: 'event-index-options-category' },
+                _react2.default.createElement(
+                  'button',
+                  { onClick: function onClick(e) {
+                      return _this2.toggleSelections("event-index-category-dropdown");
+                    },
+                    className: 'event-index-category-btn' },
+                  'CATEGORY'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { id: 'event-index-category-dropdown',
+                    className: 'event-index-category-dropdown-content'
+                  },
+                  categoryOpts
+                )
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'event-index-content' },
+            _react2.default.createElement(
+              'div',
+              { className: 'event-index-main' },
+              _react2.default.createElement(
+                'div',
+                { className: 'event-index-info' },
+                _react2.default.createElement(
+                  'h1',
+                  null,
+                  'Events For You'
+                ),
+                _react2.default.createElement(
+                  'p',
+                  null,
+                  'Five bustling boroughs make up the powerhouse known as New York City. Iconic sites like the Empire State Building and the Statue of Liberty draw crowds from across the globe. Most New York events feature music, performing & visual arts, or food & drink. Enjoy a Broadway show or take a stroll through Central Park. Check out the city\'s many events below \u2014 there\'s something for everyone!'
+                )
               ),
               _react2.default.createElement(
-                'p',
-                null,
-                'Five bustling boroughs make up the powerhouse known as New York City. Iconic sites like the Empire State Building and the Statue of Liberty draw crowds from across the globe. Most New York events feature music, performing & visual arts, or food & drink. Enjoy a Broadway show or take a stroll through Central Park. Check out the city\'s many events below \u2014 there\'s something for everyone!'
+                'ul',
+                { className: 'event-index-list' },
+                items
               )
-            ),
-            _react2.default.createElement(
-              'ul',
-              { className: 'event-index-list' },
-              items
             )
           )
         )
@@ -34234,17 +34269,25 @@ var EventIndexItem = function EventIndexItem(_ref) {
           'div',
           { className: 'event-index-item-info-right' },
           _react2.default.createElement(
-            'span',
-            null,
-            '#' + Object.values(event.category)[0].name,
-            ' ',
-            '#' + Object.values(event.eventType)[0].name
+            'div',
+            { className: 'event-index-item-info-right-span' },
+            _react2.default.createElement(
+              'span',
+              null,
+              '#' + Object.values(event.category)[0].name,
+              ' ',
+              '#' + Object.values(event.eventType)[0].name
+            )
           ),
-          _react2.default.createElement('div', { className: 'glyphicon',
-            onClick: function onClick(e) {
-              return handleSave(event, createSavedEvent, deleteSavedEvent, currentUser);
-            }
-          })
+          _react2.default.createElement(
+            'div',
+            { className: 'event-index-item-info-right-span-glyphicon' },
+            _react2.default.createElement('div', { className: 'glyphicon',
+              onClick: function onClick(e) {
+                return handleSave(event, createSavedEvent, deleteSavedEvent, currentUser);
+              }
+            })
+          )
         )
       )
     )
@@ -34274,7 +34317,7 @@ var _modal_actions = __webpack_require__(34);
 
 var _event_actions = __webpack_require__(8);
 
-var _user_actions = __webpack_require__(18);
+var _user_actions = __webpack_require__(20);
 
 var _event_show = __webpack_require__(252);
 
@@ -34366,6 +34409,7 @@ var EventShow = function (_React$Component) {
     // this.findUser = this.findUser.bind(this);
     _this.handleSave = _this.handleSave.bind(_this);
     _this.handleRegister = _this.handleRegister.bind(_this);
+    _this.convertDateTime = _this.convertDateTime.bind(_this);
     return _this;
   }
 
@@ -34382,16 +34426,16 @@ var EventShow = function (_React$Component) {
 
   }, {
     key: 'handleSave',
-    value: function handleSave() {
-      this.setState({ savedColor: !this.state.borderColor });
+    value: function handleSave(position) {
 
       if (this.state.current_user_saved === false) {
+
         this.props.createSavedEvent({
           user_id: this.props.current_user.id,
           event_id: this.props.event.id
         });
       } else {
-        // this.setState({savedColor: !this.state.borderColor});
+
         this.props.deleteSavedEvent(this.props.current_user.saved_events[this.props.event.id].saved_event_id);
       }
     }
@@ -34404,14 +34448,24 @@ var EventShow = function (_React$Component) {
       });
     }
   }, {
+    key: 'convertDateTime',
+    value: function convertDateTime(dateTime) {
+      var arr = dateTime.split(/-|T|:|\./);
+      var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
+      var timeArr = dateArr[4].split(":");
+      var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
+      return newDate.toUpperCase();
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       if (this.props.event === undefined) {
         return null;
       } else {
         this.state = {
-          current_user_saved: this.props.event.current_user_saved,
-          savedColor: true
+          current_user_saved: this.props.event.current_user_saved
         };
 
         var attendees = this.props.event.attendees === undefined ? null : Object.values(this.props.event.attendees).map(function (attendee) {
@@ -34426,6 +34480,14 @@ var EventShow = function (_React$Component) {
 
         var savedColor = this.state.savedColor ? "white" : "#0091DA";
 
+        var registerText = "REGISTER";
+        Object.values(this.props.current_user.tickets).map(function (ticket) {
+          if (ticket.event_id === _this2.props.event.id) {
+            registerText = "REGISTER MORE TICKETS";
+          }
+        });
+
+        // debugger
         return _react2.default.createElement(
           'div',
           null,
@@ -34456,7 +34518,7 @@ var EventShow = function (_React$Component) {
                   _react2.default.createElement(
                     'p',
                     null,
-                    this.props.event.start_date_time
+                    this.convertDateTime(this.props.event.start_date_time)
                   ),
                   _react2.default.createElement(
                     'h1',
@@ -34489,13 +34551,13 @@ var EventShow = function (_React$Component) {
                 { className: 'event-show-tickets' },
                 _react2.default.createElement('div', { className: 'glyphicon',
                   value: this.state.current_user_saved,
-                  onClick: this.handleSave,
-                  style: { backgroundColor: this.state.savedColor }
+                  onClick: this.handleSave
+
                 }),
                 _react2.default.createElement(
                   'button',
                   { onClick: this.handleRegister },
-                  'REGISTER'
+                  registerText
                 )
               )
             ),
@@ -34515,6 +34577,8 @@ var EventShow = function (_React$Component) {
                   null,
                   this.props.event.description
                 ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
                 _react2.default.createElement(
                   'h1',
                   null,
@@ -34554,9 +34618,10 @@ var EventShow = function (_React$Component) {
                 _react2.default.createElement(
                   'p',
                   null,
-                  this.props.event.start_date_time,
+                  this.convertDateTime(this.props.event.start_date_time),
                   ' -',
-                  this.props.event.end_date_time
+                  _react2.default.createElement('br', null),
+                  this.convertDateTime(this.props.event.end_date_time)
                 ),
                 _react2.default.createElement(
                   'h1',
@@ -34881,8 +34946,8 @@ var UserShow = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (UserShow.__proto__ || Object.getPrototypeOf(UserShow)).call(this, props));
 
     _this.state = {
-      active: null,
-      activeComponent: null
+      active: 1,
+      activeComponent: 1
     };
     _this.toggleSelection = _this.toggleSelection.bind(_this);
     _this.selectionColor = _this.selectionColor.bind(_this);
@@ -35069,11 +35134,7 @@ var UserShowIndex = function UserShowIndex(_ref) {
       _react2.default.createElement(
         'div',
         { className: 'user-show-index-main' },
-        _react2.default.createElement(
-          'ul',
-          null,
-          items
-        )
+        items
       )
     );
   } else {
@@ -35135,6 +35196,7 @@ var handleSave = function handleSave(event, createSavedEvent, deleteSavedEvent, 
     deleteSavedEvent(event.saved_event_id);
   }
 };
+// <p>{newPrice}</p>
 
 var UserShowIndexItem = function UserShowIndexItem(_ref) {
   var event = _ref.event,
@@ -35144,27 +35206,23 @@ var UserShowIndexItem = function UserShowIndexItem(_ref) {
 
   var newPrice = convertPrice(event.price);
   return _react2.default.createElement(
-    'li',
+    'div',
     { className: 'user-index-item-li' },
     _react2.default.createElement(
       'div',
       { className: 'user-index-item-main' },
-      _react2.default.createElement(
-        'div',
-        { className: 'user-index-item-info-left' },
-        _react2.default.createElement(
-          'p',
-          null,
-          newPrice
-        )
-      ),
+      _react2.default.createElement('div', { className: 'user-index-item-info-left' }),
       _react2.default.createElement(
         'div',
         { className: 'user-index-item-img-left' },
         _react2.default.createElement(
-          'a',
-          null,
-          _react2.default.createElement('img', { src: event.avatar_url })
+          'div',
+          { className: 'user-index-item-img-left-inner' },
+          _react2.default.createElement(
+            'a',
+            null,
+            _react2.default.createElement('img', { src: event.avatar })
+          )
         )
       ),
       _react2.default.createElement(
@@ -35194,17 +35252,25 @@ var UserShowIndexItem = function UserShowIndexItem(_ref) {
         'div',
         { className: 'user-index-item-info-right' },
         _react2.default.createElement(
-          'span',
-          null,
-          '#' + Object.values(event.category)[0].name,
-          ' ',
-          '#' + Object.values(event.eventType)[0].name
+          'div',
+          { className: 'user-index-item-info-right-span-tags' },
+          _react2.default.createElement(
+            'span',
+            null,
+            '#' + Object.values(event.category)[0].name,
+            ' ',
+            '#' + Object.values(event.eventType)[0].name
+          )
         ),
-        _react2.default.createElement('div', { className: 'glyphicon',
-          onClick: function onClick(e) {
-            return handleSave(event, createSavedEvent, deleteSavedEvent, currentUser);
-          }
-        })
+        _react2.default.createElement(
+          'div',
+          { className: 'user-index-item-info-right-glyph' },
+          _react2.default.createElement('div', { className: 'glyphicon',
+            onClick: function onClick(e) {
+              return handleSave(event, createSavedEvent, deleteSavedEvent, currentUser);
+            }
+          })
+        )
       )
     )
   );
@@ -35305,9 +35371,10 @@ var UserShowTicketIndexItem = function UserShowTicketIndexItem(_ref) {
   var ticket = _ref.ticket,
       currentUser = _ref.currentUser;
 
+
   return _react2.default.createElement(
     'li',
-    null,
+    { className: 'user-show-ticket-index-item-li' },
     _react2.default.createElement(
       'div',
       { className: 'user-show-ticket-index-item-main' },
@@ -35317,7 +35384,7 @@ var UserShowTicketIndexItem = function UserShowTicketIndexItem(_ref) {
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('img', { src: window.img_leaf })
+          _react2.default.createElement('img', { src: ticket.avatar })
         )
       ),
       _react2.default.createElement(
@@ -35366,7 +35433,7 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _event_actions = __webpack_require__(8);
 
-var _user_actions = __webpack_require__(18);
+var _user_actions = __webpack_require__(20);
 
 var _user_events = __webpack_require__(262);
 
@@ -35463,7 +35530,7 @@ var UserEvents = function (_React$Component) {
           ),
           _react2.default.createElement(
             'a',
-            { href: '/#/events/' + event.id + '/edit' },
+            { href: '/#/events/' + event.id + '/edit', className: 'user-events-list-edit' },
             'Edit'
           )
         );
@@ -35482,11 +35549,11 @@ var UserEvents = function (_React$Component) {
           ),
           _react2.default.createElement(
             'ul',
-            null,
+            { className: 'user-events-live-list' },
             _react2.default.createElement(
               'li',
               null,
-              'LIVE'
+              'LIVE ' + Object.values(this.props.currentUser.organized_events).length
             )
           ),
           _react2.default.createElement(

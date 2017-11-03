@@ -1,27 +1,37 @@
+.user-show-ticket-index-item-li {
+  box-shadow: 1px 1px 5px #888888;
+
+}
+
 .user-show-ticket-index-main {
   width: 50%;
   margin: 0 auto;
-  border: 1px solid black;
+  // border: 1px solid black;
   margin-top: 20px;
+
 }
 
 .user-show-ticket-index-item-main {
-  border: 1px solid black;
+  background-color: white;
+  height: 125px;
+  // border: 1px solid black;
   margin-top: 20px;
   display: flex;
 }
 
 .user-show-ticket-index-item-img {
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 30%;
   height: 100%;
-  // overflow: hidden;
+  overflow: hidden;
 }
 
 .user-show-ticket-index-item-img div {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  margin: 10px;
+  margin-bottom: 10;
+  // overflow: hidden;
 }
 
 .user-show-ticket-index-item-img div img {
@@ -31,4 +41,22 @@
 .user-show-ticket-index-item-info {
   width: 70%;
   height:100%;
+  padding: 15px;
+}
+
+.user-show-ticket-index-item-info h1{
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.user-show-ticket-index-item-info h2{
+  font-size: 12px;
+  // font-weight: 300;
+}
+
+.user-show-ticket-index-item-info h3{
+  font-size: 13px;
+  font-weight: 100;
+  margin-top: 40px;
 }

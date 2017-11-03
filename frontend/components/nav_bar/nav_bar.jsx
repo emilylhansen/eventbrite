@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 
 class NavBar extends React.Component{
 
+  demoLogin(e){
+    e.preventDefault();
+    const user = {email: "demo@gmail.com", password: "password"};
+    this.props.login(user);
+  }
+
   render(){
     const signinLogout = this.props.currentUser ?
     <li>
@@ -30,6 +36,7 @@ class NavBar extends React.Component{
 
           <ul className="login-signup-header-list">
             <li><a href="/#/events">BROWSE EVENTS</a></li>
+            <li><button onClick={(e) => this.demoLogin(e)}>DEMO</button></li>
             {signinLogout}
             <li><a href="/#/events/new">CREATE EVENT</a></li>
           </ul>

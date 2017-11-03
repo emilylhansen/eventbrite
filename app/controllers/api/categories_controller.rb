@@ -32,7 +32,6 @@ class Api::CategoriesController < ApplicationController
   end
 
   def search
-    debugger
     hash = {
     "business" => "Business",
     "music" => "Music",

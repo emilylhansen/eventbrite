@@ -284,16 +284,15 @@ class EventForm extends React.Component {
 
               <p>What type of ticket would you like to start with?</p>
               <br></br>
-              <button>FREE TICKET</button>
-              <button>PAID TICKET</button>
-              <button>DONATION</button>
-              <br></br>
               <label>Quantity available</label>
+              <br></br>
               <input type="text"
                 value={this.state.num_tickets}
                 onChange={this.handleInput("num_tickets")}
                 />
+              <br></br>
               <label>Price</label>
+              <br></br>
               <input type="text"
                 value={this.state.price}
                 onChange={this.handleInput("price")}
@@ -326,10 +325,7 @@ class EventForm extends React.Component {
                 </select>
                 <br></br>
 
-              <label>REMAINING TICKETS</label>
-                <br></br>
-                <input type="checkbox" name="remaining_tickets"></input>
-                <br></br>
+
 
                 {this.renderErrors()}
             </div>

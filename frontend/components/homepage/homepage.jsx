@@ -27,7 +27,7 @@ class Homepage extends React.Component{
 
             <div className="homepage-categories-one">
               <div className="homepage-categories-one-top">
-                <img src={window.img_outside}/>
+                <img src={window.img_music}/>
                 <div className="homepage-categories-one-top-info">
                   <Link to={{pathname: `/events/category/music`}}
                     value="Music" >Music</Link>
@@ -40,7 +40,7 @@ class Homepage extends React.Component{
               </div>
 
               <div className="homepage-categories-one-bottom">
-                <img src={window.img_outside}/>
+                <img src={window.img_food}/>
                 <div className="homepage-categories-one-bottom-info">
                   <Link to={{pathname: `/events/category/food-and-drink`, state:{category: "Food & Drink"}}}
                     value="Food & Drink" >Food & Drink</Link>
@@ -55,7 +55,7 @@ class Homepage extends React.Component{
 
             <div className="homepage-categories-two">
               <div className="homepage-categories-two-top">
-                <img src={window.img_outside}/>
+                <img src={window.img_yoga2}/>
                 <div className="homepage-categories-two-top-info">
                   <Link to={{pathname: `/events/category/classes`, state:{category: "Classes"}}}
                     value="Classes" >Classes</Link>
@@ -67,7 +67,7 @@ class Homepage extends React.Component{
                 </div>
               </div>
               <div className="homepage-categories-two-middle">
-                <img src={window.img_outside}/>
+                <img src={window.img_arts}/>
                 <div className="homepage-categories-two-middle-info">
                   <Link to={{pathname: `/events/category/arts`, state:{category: "Arts"}}}
                     value="Arts" >Arts</Link>
@@ -79,7 +79,7 @@ class Homepage extends React.Component{
                 </div>
               </div>
               <div className="homepage-categories-two-bottom">
-                <img src={window.img_outside}/>
+                <img src={window.img_party}/>
                 <div className="homepage-categories-two-bottom-info">
                   <Link to={{pathname: `/events/category/parties`, state:{category: "Parties"}}}
                     value="Parties" >Parties</Link>
@@ -94,7 +94,7 @@ class Homepage extends React.Component{
 
             <div className="homepage-categories-three">
               <div className="homepage-categories-three-top">
-                <img src={window.img_outside}/>
+                <img src={window.img_sports2}/>
                 <div className="homepage-categories-three-top-info">
                   <Link to={{pathname: `/events/category/sports-and-wellness`, state:{category: "Sports & Wellness"}}}
                     value="Sports & Wellness" >Sports & Wellness</Link>
@@ -106,7 +106,7 @@ class Homepage extends React.Component{
                 </div>
               </div>
               <div className="homepage-categories-three-bottom">
-                <img src={window.img_outside}/>
+                <img src={window.img_networking}/>
                 <div className="homepage-categories-three-bottom-info">
                   <Link to={{pathname: `/events/category/networking`, state:{category: "Networking"}}}
                     value="Networking" >Networking</Link>

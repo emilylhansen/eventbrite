@@ -26,8 +26,9 @@
 
 .homepage-search h1 {
   font-size: 50px;
-  color: orange;
+  color: #FF5200;
   padding-top: 30px;
+  font-weight: 100;
 }
 
 .homepage-bottom {
@@ -41,11 +42,13 @@
   text-align: center;
   margin-bottom: 30px;
   margin-top: 30px;
+  font-weight: 100;
+
 }
 
 .homepage-categories-main {
   height: 730px;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 70%;
   margin: 0 auto;
   justify-content: space-between;
@@ -54,7 +57,7 @@
 .homepage-categories-one {
   display: flex;
   height: 220px;
-  border: 1px solid black;
+  // border: 1px solid black;
   justify-content: space-between;
   margin-bottom: 30px;
 
@@ -62,7 +65,7 @@
 // -------------------------------------
 .homepage-categories-one-top {
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 65%;
   border-radius: 5px;
   align-content: center;
@@ -74,21 +77,25 @@
 .homepage-categories-one-top-info {
   position: absolute;
   z-index: 100;
-  left: 200px;
-  top: 20px;
+  left: 300px;
+  top: 90px;
   color:white;
 }
 
 .homepage-categories-one-top-info a{
-  font-size: 40px;
+  font-size: 25px;
+
 }
 
 .homepage-categories-one-top-info p{
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .homepage-categories-one-top-text {
   display: none;
+  align-content: center;
+  text-align: center;
 }
 
 .homepage-categories-one-top:hover
@@ -111,7 +118,7 @@
 
 .homepage-categories-one-bottom {
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 31%;
   border-radius: 5px;
   align-content: center;
@@ -123,17 +130,18 @@
 .homepage-categories-one-bottom-info {
   position: absolute;
   z-index: 100;
-  right: 200px;
-  top: 20px;
+  right: 90px;
+  top: 90px;
   color:white;
 }
 
 .homepage-categories-one-bottom-info a{
-  font-size: 40px;
+  font-size: 25px;
 }
 
 .homepage-categories-one-bottom-info p{
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .homepage-categories-one-bottom-text {
@@ -160,14 +168,14 @@
 .homepage-categories-two {
   display: flex;
   height: 220px;
-  border: 1px solid black;
+  // border: 1px solid black;
   justify-content: space-between;
   margin-bottom: 30px;
 
 }
 .homepage-categories-two-top {
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 31%;
   border-radius: 5px;
   align-content: center;
@@ -179,17 +187,18 @@
 .homepage-categories-two-top-info {
   position: absolute;
   z-index: 100;
-  right: 200px;
-  top: 20px;
+  right: 100px;
+  top: 90px;
   color:white;
 }
 
 .homepage-categories-two-top-info a{
-  font-size: 40px;
+  font-size: 25px;
 }
 
 .homepage-categories-two-top-info p{
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .homepage-categories-two-top-text {
@@ -215,7 +224,7 @@
 
 .homepage-categories-two-middle {
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 31%;
   border-radius: 5px;
   align-content: center;
@@ -227,17 +236,20 @@
 .homepage-categories-two-middle-info {
   position: absolute;
   z-index: 100;
-  left: 200px;
-  top: 20px;
+  left: 130px;
+  top: 100px;
   color:white;
 }
 
 .homepage-categories-two-middle-info a{
-  font-size: 40px;
+  font-size: 25px;
+
 }
 
 .homepage-categories-two-middle-info p{
-  font-size: 18px;
+
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .homepage-categories-two-middle-text {
@@ -262,7 +274,7 @@
 // -------------------------------------
 .homepage-categories-two-bottom {
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 31%;
   border-radius: 5px;
   align-content: center;
@@ -274,18 +286,21 @@
 .homepage-categories-two-bottom-info {
   position: absolute;
   z-index: 100;
-  left: 200px;
-  top: 20px;
+  left: 110px;
+  top: 100px;
   color:white;
 }
 
 
 .homepage-categories-two-bottom-info a{
-  font-size: 40px;
+  font-size: 25px;
+
 }
 
 .homepage-categories-two-bottom-info p{
-  font-size: 18px;
+
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .homepage-categories-two-bottom-text {
@@ -313,7 +328,7 @@
 .homepage-categories-three {
   display: flex;
   height: 220px;
-  border: 1px solid black;
+  // border: 1px solid black;
   justify-content: space-between;
   margin-bottom: 30px;
 
@@ -321,7 +336,7 @@
 
 .homepage-categories-three-top {
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 31%;
   border-radius: 5px;
   align-content: center;
@@ -333,17 +348,20 @@
 .homepage-categories-three-top-info {
   position: absolute;
   z-index: 100;
-  left: 200px;
-  top: 20px;
+  left: 70px;
+  top: 90px;
   color:white;
 }
 
 .homepage-categories-three-top-info a{
-  font-size: 40px;
+  font-size: 25px;
+
 }
 
 .homepage-categories-three-top-info p{
-  font-size: 18px;
+
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .homepage-categories-three-top-text {
@@ -370,7 +388,7 @@
 
 .homepage-categories-three-bottom {
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 65%;
   border-radius: 5px;
   align-content: center;
@@ -382,17 +400,20 @@
 .homepage-categories-three-bottom-info {
   position: absolute;
   z-index: 100;
-  left: 200px;
-  top: 20px;
+  left: 250px;
+  top: 100px;
   color:white;
 }
 
 .homepage-categories-three-bottom-info a{
-  font-size: 40px;
+  font-size: 25px;
+
 }
 
 .homepage-categories-three-bottom-info p{
-  font-size: 18px;
+  
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .homepage-categories-three-bottom-text {

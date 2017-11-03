@@ -61,6 +61,7 @@ json.tickets do
       json.start_date_time user.purchased_events[i].start_date_time
       json.title user.purchased_events[i].title
       json.created_at user.tickets[i].created_at
+      json.extract! user.purchased_events[i], :avatar_file_name, :avatar
     end
   end
 end

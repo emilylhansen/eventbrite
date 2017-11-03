@@ -11,6 +11,7 @@ class EventShow extends React.Component {
     // this.findUser = this.findUser.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
+    this.convertDateTime = this.convertDateTime.bind(this);
   }
   componentDidMount(){
     this.props.fetchEvent(this.props.eventId);
@@ -21,16 +22,16 @@ class EventShow extends React.Component {
   //   return this.props.users[id].first_name;
   // }
 
-  handleSave(){
-    this.setState({savedColor: !this.state.borderColor});
+  handleSave(position){
 
     if (this.state.current_user_saved === false){
+
       this.props.createSavedEvent({
         user_id: this.props.current_user.id,
         event_id: this.props.event.id
       });
     } else {
-      // this.setState({savedColor: !this.state.borderColor});
+
       this.props.deleteSavedEvent(this.props.current_user.saved_events[this.props.event.id].saved_event_id);
     }
   }
@@ -42,13 +43,21 @@ class EventShow extends React.Component {
     });
   }
 
+  convertDateTime(dateTime){
+    const arr = dateTime.split(/-|T|:|\./);
+    const dateArr = new Date(arr[0], arr[1], arr[2],
+      arr[3], arr[4], arr[5]).toString().split(" ");
+    const timeArr = dateArr[4].split(":");
+    const newDate = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]} ${timeArr[0]}:${timeArr[1]}`;
+    return newDate.toUpperCase();
+  }
+
   render(){
     if (this.props.event === undefined){
       return null;
     } else {
       this.state = {
-        current_user_saved: this.props.event.current_user_saved,
-        savedColor: true
+        current_user_saved: this.props.event.current_user_saved
       };
 
     const attendees = this.props.event.attendees === undefined ?
@@ -66,6 +75,14 @@ class EventShow extends React.Component {
 
     let savedColor = this.state.savedColor ? "white" : "#0091DA";
 
+    let registerText = "REGISTER";
+    Object.values(this.props.current_user.tickets).map(ticket => {
+      if(ticket.event_id === this.props.event.id){
+        registerText = "REGISTER MORE TICKETS";
+      }
+    });
+
+    // debugger
     return (
       <div>
         <NavBarContainer/>
@@ -82,7 +99,7 @@ class EventShow extends React.Component {
 
             <div className="event-show-top-right-background">
               <div className="event-show-top-right">
-                <p>{this.props.event.start_date_time}</p>
+                <p>{this.convertDateTime(this.props.event.start_date_time)}</p>
                 <h1>{this.props.event.title}</h1>
                 <h3><a>by {this.props.event.organizer_name}</a></h3>
                 <span>{this.props.event.price}</span>
@@ -95,9 +112,10 @@ class EventShow extends React.Component {
               <div className="glyphicon"
                 value={this.state.current_user_saved}
                 onClick={this.handleSave}
-                style={{backgroundColor:this.state.savedColor}}
+
                 ></div>
-              <button onClick={this.handleRegister}>REGISTER</button>
+              <button onClick={this.handleRegister}>{registerText
+                }</button>
             </div>
           </div>
 
@@ -105,6 +123,8 @@ class EventShow extends React.Component {
             <div className="event-show-bottom-left">
               <h1>DESCRIPTION</h1>
               <p>{this.props.event.description}</p>
+              <br></br>
+              <br></br>
               <h1>TAGS</h1>
               <div className="event-show-tags">
                 <div>
@@ -123,8 +143,9 @@ class EventShow extends React.Component {
             <div className="event-show-bottom-right">
               <h1>DATE AND TIME</h1>
               <p>
-                {this.props.event.start_date_time} -
-                {this.props.event.end_date_time}
+                {this.convertDateTime(this.props.event.start_date_time)} -
+                <br></br>
+                {this.convertDateTime(this.props.event.end_date_time)}
               </p>
               <h1>LOCATION</h1>
               <p>

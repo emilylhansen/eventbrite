@@ -51,7 +51,7 @@
 
 .event-show-top-right h3{
   font-size: 18px;
-  font-weight: normal;
+  font-weight: 300;
   color: gray;
 }
 
@@ -102,6 +102,10 @@
   margin: 5px;
 }
 
+.event-show-tickets button:hover {
+  background-color: #1C5400;
+}
+
 .event-show-bottom {
   // border: 1px solid black;
   display: flex;
@@ -126,14 +130,28 @@
   padding-right: 50px;
 }
 
+.event-show-bottom-left p{
+  // border: 1px solid black;
+  width: 66%;
+  padding-right: 50px;
+  font-weight: 300;
+}
+
 .event-show-bottom-right {
   // border: 1px solid black;
   width: 34%;
 }
 
+.event-show-bottom-right p, .event-show-bottom-right ul li{
+  // border: 1px solid black;
+  color: #818488;
+  font-weight: 300;
+}
+
 .event-show-tags {
   display: flex;
   float: left;
+  margin-right: 10px;
 }
 
 .event-show-tags div{

@@ -9,6 +9,7 @@
 .event-form-create h1 {
   margin-top: 20px;
   color: gray;
+  font-weight: 100;
 }
 
 .event-form-step {
@@ -30,6 +31,10 @@
   width: 60%;
   margin: 0 auto;
   margin-top: 30px;
+}
+
+.event-form-main-page label{
+  font-weight: 400;
 }
 
 .event-form-main-page input, .event-form-main-page textarea{
@@ -61,6 +66,7 @@
   font-size: 40px;
   text-align: center;
   padding-top: 5px;
+  font-weight: 300;
 }
 
 .event-form-one h1,
@@ -69,6 +75,7 @@
   font-size: 30px;
   padding: 10px;
   color: gray;
+  font-weight: 300;
 }
 
 .event-form-timedates {
@@ -84,8 +91,8 @@
 
 .event-form-timedates-start-top input,
 .event-form-timedates-end-top input {
-  width: 30%;
-  margin-right: 20px;
+  width: 150px;
+  margin-right: 12px;
 }
 
 
@@ -129,4 +136,22 @@
   background-color: white;
   font-size: 18px;
   padding: 10px;
+}
+
+.event-topic-select {
+  margin-bottom: 50px;
+  height: 50px;
+  width: 50%;
+  border: 1px solid #E0E0E0;
+  color: gray;
+  font-weight: 300;
+}
+
+.event-type-select {
+  margin-bottom: 20px;
+  height: 50px;
+  width: 50%;
+  border: 1px solid #E0E0E0;
+  color: gray;
+  font-weight: 300;
 }

@@ -29,6 +29,10 @@ class EventIndex extends React.Component{
     }
   }
 
+  toggleSelections(field){
+    document.getElementById(field).classList.toggle("show");
+  }
+
   render(){
     const items = this.props.events.map(event => (
       <EventIndexItem
@@ -42,32 +46,32 @@ class EventIndex extends React.Component{
 
     let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
       return (
-        <div key={i}>
+
         <Link
+          key={i}
           to={{pathname: `/events/event-type/${eventType.name.split(" & ").join("-and-").toLowerCase()}`,
           state:{eventType: `${eventType.name}`}}}
           value={`${eventType.name}`} >
           {eventType.name}
         </Link>
 
-        <br></br>
-        </div>
+
       );
 
     });
 
     let categoryOpts = this.props.categories.map((category, i) => {
       return(
-        <div key={i}>
+
         <Link
+          key={i}
           to={{pathname: `/events/category/${category.name.split(" & ").join("-and-").toLowerCase()}`,
           state:{category: `${category.name}`}}}
           value={`${category.name}`} >
           {category.name}
         </Link>
 
-        <br></br>
-        </div>
+
       );
 
     });
@@ -79,13 +83,31 @@ class EventIndex extends React.Component{
 
       </div>
 
-      <div>
-        <div>
-          {eventTypeOpts}
-        </div>
-        <br></br>
-        <div>
-          {categoryOpts}
+      <div className="event-index-flex">
+
+      <div className="event-index-options-main">
+        <div className="event-index-options">
+          <div className="event-index-options-event-type">
+            <button onClick={(e) => this.toggleSelections("event-index-event-type-dropdown")}
+              className="event-index-event-type-btn">
+              EVENT TYPE</button>
+            <div id="event-index-event-type-dropdown"
+              className="event-index-event-type-dropdown-content"
+              >
+              {eventTypeOpts}
+            </div>
+          </div>
+          <br></br>
+          <div className="event-index-options-category">
+            <button onClick={(e) => this.toggleSelections("event-index-category-dropdown")}
+              className="event-index-category-btn">
+              CATEGORY</button>
+            <div id="event-index-category-dropdown"
+              className="event-index-category-dropdown-content"
+              >
+              {categoryOpts}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -108,6 +130,7 @@ class EventIndex extends React.Component{
             {items}
           </ul>
         </div>
+      </div>
       </div>
       </div>
     );

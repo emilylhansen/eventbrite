@@ -31,7 +31,7 @@ class UserEvents extends React.Component {
         <h2>
           {this.convertDateTime(event.start_date_time)}
         </h2>
-        <a href={`/#/events/${event.id}/edit`}>Edit</a>
+        <a href={`/#/events/${event.id}/edit`} className="user-events-list-edit">Edit</a>
       </li>
     ));
     return (
@@ -40,9 +40,9 @@ class UserEvents extends React.Component {
         <div className="user-events-main">
           <h1>Manage Events</h1>
 
-          <ul>
+          <ul className="user-events-live-list">
             <li>
-              LIVE
+              {`LIVE ${Object.values(this.props.currentUser.organized_events).length}`}
             </li>
           </ul>
 

@@ -8,8 +8,8 @@ class UserShow extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      active: null,
-      activeComponent: null
+      active: 1,
+      activeComponent: 1
     };
     this.toggleSelection = this.toggleSelection.bind(this);
     this.selectionColor = this.selectionColor.bind(this);

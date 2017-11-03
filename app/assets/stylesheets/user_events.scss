@@ -6,26 +6,68 @@
 }
 
 .user-events-main {
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 70%;
   margin-left: 200px;
   margin-top: 30px;
-  background-color: white;
   position: absolute;
   z-index: 2
 }
 
 .user-events-main h1 {
   text-align: left;
-  font-size: 40px;
+  font-size: 30px;
   padding-bottom: 30px;
 }
 
-.user-events-main ul {
+.user-events-live-list {
   border-bottom: 1px solid #E0E0E0;
 }
 
-.user-events-list ul li{
-  border-bottom: 1px solid black;
+.user-events-live-list li{
+  width: 60px;
+  border-bottom: 4px solid #0091DA;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 300;
+  padding-bottom: 5px;
+}
+
+.user-events-list li{
+  // border: 1px solid black;
   margin-top: 20px;
+  // padding-top: 10px;
+  background-color: white;
+  padding: 10px;
+}
+
+.user-events-list li a:first-child {
+  // border-bottom: 1px solid #0091DA;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #0091DA;
+  text-decoration:  none;
+}
+
+.user-events-list li h1 {
+  padding-bottom: 5px;
+}
+
+.user-events-list li h2 {
+  padding-bottom: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #989BA1;
+}
+
+
+.user-events-list-edit {
+  font-size: 14px;
+  font-weight: 300;
+  color: #989BA1;
+}
+
+.user-events-list-edit:hover {
+  color: #0091DA;
 }

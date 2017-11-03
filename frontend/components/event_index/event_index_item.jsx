@@ -58,10 +58,14 @@ const EventIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentUser
           </div>
 
           <div className="event-index-item-info-right">
-            <span>{`#${Object.values(event.category)[0].name}`} {`#${Object.values(event.eventType)[0].name}`}</span>
+            <div className="event-index-item-info-right-span">
+              <span>{`#${Object.values(event.category)[0].name}`} {`#${Object.values(event.eventType)[0].name}`}</span>
+            </div>
+            <div className="event-index-item-info-right-span-glyphicon">
             <div className="glyphicon"
               onClick={(e) => handleSave(event, createSavedEvent, deleteSavedEvent, currentUser)}
-              ></div>
+            ></div>
+            </div>
           </div>
         </div>
 

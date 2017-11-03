@@ -33,20 +33,22 @@ const handleSave = (event, createSavedEvent, deleteSavedEvent, currentUser) => {
     deleteSavedEvent(event.saved_event_id);
   }
 };
+// <p>{newPrice}</p>
 
 const UserShowIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentUser}) => {
   const newPrice = convertPrice(event.price);
   return (
-    <li className="user-index-item-li">
+    <div className="user-index-item-li">
       <div className="user-index-item-main">
         <div className="user-index-item-info-left">
-          <p>{newPrice}</p>
         </div>
 
           <div className="user-index-item-img-left">
-            <a>
-              <img src={event.avatar_url} />
-            </a>
+            <div className="user-index-item-img-left-inner">
+              <a>
+                <img src={event.avatar} />
+              </a>
+            </div>
           </div>
 
 
@@ -57,14 +59,18 @@ const UserShowIndexItem = ({ event, createSavedEvent, deleteSavedEvent, currentU
           </div>
 
           <div className="user-index-item-info-right">
-            <span>{`#${Object.values(event.category)[0].name}`} {`#${Object.values(event.eventType)[0].name}`}</span>
+            <div className="user-index-item-info-right-span-tags">
+              <span>{`#${Object.values(event.category)[0].name}`} {`#${Object.values(event.eventType)[0].name}`}</span>
+            </div>
+            <div className="user-index-item-info-right-glyph">
             <div className="glyphicon"
               onClick={(e) => handleSave(event, createSavedEvent, deleteSavedEvent, currentUser)}
-              ></div>
+            ></div>
+            </div>
           </div>
 
       </div>
-    </li>
+    </div>
   );
 };
 
