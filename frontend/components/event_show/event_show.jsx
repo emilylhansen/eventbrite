@@ -125,6 +125,15 @@ class EventShow extends React.Component {
               <p>{this.props.event.description}</p>
               <br></br>
               <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
               <h1>TAGS</h1>
               <div className="event-show-tags">
                 <div>
