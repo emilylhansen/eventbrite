@@ -32984,46 +32984,180 @@ var Homepage = function (_React$Component) {
               'div',
               { className: 'homepage-categories-one' },
               _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: { pathname: '/events/category/music' },
-                  value: 'Music' },
-                'Music'
+                'div',
+                { className: 'homepage-categories-one-top' },
+                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'homepage-categories-one-top-info' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: { pathname: '/events/category/music' },
+                      value: 'Music' },
+                    'Music'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'homepage-categories-one-top-text' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                    )
+                  )
+                )
               ),
               _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: { pathname: '/events/category/food-and-drink', state: { category: "Food & Drink" } },
-                  value: 'Food & Drink' },
-                'Food & Drink'
+                'div',
+                { className: 'homepage-categories-one-bottom' },
+                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'homepage-categories-one-bottom-info' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: { pathname: '/events/category/food-and-drink', state: { category: "Food & Drink" } },
+                      value: 'Food & Drink' },
+                    'Food & Drink'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'homepage-categories-one-bottom-text' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                    )
+                  )
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'homepage-categories-two' },
+              _react2.default.createElement(
+                'div',
+                { className: 'homepage-categories-two-top' },
+                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'homepage-categories-two-top-info' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: { pathname: '/events/category/classes', state: { category: "Classes" } },
+                      value: 'Classes' },
+                    'Classes'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'homepage-categories-two-top-text' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                    )
+                  )
+                )
               ),
               _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: { pathname: '/events/category/classes', state: { category: "Classes" } },
-                  value: 'Classes' },
-                'Classes'
+                'div',
+                { className: 'homepage-categories-two-middle' },
+                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'homepage-categories-two-middle-info' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: { pathname: '/events/category/arts', state: { category: "Arts" } },
+                      value: 'Arts' },
+                    'Arts'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'homepage-categories-two-middle-text' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                    )
+                  )
+                )
               ),
               _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: { pathname: '/events/category/arts', state: { category: "Arts" } },
-                  value: 'Arts' },
-                'Arts'
+                'div',
+                { className: 'homepage-categories-two-bottom' },
+                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'homepage-categories-two-bottom-info' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: { pathname: '/events/category/parties', state: { category: "Parties" } },
+                      value: 'Parties' },
+                    'Parties'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'homepage-categories-two-bottom-text' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                    )
+                  )
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'homepage-categories-three' },
+              _react2.default.createElement(
+                'div',
+                { className: 'homepage-categories-three-top' },
+                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'homepage-categories-three-top-info' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: { pathname: '/events/category/sports-and-wellness', state: { category: "Sports & Wellness" } },
+                      value: 'Sports & Wellness' },
+                    'Sports & Wellness'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'homepage-categories-three-top-text' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                    )
+                  )
+                )
               ),
               _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: { pathname: '/events/category/parties', state: { category: "Parties" } },
-                  value: 'Parties' },
-                'Parties'
-              ),
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: { pathname: '/events/category/sports-and-wellness', state: { category: "Sports & Wellness" } },
-                  value: 'Sports & Wellness' },
-                'Sports & Wellness'
-              ),
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: { pathname: '/events/category/networking', state: { category: "Networking" } },
-                  value: 'Networking' },
-                'Networking'
+                'div',
+                { className: 'homepage-categories-three-bottom' },
+                _react2.default.createElement('img', { src: window.img_outside }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'homepage-categories-three-bottom-info' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: { pathname: '/events/category/networking', state: { category: "Networking" } },
+                      value: 'Networking' },
+                    'Networking'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'homepage-categories-three-bottom-text' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                    )
+                  )
+                )
               )
             )
           )
