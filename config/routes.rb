@@ -14,7 +14,13 @@ Rails.application.routes.draw do
         get "search"
       end
     end
-    
+
+    resources :event_types do
+      collection do
+        get "search"
+      end
+    end
+
     resource :session, only: [:create, :destroy, :show]
     resources :events
     resources :categories, only: [:create, :show, :index]

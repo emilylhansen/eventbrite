@@ -124,7 +124,7 @@ export const fetchByCategory = category => dispatch => (
 )
 ;
 export const fetchByEventType = eventType => dispatch => (
-  EventApiUtil.fetchByCategory(eventType).then(
+  EventApiUtil.fetchByEventType(eventType).then(
     events => dispatch(receiveEvents(events))
   )
 );

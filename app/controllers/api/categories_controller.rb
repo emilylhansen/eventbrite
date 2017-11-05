@@ -32,6 +32,7 @@ class Api::CategoriesController < ApplicationController
   end
 
   def search
+    
     hash = {
     "business" => "Business",
     "music" => "Music",

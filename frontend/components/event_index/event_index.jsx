@@ -12,9 +12,10 @@ class EventIndex extends React.Component{
     this.props.fetchEventTypes();
 
     if(this.props.match.params.categoryName){
-      // debugger
+      debugger
       this.props.fetchByCategory({name: this.props.match.params.categoryName});
     } else if (this.props.match.params.eventTypeName){
+      debugger
       this.props.fetchByEventType({name: this.props.match.params.eventTypeName});
     } else {
       this.props.fetchEvents();
@@ -22,6 +23,7 @@ class EventIndex extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
+    // debugger
     if(this.props.match.params.categoryName !== nextProps.match.params.categoryName){
       nextProps.fetchByCategory({name: nextProps.match.params.categoryName});
     } else if (this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName){
@@ -30,6 +32,7 @@ class EventIndex extends React.Component{
   }
 
   toggleSelections(field){
+    // debugger
     document.getElementById(field).classList.toggle("show");
   }
 
@@ -45,6 +48,7 @@ class EventIndex extends React.Component{
     ));
 
     let eventTypeOpts = this.props.eventTypes.map((eventType, i) => {
+      // debugger
       return (
 
         <Link
@@ -75,6 +79,7 @@ class EventIndex extends React.Component{
       );
 
     });
+
 
     return (
       <div className="event-index-main-page">

@@ -23,7 +23,6 @@ import EventShowContainer from './event_show/event_show_container';
 import TicketContainer from './ticket/ticket_container';
 import UserShowContainer from './user_show/user_show_container';
 import UserEventsContainer from './user_events/user_events_container';
-
 // <MyModal component={TicketContainer}
 //   modal={modal}
 //   closeModal={closeModal}/>

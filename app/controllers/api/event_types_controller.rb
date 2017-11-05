@@ -32,6 +32,7 @@ class Api::EventTypesController < ApplicationController
   end
 
   def search
+    debugger
     hash = {
       "class" => "Class",
       "party" => "Party",
@@ -55,8 +56,8 @@ class Api::EventTypesController < ApplicationController
       "rally" => "Rally"
     }
     eventType = EventType.find_by(name: hash[params[:eventType]])
-    @eventTypes = eventType.events
-    if @eventTypes
+    @events = eventType.events
+    if @events
       render "api/events/index"
     else
       render json: ["No events found for this event type"]

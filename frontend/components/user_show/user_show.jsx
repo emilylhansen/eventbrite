@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import NavBarContainer from '../nav_bar/nav_bar_container';
 import UserShowIndex from './user_show_index';
 import UserShowTicketIndex from './user_show_ticket_index';
+import PageFooter from "../footer/footer";
+
 
 class UserShow extends React.Component {
   constructor(props){
@@ -88,7 +90,6 @@ class UserShow extends React.Component {
             currentUser={this.props.currentUser}
             />
         </div>
-
         <div className="user-show-background"></div>
       </div>
     );

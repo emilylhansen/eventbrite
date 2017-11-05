@@ -26,6 +26,11 @@ class NavBar extends React.Component{
     :
     <li><a href="#/signin">SIGN IN</a></li>
 
+    const demo = this.props.currentUser ?
+    null
+    :
+    <li><button onClick={(e) => this.demoLogin(e)}>DEMO</button></li>;
+
     return (
       <header className="login-signup-header">
         <nav className="login-signup-nav">
@@ -36,7 +41,7 @@ class NavBar extends React.Component{
 
           <ul className="login-signup-header-list">
             <li><a href="/#/events">BROWSE EVENTS</a></li>
-            <li><button onClick={(e) => this.demoLogin(e)}>DEMO</button></li>
+            {demo}
             {signinLogout}
             <li><a href="/#/events/new">CREATE EVENT</a></li>
           </ul>

@@ -777,7 +777,7 @@ var fetchByCategory = exports.fetchByCategory = function fetchByCategory(categor
 };
 var fetchByEventType = exports.fetchByEventType = function fetchByEventType(eventType) {
   return function (dispatch) {
-    return EventApiUtil.fetchByCategory(eventType).then(function (events) {
+    return EventApiUtil.fetchByEventType(eventType).then(function (events) {
       return dispatch(receiveEvents(events));
     });
   };
@@ -25782,12 +25782,12 @@ var SessionReducer = function SessionReducer() {
     case _session_actions.RECEIVE_EMAIL:
       return (0, _merge2.default)({}, { email: action.email });
     case _event_actions.RECEIVE_SAVED_EVENT:
-      // debugger
+      debugger;
       newState = (0, _merge2.default)({}, oldState);
-      newState.currentUser.saved_events[action.savedEvent.event_id] = action.savedEvent;
+      newState.currentUser.saved_events = action.savedEvent.saved_events;
       return newState;
     case _event_actions.REMOVE_SAVED_EVENT:
-      // debugger
+      debugger;
       newState = (0, _merge2.default)({}, oldState);
       var eventId = void 0;
       Object.values(oldState.currentUser.saved_events).map(function (e) {
@@ -32836,6 +32836,18 @@ var NavBar = function (_React$Component) {
         )
       );
 
+      var demo = this.props.currentUser ? null : _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick(e) {
+              return _this2.demoLogin(e);
+            } },
+          'DEMO'
+        )
+      );
+
       return _react2.default.createElement(
         'header',
         { className: 'login-signup-header' },
@@ -32863,17 +32875,7 @@ var NavBar = function (_React$Component) {
                 'BROWSE EVENTS'
               )
             ),
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                'button',
-                { onClick: function onClick(e) {
-                    return _this2.demoLogin(e);
-                  } },
-                'DEMO'
-              )
-            ),
+            demo,
             signinLogout,
             _react2.default.createElement(
               'li',
@@ -32952,6 +32954,10 @@ var _reactRouterDom = __webpack_require__(1);
 var _nav_bar_container = __webpack_require__(13);
 
 var _nav_bar_container2 = _interopRequireDefault(_nav_bar_container);
+
+var _footer = __webpack_require__(263);
+
+var _footer2 = _interopRequireDefault(_footer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33185,7 +33191,8 @@ var Homepage = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement('div', { className: 'homepage-bottom' })
+        _react2.default.createElement('div', { className: 'homepage-bottom' }),
+        _react2.default.createElement(_footer2.default, null)
       );
     }
   }]);
@@ -34000,9 +34007,10 @@ var EventIndex = function (_React$Component) {
       this.props.fetchEventTypes();
 
       if (this.props.match.params.categoryName) {
-        // debugger
+        debugger;
         this.props.fetchByCategory({ name: this.props.match.params.categoryName });
       } else if (this.props.match.params.eventTypeName) {
+        debugger;
         this.props.fetchByEventType({ name: this.props.match.params.eventTypeName });
       } else {
         this.props.fetchEvents();
@@ -34011,6 +34019,7 @@ var EventIndex = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      // debugger
       if (this.props.match.params.categoryName !== nextProps.match.params.categoryName) {
         nextProps.fetchByCategory({ name: nextProps.match.params.categoryName });
       } else if (this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName) {
@@ -34020,6 +34029,7 @@ var EventIndex = function (_React$Component) {
   }, {
     key: 'toggleSelections',
     value: function toggleSelections(field) {
+      // debugger
       document.getElementById(field).classList.toggle("show");
     }
   }, {
@@ -34038,6 +34048,7 @@ var EventIndex = function (_React$Component) {
       });
 
       var eventTypeOpts = this.props.eventTypes.map(function (eventType, i) {
+        // debugger
         return _react2.default.createElement(
           _reactRouterDom.Link,
           {
@@ -34164,6 +34175,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -34172,127 +34185,165 @@ var _reactRouterDom = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var convertPrice = function convertPrice(price) {
-  var newPrice = price.toString().split(".");
-  if (price === 0) {
-    return "FREE";
-  } else if (newPrice.length === 1) {
-    return '$' + newPrice[0] + '.00';
-  } else if (newPrice[1].length === 1) {
-    return '$' + price.toString() + '0';
-  } else {
-    return '$' + price.toString();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EventIndexItem = function (_React$Component) {
+  _inherits(EventIndexItem, _React$Component);
+
+  function EventIndexItem(props) {
+    _classCallCheck(this, EventIndexItem);
+
+    var _this = _possibleConstructorReturn(this, (EventIndexItem.__proto__ || Object.getPrototypeOf(EventIndexItem)).call(this, props));
+
+    _this.convertPrice = _this.convertPrice.bind(_this);
+    _this.convertDateTime = _this.convertDateTime.bind(_this);
+    _this.handleSave = _this.handleSave.bind(_this);
+    return _this;
   }
-};
 
-var convertDateTime = function convertDateTime(dateTime) {
-  var arr = dateTime.split(/-|T|:|\./);
-  var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
-  var timeArr = dateArr[4].split(":");
-  var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
-  return newDate.toUpperCase();
-};
+  _createClass(EventIndexItem, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.event.current_user_saved) {
+        document.getElementById('' + this.props.event.id).classList.remove("fa-bookmark-o");
+        document.getElementById('' + this.props.event.id).classList.add("fa-bookmark");
+      }
+    }
+  }, {
+    key: 'convertPrice',
+    value: function convertPrice(price) {
+      var newPrice = price.toString().split(".");
+      if (price === 0) {
+        return "FREE";
+      } else if (newPrice.length === 1) {
+        return '$' + newPrice[0] + '.00';
+      } else if (newPrice[1].length === 1) {
+        return '$' + price.toString() + '0';
+      } else {
+        return '$' + price.toString();
+      }
+    }
+  }, {
+    key: 'convertDateTime',
+    value: function convertDateTime(dateTime) {
+      var arr = dateTime.split(/-|T|:|\./);
+      var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
+      var timeArr = dateArr[4].split(":");
+      var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
+      return newDate.toUpperCase();
+    }
+  }, {
+    key: 'handleSave',
+    value: function handleSave(e) {
+      // debugger
+      if (this.props.event.current_user_saved === false) {
+        document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
+        document.getElementById('' + e.target.id).classList.add("fa-bookmark");
+        this.props.createSavedEvent({ user_id: this.props.currentUser.id, event_id: e.target.id });
+      } else {
+        document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
+        document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
+        this.props.deleteSavedEvent(this.props.currentUser.saved_events[e.target.id].saved_event_id);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-var handleSave = function handleSave(event, createSavedEvent, deleteSavedEvent, currentUser) {
-  // debugger
-  if (event.current_user_saved === false) {
-    createSavedEvent({ user_id: currentUser.id, event_id: event.id });
-  } else {
-    deleteSavedEvent(currentUser.saved_events[event.id].saved_event_id);
-  }
-};
-
-var EventIndexItem = function EventIndexItem(_ref) {
-  var event = _ref.event,
-      createSavedEvent = _ref.createSavedEvent,
-      deleteSavedEvent = _ref.deleteSavedEvent,
-      currentUser = _ref.currentUser,
-      outer = _ref.outer,
-      history = _ref.history;
-
-  var newPrice = convertPrice(event.price);
-  return _react2.default.createElement(
-    'li',
-    { className: 'event-index-item-li' },
-    _react2.default.createElement(
-      'div',
-      { className: 'event-index-item-main' },
-      _react2.default.createElement(
-        'div',
-        { className: 'event-index-item-img' },
+      var newPrice = this.convertPrice(this.props.event.price);
+      return _react2.default.createElement(
+        'li',
+        { className: 'event-index-item-li' },
         _react2.default.createElement(
           'div',
-          { className: 'event-index-item-img-left' },
+          { className: 'event-index-item-main' },
           _react2.default.createElement(
-            'a',
-            null,
-            _react2.default.createElement('img', { src: event.avatar_url })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'event-index-item-img-right' },
-          _react2.default.createElement(
-            'h2',
-            null,
-            convertDateTime(event.start_date_time)
-          ),
-          _react2.default.createElement(
-            'h1',
-            null,
+            'div',
+            { className: 'event-index-item-img' },
             _react2.default.createElement(
-              'a',
-              { href: '/#/events/' + event.id },
-              event.title
+              'div',
+              { className: 'event-index-item-img-left' },
+              _react2.default.createElement(
+                'a',
+                null,
+                _react2.default.createElement('img', { src: this.props.event.avatar_url })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'event-index-item-img-right' },
+              _react2.default.createElement(
+                'h2',
+                null,
+                this.convertDateTime(this.props.event.start_date_time)
+              ),
+              _react2.default.createElement(
+                'h1',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: '/#/events/' + this.props.event.id },
+                  this.props.event.title
+                )
+              ),
+              _react2.default.createElement(
+                'h3',
+                null,
+                this.props.event.location
+              )
             )
           ),
           _react2.default.createElement(
-            'h3',
-            null,
-            event.location
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'event-index-item-info' },
-        _react2.default.createElement(
-          'div',
-          { className: 'event-index-item-info-left' },
-          _react2.default.createElement(
-            'p',
-            null,
-            newPrice
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'event-index-item-info-right' },
-          _react2.default.createElement(
             'div',
-            { className: 'event-index-item-info-right-span' },
+            { className: 'event-index-item-info' },
             _react2.default.createElement(
-              'span',
-              null,
-              '#' + Object.values(event.category)[0].name,
-              ' ',
-              '#' + Object.values(event.eventType)[0].name
+              'div',
+              { className: 'event-index-item-info-left' },
+              _react2.default.createElement(
+                'p',
+                null,
+                newPrice
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'event-index-item-info-right' },
+              _react2.default.createElement(
+                'div',
+                { className: 'event-index-item-info-right-span' },
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  '#' + Object.values(this.props.event.category)[0].name,
+                  ' ',
+                  '#' + Object.values(this.props.event.eventType)[0].name
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'event-index-item-info-right-span-glyphicon' },
+                _react2.default.createElement('i', { className: 'fa fa-bookmark-o',
+                  'aria-hidden': 'true',
+                  id: '' + this.props.event.id,
+                  onClick: function onClick(e) {
+                    return _this2.handleSave(e);
+                  }
+                })
+              )
             )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'event-index-item-info-right-span-glyphicon' },
-            _react2.default.createElement('div', { className: 'glyphicon',
-              onClick: function onClick(e) {
-                return handleSave(event, createSavedEvent, deleteSavedEvent, currentUser);
-              }
-            })
           )
         )
-      )
-    )
-  );
-};
+      );
+    }
+  }]);
+
+  return EventIndexItem;
+}(_react2.default.Component);
 
 exports.default = (0, _reactRouterDom.withRouter)(EventIndexItem);
 
@@ -34416,27 +34467,22 @@ var EventShow = function (_React$Component) {
   _createClass(EventShow, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+
       this.props.fetchEvent(this.props.eventId);
       this.props.fetchUsers();
     }
-
-    // findUser(id){
-    //   return this.props.users[id].first_name;
-    // }
-
   }, {
     key: 'handleSave',
-    value: function handleSave(position) {
+    value: function handleSave(e) {
 
-      if (this.state.current_user_saved === false) {
-
-        this.props.createSavedEvent({
-          user_id: this.props.current_user.id,
-          event_id: this.props.event.id
-        });
+      if (this.props.event.current_user_saved === false) {
+        document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
+        document.getElementById('' + e.target.id).classList.add("fa-bookmark");
+        this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
       } else {
-
-        this.props.deleteSavedEvent(this.props.current_user.saved_events[this.props.event.id].saved_event_id);
+        document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
+        document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
+        this.props.deleteSavedEvent(this.props.current_user.saved_events[e.target.id].saved_event_id);
       }
     }
   }, {
@@ -34464,6 +34510,14 @@ var EventShow = function (_React$Component) {
       if (this.props.event === undefined) {
         return null;
       } else {
+
+        if (document.getElementById('' + this.props.event.id)) {
+          if (this.props.event.current_user_saved) {
+            document.getElementById('' + this.props.event.id).classList.remove("fa-bookmark-o");
+            document.getElementById('' + this.props.event.id).classList.add("fa-bookmark");
+          }
+        }
+
         this.state = {
           current_user_saved: this.props.event.current_user_saved
         };
@@ -34487,7 +34541,6 @@ var EventShow = function (_React$Component) {
           }
         });
 
-        // debugger
         return _react2.default.createElement(
           'div',
           null,
@@ -34549,10 +34602,12 @@ var EventShow = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'event-show-tickets' },
-                _react2.default.createElement('div', { className: 'glyphicon',
-                  value: this.state.current_user_saved,
-                  onClick: this.handleSave
-
+                _react2.default.createElement('i', { className: 'fa fa-bookmark-o fa-lg',
+                  'aria-hidden': 'true',
+                  id: '' + this.props.event.id,
+                  onClick: function onClick(e) {
+                    return _this2.handleSave(e);
+                  }
                 }),
                 _react2.default.createElement(
                   'button',
@@ -34938,6 +34993,10 @@ var _user_show_ticket_index = __webpack_require__(259);
 
 var _user_show_ticket_index2 = _interopRequireDefault(_user_show_ticket_index);
 
+var _footer = __webpack_require__(263);
+
+var _footer2 = _interopRequireDefault(_footer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35166,6 +35225,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -35174,116 +35235,156 @@ var _reactRouterDom = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var convertPrice = function convertPrice(price) {
-  var newPrice = price.toString().split(".");
-  if (price === 0) {
-    return "FREE";
-  } else if (newPrice.length === 1) {
-    return '$' + newPrice[0] + '.00';
-  } else if (newPrice[1].length === 1) {
-    return '$' + price.toString() + '0';
-  } else {
-    return '$' + price.toString();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UserShowIndexItem = function (_React$Component) {
+  _inherits(UserShowIndexItem, _React$Component);
+
+  function UserShowIndexItem(props) {
+    _classCallCheck(this, UserShowIndexItem);
+
+    var _this = _possibleConstructorReturn(this, (UserShowIndexItem.__proto__ || Object.getPrototypeOf(UserShowIndexItem)).call(this, props));
+
+    _this.handleSave = _this.handleSave.bind(_this);
+    return _this;
   }
-};
 
-var convertDateTime = function convertDateTime(dateTime) {
-  var arr = dateTime.split(/-|T|:|\./);
-  var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
-  var timeArr = dateArr[4].split(":");
-  var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
-  return newDate.toUpperCase();
-};
+  _createClass(UserShowIndexItem, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // debugger
+      if (this.props.event.current_user_saved) {
+        document.getElementById('' + this.props.event.event_id).classList.remove("fa-bookmark-o");
+        document.getElementById('' + this.props.event.event_id).classList.add("fa-bookmark");
+      }
+    }
+  }, {
+    key: 'convertPrice',
+    value: function convertPrice(price) {
+      var newPrice = price.toString().split(".");
+      if (price === 0) {
+        return "FREE";
+      } else if (newPrice.length === 1) {
+        return '$' + newPrice[0] + '.00';
+      } else if (newPrice[1].length === 1) {
+        return '$' + price.toString() + '0';
+      } else {
+        return '$' + price.toString();
+      }
+    }
+  }, {
+    key: 'convertDateTime',
+    value: function convertDateTime(dateTime) {
+      var arr = dateTime.split(/-|T|:|\./);
+      var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
+      var timeArr = dateArr[4].split(":");
+      var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
+      return newDate.toUpperCase();
+    }
+  }, {
+    key: 'handleSave',
+    value: function handleSave(e) {
+      //  debugger
+      if (this.props.event.current_user_saved === false) {
+        document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
+        document.getElementById('' + e.target.id).classList.add("fa-bookmark");
+        this.props.createSavedEvent({ user_id: this.props.currentUser.id, event_id: e.target.id });
+      } else {
+        document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
+        document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
+        this.props.deleteSavedEvent(this.props.currentUser.saved_events[e.target.id].saved_event_id);
+      }
+    }
 
-var handleSave = function handleSave(event, createSavedEvent, deleteSavedEvent, currentUser) {
-  // debugger
-  if (event.current_user_saved === false) {
-    // debugger
-    createSavedEvent({ user_id: currentUser.id, event_id: event.event_id });
-  } else {
-    // debugger
-    deleteSavedEvent(event.saved_event_id);
-  }
-};
-// <p>{newPrice}</p>
+    // <p>{newPrice}</p>
 
-var UserShowIndexItem = function UserShowIndexItem(_ref) {
-  var event = _ref.event,
-      createSavedEvent = _ref.createSavedEvent,
-      deleteSavedEvent = _ref.deleteSavedEvent,
-      currentUser = _ref.currentUser;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-  var newPrice = convertPrice(event.price);
-  return _react2.default.createElement(
-    'div',
-    { className: 'user-index-item-li' },
-    _react2.default.createElement(
-      'div',
-      { className: 'user-index-item-main' },
-      _react2.default.createElement('div', { className: 'user-index-item-info-left' }),
-      _react2.default.createElement(
+      // debugger
+      var newPrice = this.convertPrice(this.props.event.price);
+      return _react2.default.createElement(
         'div',
-        { className: 'user-index-item-img-left' },
+        { className: 'user-index-item-li' },
         _react2.default.createElement(
           'div',
-          { className: 'user-index-item-img-left-inner' },
+          { className: 'user-index-item-main' },
+          _react2.default.createElement('div', { className: 'user-index-item-info-left' }),
           _react2.default.createElement(
-            'a',
-            null,
-            _react2.default.createElement('img', { src: event.avatar })
+            'div',
+            { className: 'user-index-item-img-left' },
+            _react2.default.createElement(
+              'div',
+              { className: 'user-index-item-img-left-inner' },
+              _react2.default.createElement(
+                'a',
+                null,
+                _react2.default.createElement('img', { src: this.props.event.avatar })
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'user-index-item-img-right' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              this.convertDateTime(this.props.event.start_date_time)
+            ),
+            _react2.default.createElement(
+              'h1',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: '/#/events/' + this.props.event.event_id },
+                this.props.event.title
+              )
+            ),
+            _react2.default.createElement(
+              'h3',
+              null,
+              this.props.event.location
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'user-index-item-info-right' },
+            _react2.default.createElement(
+              'div',
+              { className: 'user-index-item-info-right-span-tags' },
+              _react2.default.createElement(
+                'span',
+                null,
+                '#' + Object.values(this.props.event.category)[0].name,
+                ' ',
+                '#' + Object.values(this.props.event.eventType)[0].name
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'user-index-item-info-right-glyph' },
+              _react2.default.createElement('i', { className: 'fa fa-bookmark-o',
+                'aria-hidden': 'true',
+                id: '' + this.props.event.event_id,
+                onClick: function onClick(e) {
+                  return _this2.handleSave(e);
+                }
+              })
+            )
           )
         )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'user-index-item-img-right' },
-        _react2.default.createElement(
-          'h2',
-          null,
-          convertDateTime(event.start_date_time)
-        ),
-        _react2.default.createElement(
-          'h1',
-          null,
-          _react2.default.createElement(
-            'a',
-            { href: '/#/events/' + event.event_id },
-            event.title
-          )
-        ),
-        _react2.default.createElement(
-          'h3',
-          null,
-          event.location
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'user-index-item-info-right' },
-        _react2.default.createElement(
-          'div',
-          { className: 'user-index-item-info-right-span-tags' },
-          _react2.default.createElement(
-            'span',
-            null,
-            '#' + Object.values(event.category)[0].name,
-            ' ',
-            '#' + Object.values(event.eventType)[0].name
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'user-index-item-info-right-glyph' },
-          _react2.default.createElement('div', { className: 'glyphicon',
-            onClick: function onClick(e) {
-              return handleSave(event, createSavedEvent, deleteSavedEvent, currentUser);
-            }
-          })
-        )
-      )
-    )
-  );
-};
+      );
+    }
+  }]);
+
+  return UserShowIndexItem;
+}(_react2.default.Component);
 
 exports.default = (0, _reactRouterDom.withRouter)(UserShowIndexItem);
 
@@ -35580,6 +35681,83 @@ var UserEvents = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = UserEvents;
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PageFooter = function PageFooter() {
+  return _react2.default.createElement(
+    "div",
+    { className: "footer-main" },
+    _react2.default.createElement("div", { className: "footer-top" }),
+    _react2.default.createElement(
+      "div",
+      { className: "footer-bottom" },
+      _react2.default.createElement(
+        "div",
+        { className: "footer-bottom-links" },
+        _react2.default.createElement(
+          "nav",
+          null,
+          _react2.default.createElement(
+            "a",
+            { href: "https://www.facebook.com/Eventbrite" },
+            "Facebook"
+          ),
+          _react2.default.createElement(
+            "a",
+            { href: "https://twitter.com/eventbrite" },
+            "Twitter"
+          ),
+          _react2.default.createElement(
+            "a",
+            { href: "https://www.linkedin.com/company/eventbrite/" },
+            "LinkedIn"
+          ),
+          _react2.default.createElement(
+            "a",
+            { href: "https://www.instagram.com/eventbrite/" },
+            "Instagram"
+          )
+        )
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "footer-bottom-logo" },
+        _react2.default.createElement(
+          "div",
+          null,
+          "E"
+        )
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "footer-bottom-name" },
+        _react2.default.createElement(
+          "footer",
+          null,
+          "\xA9 2017 Happeningbrite"
+        )
+      )
+    )
+  );
+};
+
+exports.default = PageFooter;
 
 /***/ })
 /******/ ]);
