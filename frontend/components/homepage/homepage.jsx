@@ -30,8 +30,8 @@ class Homepage extends React.Component{
               <div className="homepage-categories-one-top">
                 <img src={window.img_music}/>
                 <div className="homepage-categories-one-top-info">
-                  <Link to={{pathname: `/events/category/music`}}
-                    value="Music" >Music</Link>
+                    <Link to={{pathname: `/events/category/music`}}
+                      value="Music" >Music</Link>
                   <div className="homepage-categories-one-top-text">
                     <p>
                       Intimate house concerts, major music festivals, and the occasional dance party

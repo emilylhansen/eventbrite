@@ -54,6 +54,7 @@
   justify-content: space-between;
 }
 
+// -------------------------------------
 .homepage-categories-one {
   display: flex;
   height: 220px;
@@ -77,25 +78,39 @@
 .homepage-categories-one-top-info {
   position: absolute;
   z-index: 100;
-  left: 300px;
-  top: 90px;
+  top: 100px;
   color:white;
+  // border: 1px solid black;
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
+  width: 100%;
 }
 
-.homepage-categories-one-top-info a{
-  font-size: 25px;
 
+.homepage-categories-one-top-info a{
+  // position: absolute;
+  font-size: 25px;
+  // border: 1px solid black;
 }
 
 .homepage-categories-one-top-info p{
   font-size: 14px;
   font-weight: 300;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-one-top-text {
+  // border: 1px solid black;
+  position: absolute;
   display: none;
   align-content: center;
   text-align: center;
+  margin: 0 auto;
+  width:100%;
+
+
 }
 
 .homepage-categories-one-top:hover
@@ -130,9 +145,12 @@
 .homepage-categories-one-bottom-info {
   position: absolute;
   z-index: 100;
-  right: 90px;
-  top: 90px;
+  top: 100px;
   color:white;
+  width:100%;
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
 }
 
 .homepage-categories-one-bottom-info a{
@@ -142,10 +160,19 @@
 .homepage-categories-one-bottom-info p{
   font-size: 14px;
   font-weight: 300;
+  width:100%;
+  text-align: center;
+
 }
 
 .homepage-categories-one-bottom-text {
+  position: absolute;
   display: none;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width:100%;
+
 }
 
 .homepage-categories-one-bottom:hover
@@ -187,9 +214,12 @@
 .homepage-categories-two-top-info {
   position: absolute;
   z-index: 100;
-  right: 100px;
-  top: 90px;
+  top: 100px;
   color:white;
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-two-top-info a{
@@ -199,10 +229,17 @@
 .homepage-categories-two-top-info p{
   font-size: 14px;
   font-weight: 300;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-two-top-text {
+  position: absolute;
   display: none;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width:100%;
 }
 
 .homepage-categories-two-top:hover
@@ -236,9 +273,12 @@
 .homepage-categories-two-middle-info {
   position: absolute;
   z-index: 100;
-  left: 130px;
   top: 100px;
   color:white;
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-two-middle-info a{
@@ -247,13 +287,19 @@
 }
 
 .homepage-categories-two-middle-info p{
-
   font-size: 14px;
   font-weight: 300;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-two-middle-text {
+  position: absolute;
   display: none;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width:100%;
 }
 
 .homepage-categories-two-middle:hover
@@ -286,9 +332,12 @@
 .homepage-categories-two-bottom-info {
   position: absolute;
   z-index: 100;
-  left: 110px;
   top: 100px;
   color:white;
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 
@@ -298,13 +347,19 @@
 }
 
 .homepage-categories-two-bottom-info p{
-
   font-size: 14px;
   font-weight: 300;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-two-bottom-text {
+  position: absolute;
   display: none;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width:100%;
 }
 
 .homepage-categories-two-bottom:hover
@@ -348,9 +403,12 @@
 .homepage-categories-three-top-info {
   position: absolute;
   z-index: 100;
-  left: 70px;
-  top: 90px;
+  top: 100px;
   color:white;
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-three-top-info a{
@@ -359,13 +417,19 @@
 }
 
 .homepage-categories-three-top-info p{
-
   font-size: 14px;
   font-weight: 300;
+  text-align: center;
+  width: 100%;
 }
 
 .homepage-categories-three-top-text {
+  position: absolute;
   display: none;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width:100%;
 }
 
 .homepage-categories-three-top:hover
@@ -400,9 +464,12 @@
 .homepage-categories-three-bottom-info {
   position: absolute;
   z-index: 100;
-  left: 250px;
   top: 100px;
   color:white;
+  width:100%;
+  margin: 0 auto;
+  align-content: center;
+  text-align: center;
 }
 
 .homepage-categories-three-bottom-info a{
@@ -411,13 +478,19 @@
 }
 
 .homepage-categories-three-bottom-info p{
-  
   font-size: 14px;
   font-weight: 300;
+  width:100%;
+  text-align: center;
 }
 
 .homepage-categories-three-bottom-text {
+  position: absolute;
   display: none;
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width:100%;
 }
 
 .homepage-categories-three-bottom:hover
