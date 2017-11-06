@@ -1,24 +1,8 @@
-# README
+**Happeningbrite** is a platform that allows event organizers to plan, promote, and sell tickets to events.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Features
+⋅⋅* Create and edit events
+..* Bookmark events
+..* Purchase event tickets 
+..* Sort events by category or event type
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
