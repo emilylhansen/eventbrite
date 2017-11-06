@@ -77,7 +77,7 @@ class UserShowIndexItem extends React.Component {
                 <span>{`#${Object.values(this.props.event.category)[0].name}`} {`#${Object.values(this.props.event.eventType)[0].name}`}</span>
               </div>
               <div className="user-index-item-info-right-glyph">
-                <i className="fa fa-bookmark-o"
+                <i className="fa fa-bookmark-o lg"
                    aria-hidden="true"
                    id={`${this.props.event.event_id}`}
                    onClick={(e) => this.handleSave(e)}

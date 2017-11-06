@@ -66,34 +66,25 @@
   width: 75%;
   background-color: white;
   display: flex;
+  justify-content: space-between;
+
 }
 
-.event-index-item-info-right-span div:first-child {
-  float:left;
-  font-size: 12px;
-  border-right: 1px solid #E0E0E0;
-  height: 100%;
-  padding-left: 10px;
-  margin-left: 10px;
+.event-index-item-info-right-span {
+  // border: 1px solid black;
+  float: left;
+  padding: 10px 10px 0px 10px;
+  color: #707378;
+  font-size: 13px;
+  font-weight: 100;
 }
 
-.event-index-item-info-right-span div:last-child {
-  float:right;
-  text-align: right;
-}
-
-.event-index-item-info-right span:first-child{
-  padding-top: 20px;
-  // padding-bottom: 20px;
-  // padding-right: 430px;
-}
-
-.event-index-item-info-right span:last-child{
-  font-size: 16px;
-  float:right;
-  padding: 5px;
+.event-index-item-info-right-span-glyphicon {
+  // border: 1px solid black;
+  float: right;
+  padding: 10px 10px 0px 10px;
   border-left: 1px solid #E0E0E0;
-  height: 100%;
+
 }
 
 .fa-bookmark-o {

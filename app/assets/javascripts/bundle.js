@@ -34382,14 +34382,14 @@ var EventIndexItem = function (_React$Component) {
                   'span',
                   null,
                   '#' + Object.values(this.props.event.category)[0].name,
-                  ' ',
+                  '\xA0\xA0\xA0\xA0',
                   '#' + Object.values(this.props.event.eventType)[0].name
                 )
               ),
               _react2.default.createElement(
                 'div',
                 { className: 'event-index-item-info-right-span-glyphicon' },
-                _react2.default.createElement('i', { className: 'fa fa-bookmark-o',
+                _react2.default.createElement('i', { className: 'fa fa-bookmark-o fa-lg',
                   'aria-hidden': 'true',
                   id: '' + this.props.event.id,
                   onClick: function onClick(e) {
@@ -34664,17 +34664,25 @@ var EventShow = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'event-show-tickets' },
-                _react2.default.createElement('i', { className: 'fa fa-bookmark-o fa-lg',
-                  'aria-hidden': 'true',
-                  id: '' + this.props.event.id,
-                  onClick: function onClick(e) {
-                    return _this2.handleSave(e);
-                  }
-                }),
                 _react2.default.createElement(
-                  'button',
-                  { onClick: this.handleRegister },
-                  registerText
+                  'div',
+                  { className: 'event-show-tickets-top' },
+                  _react2.default.createElement('i', { className: 'fa fa-bookmark-o fa-lg',
+                    'aria-hidden': 'true',
+                    id: '' + this.props.event.id,
+                    onClick: function onClick(e) {
+                      return _this2.handleSave(e);
+                    }
+                  })
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'event-show-tickets-bottom' },
+                  _react2.default.createElement(
+                    'button',
+                    { onClick: this.handleRegister },
+                    registerText
+                  )
                 )
               )
             ),
@@ -35425,7 +35433,7 @@ var UserShowIndexItem = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'user-index-item-info-right-glyph' },
-              _react2.default.createElement('i', { className: 'fa fa-bookmark-o',
+              _react2.default.createElement('i', { className: 'fa fa-bookmark-o lg',
                 'aria-hidden': 'true',
                 id: '' + this.props.event.event_id,
                 onClick: function onClick(e) {
@@ -35566,7 +35574,7 @@ var UserShowTicketIndexItem = function UserShowTicketIndexItem(_ref) {
           null,
           _react2.default.createElement(
             'a',
-            { src: '/#/events/' + ticket.id },
+            { href: '/#/events/' + ticket.event_id },
             ticket.title
           )
         ),

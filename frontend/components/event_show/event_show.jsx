@@ -114,13 +114,18 @@ class EventShow extends React.Component {
 
             <div className="event-show-tickets-background">
               <div className="event-show-tickets">
-                <i className="fa fa-bookmark-o fa-lg"
-                   aria-hidden="true"
-                   id={`${this.props.event.id}`}
-                   onClick={(e) => this.handleSave(e)}
-                ></i>
-                <button onClick={this.handleRegister}>{registerText
-                  }</button>
+                <div className="event-show-tickets-top">
+                  <i className="fa fa-bookmark-o fa-lg"
+                    aria-hidden="true"
+                    id={`${this.props.event.id}`}
+                    onClick={(e) => this.handleSave(e)}
+                    ></i>
+                </div>
+                <div className="event-show-tickets-bottom">
+                  <button onClick={this.handleRegister}>
+                    {registerText}
+                  </button>
+                </div>
               </div>
             </div>
 

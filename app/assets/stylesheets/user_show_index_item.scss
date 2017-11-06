@@ -49,21 +49,24 @@
   display: flex;
   align-content: center;
   text-align: center;
+  justify-content: space-between;
+
 }
 
-.user-index-item-info-right div:first-child{
-  // height: 35px;
-  padding-top: 10px;
-  margin-left: 10px;
-  // padding-right: 180px;
+.user-index-item-info-right-span-tags{
+  float: left;
+  padding: 14px 10px 0px 10px;
+  color: #707378;
+  font-size: 13px;
+  font-weight: 100;
+  // border: 1px solid black;
 }
 
-.user-index-item-info-right div:last-child{
+.user-index-item-info-right-glyph{
+  // border: 1px solid black;
+  float: right;
+  padding: 14px 10px 14px 10px;
   border-left: 1px solid #E0E0E0;
-  // margin-top: 10px;
-  // margin-left: 10px;
-  text-align: right;
-  float:right;
 
 }
 
@@ -75,23 +78,4 @@
   overflow: hidden;
   width: 100%;
   // position:absolute;
-}
-
-.user-index-item-img-left-inner {
-
-}
-
-.user-index-item-info-left {
-  // position: relative;
-  // z-index: 100;
-  // background-color: white;
-  // opacity: .8;
-  // padding: 5px;
-  // padding-bottom: 5px;
-  // float: right;
-  // height: 15px;
-  // font-size: 14px;
-  // text-align: center;
-  // margin: 10px;
-  // opacity: .8;
 }

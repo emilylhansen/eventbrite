@@ -11,7 +11,7 @@ const convertDateTime = dateTime => {
 };
 
 const UserShowTicketIndexItem = ({ticket, currentUser}) => {
-  
+
   return (
     <li className="user-show-ticket-index-item-li">
       <div className="user-show-ticket-index-item-main">
@@ -27,7 +27,7 @@ const UserShowTicketIndexItem = ({ticket, currentUser}) => {
           <h2>{convertDateTime(ticket.start_date_time)}</h2>
 
           <h1>
-            <a src={`/#/events/${ticket.id}`}>
+            <a href={`/#/events/${ticket.event_id}`}>
               {ticket.title}
             </a>
           </h1>

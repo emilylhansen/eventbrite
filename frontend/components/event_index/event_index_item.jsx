@@ -77,10 +77,12 @@ class EventIndexItem extends React.Component {
 
             <div className="event-index-item-info-right">
               <div className="event-index-item-info-right-span">
-                <span>{`#${Object.values(this.props.event.category)[0].name}`} {`#${Object.values(this.props.event.eventType)[0].name}`}</span>
+                <span>{`#${Object.values(this.props.event.category)[0].name}`}
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  {`#${Object.values(this.props.event.eventType)[0].name}`}</span>
               </div>
               <div className="event-index-item-info-right-span-glyphicon">
-                <i className="fa fa-bookmark-o"
+                <i className="fa fa-bookmark-o fa-lg"
                    aria-hidden="true"
                    id={`${this.props.event.id}`}
                    onClick={(e) => this.handleSave(e)}
