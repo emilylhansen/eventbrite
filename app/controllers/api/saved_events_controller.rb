@@ -1,7 +1,6 @@
 class Api::SavedEventsController < ApplicationController
 
   def create
-    debugger
     @user = current_user
     @savedEvent = SavedEvent.new(saved_event_params)
     if @savedEvent.save
@@ -22,7 +21,7 @@ class Api::SavedEventsController < ApplicationController
   end
 
   def destroy
-    debugger
+    
     @user = current_user
     @savedEvent = SavedEvent.find(params[:id])
     @savedEvent.destroy

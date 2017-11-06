@@ -10,6 +10,8 @@ import {
 } from 'react-router-dom';
 
 import { closeModal } from '../actions/modal_actions';
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
+
 
 import MyModal from './myModal';
 import SessionFormContainer from './session_form/session_form_container';
@@ -36,11 +38,11 @@ const App = () => (
       <Route exact path="/events" component={EventIndexContainer}/>
       <Route exact path="/events/category/:categoryName" component={EventIndexContainer}/>
       <Route exact path="/events/event-type/:eventTypeName" component={EventIndexContainer}/>
-      <Route exact path="/events/new" component={EventFormContainer}/>
+      <ProtectedRoute exact path="/events/new" component={EventFormContainer}/>
       <Route exact path="/events/:eventId" component={EventShowContainer}/>
-      <Route exact path="/events/:eventId/edit" component={EventFormContainer}/>
-      <Route exact path="/users/:userId" component={UserShowContainer}/>
-      <Route exact path="/myevents" component={UserEventsContainer}/>
+      <ProtectedRoute exact path="/events/:eventId/edit" component={EventFormContainer}/>
+      <ProtectedRoute exact path="/users/:userId" component={UserShowContainer}/>
+      <ProtectedRoute exact path="/myevents" component={UserEventsContainer}/>
       <Route path="/" component={HomepageContainer}/>
     </Switch>
   </div>

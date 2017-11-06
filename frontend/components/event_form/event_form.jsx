@@ -67,7 +67,6 @@ class EventForm extends React.Component {
   }
 
   findCategoryId(){
-    // debugger
     for(let i = 0; i < this.props.categories.length; i++){
       if (this.props.categories[i].name === this.category){
         return this.props.categories[i].id;
@@ -76,7 +75,6 @@ class EventForm extends React.Component {
   }
 
   findEventTypeId(){
-    // debugger
     for(let i = 0; i < this.props.eventTypes.length; i++){
       if (this.props.eventTypes[i].name === this.eventType){
         return this.props.eventTypes[i].id;
@@ -94,7 +92,6 @@ class EventForm extends React.Component {
   }
 
   handleSubmit(e){
-    // debugger
     e.preventDefault();
 
     this.combineDateTime();
@@ -120,7 +117,6 @@ class EventForm extends React.Component {
 
     const category_id = this.findCategoryId();
     const event_type_id = this.findEventTypeId();
-    // debugger
     if(this.props.match.path === '/events/new'){
       this.props.action(formData, this.goBack).then(
         ({event}) => {

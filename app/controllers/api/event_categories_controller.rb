@@ -6,7 +6,6 @@ class Api::EventCategoriesController < ApplicationController
   end
 
   def create
-    # debugger
     @eventCategory = EventCategory.new(eventCategory_params)
     if @eventCategory.save
       render :show

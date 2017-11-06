@@ -32,7 +32,7 @@ class Api::EventTypesController < ApplicationController
   end
 
   def search
-    debugger
+    
     hash = {
       "class" => "Class",
       "party" => "Party",

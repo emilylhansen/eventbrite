@@ -20,7 +20,6 @@ class Api::UsersController < ApplicationController
   end
 
   def email_exists
-    # debugger
     user = User.find_by(email: params[:user][:email])
     if user
       render json: {exist: true}

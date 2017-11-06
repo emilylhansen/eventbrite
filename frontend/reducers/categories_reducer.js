@@ -4,7 +4,6 @@ import {RECEIVE_CATEGORIES} from '../actions/category_actions';
 
 
 const CategoriesReducer = (oldState={}, action) => {
-  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_CATEGORIES:

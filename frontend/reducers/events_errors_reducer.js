@@ -2,7 +2,6 @@ import merge from 'lodash/merge';
 import {RECEIVE_ERRORS} from '../actions/session_actions';
 
 const EventsErrorsReducer = (oldState=[], action) => {
-  // debugger
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_ERRORS:

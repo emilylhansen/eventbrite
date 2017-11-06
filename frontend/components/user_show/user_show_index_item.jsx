@@ -9,7 +9,6 @@ class UserShowIndexItem extends React.Component {
   }
 
   componentDidMount(){
-    // debugger
     if(this.props.event.current_user_saved){
       document.getElementById(`${this.props.event.event_id}`).classList.remove("fa-bookmark-o");
       document.getElementById(`${this.props.event.event_id}`).classList.add("fa-bookmark");
@@ -39,7 +38,6 @@ class UserShowIndexItem extends React.Component {
   }
 
   handleSave(e){
-    //  debugger
      if (this.props.event.current_user_saved === false){
        document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark-o");
        document.getElementById(`${e.target.id}`).classList.add("fa-bookmark");
@@ -51,9 +49,7 @@ class UserShowIndexItem extends React.Component {
      }
    }
 
-  // <p>{newPrice}</p>
   render(){
-    // debugger
     const newPrice = this.convertPrice(this.props.event.price);
     return (
       <div className="user-index-item-li">
