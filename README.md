@@ -37,15 +37,15 @@ The front end is built completely in React.js/Redux and JavaScript. React's virt
     
 ### Code Guide 
 If you'd like to take a closer look at the code behind Eventbrite, the best folders to link in are: 
-* root.jsx 
+* [root.jsx] (https://github.com/emilylhansen/eventbrite/blob/master/frontend/components/root.jsx)
     * using React Router to keep UI in sync with the URL 
-* React components 
-    * consists of App as a top component, 
-* Rails controllers 
-* Api Util 
+* [React components] (https://github.com/emilylhansen/eventbrite/tree/master/frontend/components)
+    * consists of [App] (https://github.com/emilylhansen/eventbrite/blob/master/frontend/components/App.jsx) as a top component, [Auth Form] (https://github.com/emilylhansen/eventbrite/blob/master/frontend/components/session_form), [Event Show] (https://github.com/emilylhansen/eventbrite/blob/master/frontend/components/event_show), and [User Show] (https://github.com/emilylhansen/eventbrite/blob/master/frontend/components/user_show).
+* [Rails controllers] (https://github.com/emilylhansen/eventbrite/tree/master/app/controllers)
+* [Api Util] (https://github.com/emilylhansen/eventbrite/tree/master/frontend/util)
   * handles all ajax requests 
-* DB Schema 
-* Rails Routes 
+* [DB Schema] (https://github.com/emilylhansen/eventbrite/blob/master/db/schema.rb)
+* [Rails Routes] (https://github.com/emilylhansen/eventbrite/blob/master/config/routes.rb) 
 
 ### Primary Components 
 **User Authorization**
