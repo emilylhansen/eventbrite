@@ -335,8 +335,8 @@ category16 = Category.create!(name: "Spirituality")
 category17 = Category.create!(name: "Travel & Outdoor")
 category18 = Category.create!(name: "Home & Lifestyle")
 category19 = Category.create!(name: "Government")
-category20 = Category.create!(name: "Auto, Boat & Air")
-category21 = Category.create!(name: "School Activities")
+# category20 = Category.create!(name: "Auto, Boat & Air")
+# category21 = Category.create!(name: "School Activities")
 
 EventType.destroy_all
 

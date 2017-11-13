@@ -39,10 +39,11 @@ class EventIndexItem extends React.Component {
   }
 
   handleSave(e){
+    debugger
     if (this.props.event.current_user_saved === false){
       document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark-o");
       document.getElementById(`${e.target.id}`).classList.add("fa-bookmark");
-      this.props.createSavedEvent({user_id: this.props.currentUser.id, event_id: e.target.id});
+      this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: e.target.id});
     } else {
       document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark");
       document.getElementById(`${e.target.id}`).classList.add("fa-bookmark-o");

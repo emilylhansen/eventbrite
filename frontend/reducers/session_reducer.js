@@ -37,7 +37,7 @@ const SessionReducer = (oldState=defaultState, action) => {
         eventId = e.event_id;
       }
     });
-    delete oldState.currentUser.saved_events[eventId];
+    delete newState.currentUser.saved_events[eventId];
     return newState;
     case RECEIVE_TICKET:
     newState = merge({}, oldState);

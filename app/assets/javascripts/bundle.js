@@ -25870,7 +25870,7 @@ var SessionReducer = function SessionReducer() {
           eventId = e.event_id;
         }
       });
-      delete oldState.currentUser.saved_events[eventId];
+      delete newState.currentUser.saved_events[eventId];
       return newState;
     case _event_actions.RECEIVE_TICKET:
       newState = (0, _merge2.default)({}, oldState);
@@ -34350,10 +34350,11 @@ var EventIndexItem = function (_React$Component) {
   }, {
     key: 'handleSave',
     value: function handleSave(e) {
+      debugger;
       if (this.props.event.current_user_saved === false) {
         document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
         document.getElementById('' + e.target.id).classList.add("fa-bookmark");
-        this.props.createSavedEvent({ user_id: this.props.currentUser.id, event_id: e.target.id });
+        this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
       } else {
         document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
         document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
