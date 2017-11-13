@@ -982,7 +982,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _session_actions = __webpack_require__(7);
 
-var _nav_bar = __webpack_require__(244);
+var _nav_bar = __webpack_require__(245);
 
 var _nav_bar2 = _interopRequireDefault(_nav_bar);
 
@@ -31996,21 +31996,21 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _modal_actions = __webpack_require__(34);
 
-var _route_util = __webpack_require__(264);
+var _route_util = __webpack_require__(237);
 
-var _myModal = __webpack_require__(237);
+var _myModal = __webpack_require__(238);
 
 var _myModal2 = _interopRequireDefault(_myModal);
 
-var _session_form_container = __webpack_require__(238);
+var _session_form_container = __webpack_require__(239);
 
 var _session_form_container2 = _interopRequireDefault(_session_form_container);
 
-var _session_form_login_container = __webpack_require__(240);
+var _session_form_login_container = __webpack_require__(241);
 
 var _session_form_login_container2 = _interopRequireDefault(_session_form_login_container);
 
-var _session_form_signup_container = __webpack_require__(242);
+var _session_form_signup_container = __webpack_require__(243);
 
 var _session_form_signup_container2 = _interopRequireDefault(_session_form_signup_container);
 
@@ -32018,31 +32018,31 @@ var _nav_bar_container = __webpack_require__(13);
 
 var _nav_bar_container2 = _interopRequireDefault(_nav_bar_container);
 
-var _homepage_container = __webpack_require__(245);
+var _homepage_container = __webpack_require__(246);
 
 var _homepage_container2 = _interopRequireDefault(_homepage_container);
 
-var _event_form_container = __webpack_require__(247);
+var _event_form_container = __webpack_require__(248);
 
 var _event_form_container2 = _interopRequireDefault(_event_form_container);
 
-var _event_index_container = __webpack_require__(249);
+var _event_index_container = __webpack_require__(250);
 
 var _event_index_container2 = _interopRequireDefault(_event_index_container);
 
-var _event_show_container = __webpack_require__(252);
+var _event_show_container = __webpack_require__(253);
 
 var _event_show_container2 = _interopRequireDefault(_event_show_container);
 
-var _ticket_container = __webpack_require__(254);
+var _ticket_container = __webpack_require__(255);
 
 var _ticket_container2 = _interopRequireDefault(_ticket_container);
 
-var _user_show_container = __webpack_require__(256);
+var _user_show_container = __webpack_require__(257);
 
 var _user_show_container2 = _interopRequireDefault(_user_show_container);
 
-var _user_events_container = __webpack_require__(262);
+var _user_events_container = __webpack_require__(263);
 
 var _user_events_container2 = _interopRequireDefault(_user_events_container);
 
@@ -32101,6 +32101,54 @@ exports.default = App;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ProtectedRoute = exports.AuthRoute = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(5);
+
+var _reactRouterDom = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Auth = function Auth(_ref) {
+  var Component = _ref.component,
+      path = _ref.path,
+      loggedIn = _ref.loggedIn;
+  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
+      return !loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+    } });
+};
+
+var Protected = function Protected(_ref2) {
+  var Component = _ref2.component,
+      path = _ref2.path,
+      loggedIn = _ref2.loggedIn;
+  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
+      return loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
+    } });
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return { loggedIn: Boolean(state.session.currentUser) };
+};
+
+var AuthRoute = exports.AuthRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Auth));
+
+var ProtectedRoute = exports.ProtectedRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Protected));
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = MyModal;
 
 var _react = __webpack_require__(0);
@@ -32128,7 +32176,7 @@ function MyModal(_ref) {
 }
 
 /***/ }),
-/* 238 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32144,7 +32192,7 @@ var _session_actions = __webpack_require__(7);
 
 var _user_actions = __webpack_require__(20);
 
-var _session_form = __webpack_require__(239);
+var _session_form = __webpack_require__(240);
 
 var _session_form2 = _interopRequireDefault(_session_form);
 
@@ -32179,7 +32227,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form2.default));
 
 /***/ }),
-/* 239 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32353,7 +32401,7 @@ var SessionForm = function (_React$Component) {
 exports.default = (0, _reactRouterDom.withRouter)(SessionForm);
 
 /***/ }),
-/* 240 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32373,7 +32421,7 @@ var _category_actions = __webpack_require__(16);
 
 var _event_type_actions = __webpack_require__(17);
 
-var _session_form_login = __webpack_require__(241);
+var _session_form_login = __webpack_require__(242);
 
 var _session_form_login2 = _interopRequireDefault(_session_form_login);
 
@@ -32404,7 +32452,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form_login2.default);
 
 /***/ }),
-/* 241 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32564,7 +32612,7 @@ var SessionFormLogin = function (_React$Component) {
 exports.default = (0, _reactRouterDom.withRouter)(SessionFormLogin);
 
 /***/ }),
-/* 242 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32584,7 +32632,7 @@ var _category_actions = __webpack_require__(16);
 
 var _event_type_actions = __webpack_require__(17);
 
-var _session_form_signup = __webpack_require__(243);
+var _session_form_signup = __webpack_require__(244);
 
 var _session_form_signup2 = _interopRequireDefault(_session_form_signup);
 
@@ -32615,7 +32663,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form_signup2.default);
 
 /***/ }),
-/* 243 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32802,7 +32850,7 @@ var SessionFormSignup = function (_React$Component) {
 exports.default = (0, _reactRouterDom.withRouter)(SessionFormSignup);
 
 /***/ }),
-/* 244 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32970,7 +33018,7 @@ var NavBar = function (_React$Component) {
 exports.default = NavBar;
 
 /***/ }),
-/* 245 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32984,7 +33032,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _event_actions = __webpack_require__(8);
 
-var _homepage = __webpack_require__(246);
+var _homepage = __webpack_require__(247);
 
 var _homepage2 = _interopRequireDefault(_homepage);
 
@@ -33005,7 +33053,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_homepage2.default);
 
 /***/ }),
-/* 246 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33306,7 +33354,7 @@ exports.default = Homepage;
 // </div>
 
 /***/ }),
-/* 247 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33326,7 +33374,7 @@ var _category_actions = __webpack_require__(16);
 
 var _event_type_actions = __webpack_require__(17);
 
-var _event_form = __webpack_require__(248);
+var _event_form = __webpack_require__(249);
 
 var _event_form2 = _interopRequireDefault(_event_form);
 
@@ -33433,7 +33481,7 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapSt
 // comment
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33961,7 +34009,7 @@ var EventForm = function (_React$Component) {
 exports.default = EventForm;
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33981,7 +34029,7 @@ var _category_actions = __webpack_require__(16);
 
 var _event_type_actions = __webpack_require__(17);
 
-var _event_index = __webpack_require__(250);
+var _event_index = __webpack_require__(251);
 
 var _event_index2 = _interopRequireDefault(_event_index);
 
@@ -34025,7 +34073,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_event_index2.default));
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34047,7 +34095,7 @@ var _nav_bar_container = __webpack_require__(13);
 
 var _nav_bar_container2 = _interopRequireDefault(_nav_bar_container);
 
-var _event_index_item = __webpack_require__(251);
+var _event_index_item = __webpack_require__(252);
 
 var _event_index_item2 = _interopRequireDefault(_event_index_item);
 
@@ -34228,7 +34276,7 @@ var EventIndex = function (_React$Component) {
 exports.default = EventIndex;
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34412,7 +34460,7 @@ exports.default = (0, _reactRouterDom.withRouter)(EventIndexItem);
 // comment
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34432,7 +34480,7 @@ var _event_actions = __webpack_require__(8);
 
 var _user_actions = __webpack_require__(20);
 
-var _event_show = __webpack_require__(253);
+var _event_show = __webpack_require__(254);
 
 var _event_show2 = _interopRequireDefault(_event_show);
 
@@ -34479,7 +34527,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_event_show2.default));
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34801,7 +34849,7 @@ var EventShow = function (_React$Component) {
 exports.default = EventShow;
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34819,7 +34867,7 @@ var _modal_actions = __webpack_require__(34);
 
 var _event_actions = __webpack_require__(8);
 
-var _ticket = __webpack_require__(255);
+var _ticket = __webpack_require__(256);
 
 var _ticket2 = _interopRequireDefault(_ticket);
 
@@ -34849,7 +34897,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ticket2.default);
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34991,7 +35039,7 @@ var Ticket = function (_React$Component) {
 exports.default = Ticket;
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35007,7 +35055,7 @@ var _reactRouterDom = __webpack_require__(1);
 
 var _event_actions = __webpack_require__(8);
 
-var _user_show = __webpack_require__(257);
+var _user_show = __webpack_require__(258);
 
 var _user_show2 = _interopRequireDefault(_user_show);
 
@@ -35033,7 +35081,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_user_show2.default);
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35055,11 +35103,11 @@ var _nav_bar_container = __webpack_require__(13);
 
 var _nav_bar_container2 = _interopRequireDefault(_nav_bar_container);
 
-var _user_show_index = __webpack_require__(258);
+var _user_show_index = __webpack_require__(259);
 
 var _user_show_index2 = _interopRequireDefault(_user_show_index);
 
-var _user_show_ticket_index = __webpack_require__(260);
+var _user_show_ticket_index = __webpack_require__(261);
 
 var _user_show_ticket_index2 = _interopRequireDefault(_user_show_ticket_index);
 
@@ -35225,7 +35273,7 @@ var UserShow = function (_React$Component) {
 exports.default = UserShow;
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35241,7 +35289,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(1);
 
-var _user_show_index_item = __webpack_require__(259);
+var _user_show_index_item = __webpack_require__(260);
 
 var _user_show_index_item2 = _interopRequireDefault(_user_show_index_item);
 
@@ -35285,7 +35333,7 @@ exports.default = (0, _reactRouterDom.withRouter)(UserShowIndex);
 // comment
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35455,7 +35503,7 @@ exports.default = (0, _reactRouterDom.withRouter)(UserShowIndexItem);
 // comment
 
 /***/ }),
-/* 260 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35471,7 +35519,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(1);
 
-var _user_show_ticket_index_item = __webpack_require__(261);
+var _user_show_ticket_index_item = __webpack_require__(262);
 
 var _user_show_ticket_index_item2 = _interopRequireDefault(_user_show_ticket_index_item);
 
@@ -35515,7 +35563,7 @@ exports.default = (0, _reactRouterDom.withRouter)(UserShowTicketIndex);
 // comment
 
 /***/ }),
-/* 261 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35591,7 +35639,7 @@ var UserShowTicketIndexItem = function UserShowTicketIndexItem(_ref) {
 exports.default = UserShowTicketIndexItem;
 
 /***/ }),
-/* 262 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35609,7 +35657,7 @@ var _event_actions = __webpack_require__(8);
 
 var _user_actions = __webpack_require__(20);
 
-var _user_events = __webpack_require__(263);
+var _user_events = __webpack_require__(264);
 
 var _user_events2 = _interopRequireDefault(_user_events);
 
@@ -35628,7 +35676,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_user_events2.default));
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35745,54 +35793,6 @@ var UserEvents = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = UserEvents;
-
-/***/ }),
-/* 264 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ProtectedRoute = exports.AuthRoute = undefined;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(5);
-
-var _reactRouterDom = __webpack_require__(1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Auth = function Auth(_ref) {
-  var Component = _ref.component,
-      path = _ref.path,
-      loggedIn = _ref.loggedIn;
-  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
-      return !loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
-    } });
-};
-
-var Protected = function Protected(_ref2) {
-  var Component = _ref2.component,
-      path = _ref2.path,
-      loggedIn = _ref2.loggedIn;
-  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
-      return loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
-    } });
-};
-
-var mapStateToProps = function mapStateToProps(state) {
-  return { loggedIn: Boolean(state.session.currentUser) };
-};
-
-var AuthRoute = exports.AuthRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Auth));
-
-var ProtectedRoute = exports.ProtectedRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Protected));
 
 /***/ })
 /******/ ]);
