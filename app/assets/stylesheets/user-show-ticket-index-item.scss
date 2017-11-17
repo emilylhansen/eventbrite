@@ -1,5 +1,5 @@
 .user-show-ticket-index-item-li {
-  box-shadow: 1px 1px 5px #888888;
+  border-bottom: 1px solid #DFDFE1;
 
 }
 
@@ -45,19 +45,9 @@
   padding: 15px;
 }
 
-.user-show-ticket-index-item-info h1{
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.user-show-ticket-index-item-info h2{
-  font-size: 12px;
-  // font-weight: 300;
-}
-
 .user-show-ticket-index-item-info h3{
-  font-size: 13px;
-  font-weight: 100;
+  font-weight: 300;
+  color: gray;
+  font-size: 12px;
   margin-top: 40px;
 }

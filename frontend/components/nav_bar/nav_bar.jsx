@@ -12,7 +12,8 @@ class NavBar extends React.Component{
   render(){
     const signinLogout = this.props.currentUser ?
     <li>
-      <a href="/">{this.props.currentUser.first_name.toUpperCase()} &#9660;</a>
+      <a href="/">{this.props.currentUser.first_name.toUpperCase()} <i className="fa fa-angle-down fa-lg" aria-hidden="true"></i>
+      </a>
       <ul className="login-signup-dropdown">
         <li><a href={`/#/users/${this.props.currentUser.id}`}>
           {`Tickets ${Object.values(this.props.currentUser.tickets).length}`}

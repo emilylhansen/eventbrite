@@ -22,12 +22,12 @@
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  border-left: 1px solid #E0E0E0;
-  border-right: 1px solid #E0E0E0;
+  border-left: 1px solid #EFF2F5;
+  border-right: 1px solid #EFF2F5;
 }
 
 .login-signup-logo {
-  border-right: 1px solid #E0E0E0;
+  border-right: 1px solid #EFF2F5;
   font-weight: 700;
   font-size: 16px;
 }
@@ -37,7 +37,7 @@
 }
 
 .login-signup-header-list > li {
-  border-left: 1px solid #E0E0E0;
+  border-left: 1px solid #EFF2F5;
   position: relative;
   font-size: 13px;
   color: #666A73;
@@ -58,6 +58,7 @@
 
 .login-signup-header-list li:last-child {
   color: #0091DA;
+  font-weight: 400;
 }
 
 .login-signup-header-list li:last-child:hover {
@@ -65,20 +66,20 @@
 }
 
 .login-signup-header-list > li:not(:last-child):hover {
-  background: #E0E0E0;
+  background: #EFF2F5;
 }
 
 .login-signup-dropdown {
   display: none;
   position: absolute;
-  left: -100px;
+  left: -110px;
   top: 59px;
   font-size: 16px;
   white-space: nowrap;
   background: #fff;
-  border-left: 1px solid #E0E0E0;
-  border-right: 1px solid #E0E0E0;
-  border-bottom: 1px solid #E0E0E0;
+  border-left: 1px solid #EFF2F5;
+  border-right: 1px solid #EFF2F5;
+  border-bottom: 1px solid #EFF2F5;
   overflow: hidden;
   width: 200px;
 }
@@ -87,17 +88,17 @@ li:hover .login-signup-dropdown {
   display: block;
 }
 
-.login-signup-dropdown > li {
-  border-top: 1px solid #E0E0E0;
+.login-signup-dropdown > li, .login-signup-dropdown > li:last-child {
+  border-top: 1px solid #EFF2F5;
   font-size: 14px;
   color: #666A73;
   font-weight: 300;
 }
 
-.login-signup-dropdown > li:last-child {
-  color: gray;
+.login-signup-dropdown > li:last-child:hover {
+  color: #666A73;
 }
 
 .login-signup-dropdown > li:hover {
-  background: #E0E0E0;
+  background: #EFF2F5;
 }

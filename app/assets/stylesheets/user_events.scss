@@ -34,18 +34,15 @@
 }
 
 .user-events-list li{
-  // border: 1px solid black;
   margin-top: 20px;
-  // padding-top: 10px;
   background-color: white;
   padding: 10px;
 }
 
 .user-events-list li a:first-child {
-  // border-bottom: 1px solid #0091DA;
   margin-top: 20px;
-  font-size: 20px;
-  font-weight: 300;
+  font-size: 18px;
+  font-weight: 400;
   color: #0091DA;
   text-decoration:  none;
 }
@@ -56,16 +53,16 @@
 
 .user-events-list li h2 {
   padding-bottom: 10px;
+  color: #777A7D;
   font-size: 14px;
-  font-weight: 300;
-  color: #989BA1;
+  font-weight: 400;
 }
 
 
 .user-events-list-edit {
+  color: #777A7D;
   font-size: 14px;
-  font-weight: 300;
-  color: #989BA1;
+  font-weight: 400;
 }
 
 .user-events-list-edit:hover {

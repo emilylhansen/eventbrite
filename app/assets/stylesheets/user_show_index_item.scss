@@ -15,7 +15,7 @@
   width: 29%;
   height: 300px;
   background-color: white;
-  box-shadow: 1px 1px 5px #888888;
+  border-bottom: 1px solid #DFDFE1;
   float:left;
   margin: 20px;
 }
@@ -25,24 +25,6 @@
   border-bottom: 1px solid #E0E0E0;
   padding: 15px;
   height: 75px;
-}
-
-.user-index-item-img-right h2 {
-  color: gray;
-  font-size: 12px;
-  // font-weight: 100;
-}
-
-.user-index-item-img-right h1 {
-  font-size: 18px;
-  margin-top: 5px;
-}
-
-.user-index-item-img-right h3 {
-  color: gray;
-  font-size: 14px;
-  font-weight: 100;
-  margin-top: 5px;
 }
 
 .user-index-item-info-right {
@@ -55,17 +37,17 @@
 
 .user-index-item-info-right-span-tags{
   float: left;
-  padding: 14px 10px 0px 10px;
-  color: #707378;
+  padding: 14px 10px 0px 5px;
+  color: #898B8F;
   font-size: 13px;
-  font-weight: 100;
-  // border: 1px solid black;
+  font-weight: 300;
+  margin-left: 10px;
 }
 
 .user-index-item-info-right-glyph{
   // border: 1px solid black;
   float: right;
-  padding: 14px 10px 14px 10px;
+  padding: 11px 10px 14px 10px;
   border-left: 1px solid #E0E0E0;
 
 }

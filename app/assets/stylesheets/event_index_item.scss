@@ -24,21 +24,27 @@
 
 }
 
-.event-index-item-img-right h2 {
-  color: gray;
+.event-index-item-img-right h2,
+.user-index-item-img-right h2,
+.user-show-ticket-index-item-info h2{
+  color: #777A7D;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
-.event-index-item-img-right h1 {
-  font-size: 18px;
+.event-index-item-img-right h1,
+.user-index-item-img-right h1,
+.user-show-ticket-index-item-info h1 {
+  font-size: 16px;
   margin-top: 5px;
+  font-weight: 500;
 }
 
-.event-index-item-img-right h3 {
+.event-index-item-img-right h3,
+.user-index-item-img-right h3 {
   font-weight: 300;
   color: gray;
-  font-size: 14px;
+  font-size: 12px;
   margin-top: 5px;
 }
 
@@ -58,8 +64,9 @@
   text-align: left;
   margin-top: 10px;
   margin-left: 10px;
-  font-weight: 300;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 13px;
+  color: #383C45;
 }
 
 .event-index-item-info-right {
@@ -74,9 +81,10 @@
   // border: 1px solid black;
   float: left;
   padding: 10px 10px 0px 10px;
-  color: #707378;
+  color: #898B8F;
   font-size: 13px;
-  font-weight: 100;
+  font-weight: 300;
+  margin-left: 10px;
 }
 
 .event-index-item-info-right-span-glyphicon {

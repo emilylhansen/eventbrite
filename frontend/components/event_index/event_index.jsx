@@ -79,9 +79,7 @@ class EventIndex extends React.Component{
     return (
       <div className="event-index-main-page">
       <NavBarContainer/>
-      <div className="event-index-background">
-
-      </div>
+      <div className="event-index-background"></div>
 
       <div className="event-index-flex">
 
@@ -90,7 +88,8 @@ class EventIndex extends React.Component{
           <div className="event-index-options-event-type">
             <button onClick={(e) => this.toggleSelections("event-index-event-type-dropdown")}
               className="event-index-event-type-btn">
-              EVENT TYPE</button>
+              EVENT TYPE <i className="fa fa-angle-down fa-lg" aria-hidden="true"></i>
+              </button>
             <div id="event-index-event-type-dropdown"
               className="event-index-event-type-dropdown-content"
               >
@@ -101,7 +100,8 @@ class EventIndex extends React.Component{
           <div className="event-index-options-category">
             <button onClick={(e) => this.toggleSelections("event-index-category-dropdown")}
               className="event-index-category-btn">
-              CATEGORY</button>
+              CATEGORY <i className="fa fa-angle-down fa-lg" aria-hidden="true"></i>
+              </button>
             <div id="event-index-category-dropdown"
               className="event-index-category-dropdown-content"
               >
@@ -110,7 +110,6 @@ class EventIndex extends React.Component{
           </div>
         </div>
       </div>
-
       <div className="event-index-content">
         <div className="event-index-main">
 
@@ -131,8 +130,8 @@ class EventIndex extends React.Component{
           </ul>
         </div>
       </div>
-      </div>
-      </div>
+    </div>
+    </div>
     );
   }
 }
