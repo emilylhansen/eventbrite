@@ -11,7 +11,7 @@
   margin-left: 200px;
   margin-top: 30px;
   position: absolute;
-  z-index: 2
+  z-index: 1
 }
 
 .user-events-main h1 {
@@ -45,6 +45,11 @@
   font-weight: 400;
   color: #0091DA;
   text-decoration:  none;
+}
+
+.user-events-list li a:first-child:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 .user-events-list li h1 {

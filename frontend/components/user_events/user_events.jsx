@@ -31,7 +31,8 @@ class UserEvents extends React.Component {
         <h2>
           {this.convertDateTime(event.start_date_time)}
         </h2>
-        <a href={`/#/events/${event.id}/edit`} className="user-events-list-edit">Edit</a>
+        <a href={`/#/events/${event.id}/edit`} className="user-events-list-edit">
+          <i className="fa fa-pencil" aria-hidden="true"></i> Edit</a>
       </li>
     ));
     return (

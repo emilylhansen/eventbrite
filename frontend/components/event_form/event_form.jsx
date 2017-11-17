@@ -198,7 +198,7 @@ class EventForm extends React.Component {
                   />
                 <br></br>
 
-              <label>Location</label>
+              <label>LOCATION</label>
                 <br></br>
                 <input type="text"
                   placeholder="Specify where it's held"
@@ -247,14 +247,19 @@ class EventForm extends React.Component {
 
               <label>EVENT IMAGE</label>
                 <br></br>
-                <input type="file" onChange={this.updateFile}/>
-                <img src={this.state.avatarUrl}/>
+                <input className="event-form-image-input" id="file" type="file" name="file" onChange={this.updateFile}/>
+                <div className="event-form-image-input-label-div">
+                  <label className="event-form-image-input-label" htmlFor="file">
+                  <i className="fa fa-camera" aria-hidden="true"></i> ADD EVENT IMAGE
+                    <img className="event-form-image" src={this.state.avatarUrl}/>
+                  </label>
+                </div>
                 <br></br>
 
               <label>EVENT DESCRIPTION</label>
                 <br></br>
                 <textarea value={this.state.description}
-                  cols="325" rows="150"
+                  cols="75" rows="10"
                   onChange={this.handleInput('description')}
                   />
                 <br></br>
@@ -270,6 +275,7 @@ class EventForm extends React.Component {
               <label>ORGANIZER DESCRIPTION</label>
                 <br></br>
                 <textarea value={this.state.organizer_description}
+                  cols="75" rows="1"
                   onChange={this.handleInput('organizer_description')}
                   />
 
@@ -278,7 +284,6 @@ class EventForm extends React.Component {
                 <h1>Create Tickets</h1>
               </div>
 
-              <p>What type of ticket would you like to start with?</p>
               <br></br>
               <label>Quantity available</label>
               <br></br>

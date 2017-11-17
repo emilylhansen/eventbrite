@@ -33574,7 +33574,7 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'Location'
+                'LOCATION'
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'text',
@@ -33647,8 +33647,18 @@ var EventForm = function (_React$Component) {
                 'EVENT IMAGE'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement('input', { type: 'file', onChange: this.updateFile }),
-              _react2.default.createElement('img', { src: this.state.avatarUrl }),
+              _react2.default.createElement('input', { className: 'event-form-image-input', id: 'file', type: 'file', name: 'file', onChange: this.updateFile }),
+              _react2.default.createElement(
+                'div',
+                { className: 'event-form-image-input-label-div' },
+                _react2.default.createElement(
+                  'label',
+                  { className: 'event-form-image-input-label', htmlFor: 'file' },
+                  _react2.default.createElement('i', { className: 'fa fa-camera', 'aria-hidden': 'true' }),
+                  ' ADD EVENT IMAGE',
+                  _react2.default.createElement('img', { className: 'event-form-image', src: this.state.avatarUrl })
+                )
+              ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'label',
@@ -33657,7 +33667,7 @@ var EventForm = function (_React$Component) {
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('textarea', { value: this.state.description,
-                cols: '325', rows: '150',
+                cols: '75', rows: '10',
                 onChange: this.handleInput('description')
               }),
               _react2.default.createElement('br', null),
@@ -33679,6 +33689,7 @@ var EventForm = function (_React$Component) {
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('textarea', { value: this.state.organizer_description,
+                cols: '75', rows: '1',
                 onChange: this.handleInput('organizer_description')
               }),
               _react2.default.createElement(
@@ -33694,11 +33705,6 @@ var EventForm = function (_React$Component) {
                   null,
                   'Create Tickets'
                 )
-              ),
-              _react2.default.createElement(
-                'p',
-                null,
-                'What type of ticket would you like to start with?'
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
@@ -35547,7 +35553,8 @@ var UserEvents = function (_React$Component) {
           _react2.default.createElement(
             'a',
             { href: '/#/events/' + event.id + '/edit', className: 'user-events-list-edit' },
-            'Edit'
+            _react2.default.createElement('i', { className: 'fa fa-pencil', 'aria-hidden': 'true' }),
+            ' Edit'
           )
         );
       });
