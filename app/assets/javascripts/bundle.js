@@ -33200,7 +33200,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var dateTime = {
     startDate: currentDateTime().currentDate,
     startTime: "19:00:00",
-    endDate: currentDateTime().currentTime,
+    endDate: currentDateTime().currentDate,
     endTime: "22:00:00"
   };
 
@@ -33600,9 +33600,10 @@ var EventForm = function (_React$Component) {
                     { className: 'event-form-timedates-start-top' },
                     _react2.default.createElement('input', { type: 'date',
                       min: this.props.currentDate,
+                      value: this.dateTime.startDate,
                       onChange: this.handleInput('startDate')
                     }),
-                    _react2.default.createElement('input', { list: 'times', name: 'times' }),
+                    _react2.default.createElement('input', { list: 'times', name: 'times', placeholder: this.dateTime.startTime }),
                     _react2.default.createElement(
                       'datalist',
                       { id: 'times',
@@ -33627,9 +33628,10 @@ var EventForm = function (_React$Component) {
                     { className: 'event-form-timedates-end-top' },
                     _react2.default.createElement('input', { type: 'date',
                       min: this.props.currentDate,
+                      value: this.dateTime.endDate,
                       onChange: this.handleInput('endDate')
                     }),
-                    _react2.default.createElement('input', { list: 'times', name: 'times' }),
+                    _react2.default.createElement('input', { list: 'times', name: 'times', placeholder: this.dateTime.endTime }),
                     _react2.default.createElement(
                       'datalist',
                       { id: 'times',

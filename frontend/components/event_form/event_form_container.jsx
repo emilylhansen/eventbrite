@@ -49,7 +49,7 @@ const mapStateToProps = (state, ownProps) => {
   let dateTime = {
     startDate: currentDateTime().currentDate,
     startTime: "19:00:00",
-    endDate: currentDateTime().currentTime,
+    endDate: currentDateTime().currentDate,
     endTime: "22:00:00"
   };
 

@@ -214,9 +214,10 @@ class EventForm extends React.Component {
                 <div className="event-form-timedates-start-top">
                   <input type="date"
                     min={this.props.currentDate}
+                    value={this.dateTime.startDate}
                     onChange={this.handleInput('startDate')}
                     />
-                  <input list="times" name="times"/>
+                  <input list="times" name="times" placeholder={this.dateTime.startTime}/>
                   <datalist id="times"
                     value={this.dateTime.startTime}
                     onChange={this.handleInput('startTime')}
@@ -232,9 +233,10 @@ class EventForm extends React.Component {
                 <div className="event-form-timedates-end-top">
                   <input type="date"
                     min={this.props.currentDate}
+                    value={this.dateTime.endDate}
                     onChange={this.handleInput('endDate')}
                     />
-                  <input list="times" name="times"/>
+                  <input list="times" name="times" placeholder={this.dateTime.endTime}/>
                     <datalist id="times"
                       value={this.dateTime.endTime}
                       onChange={this.handleInput('endTime')}
