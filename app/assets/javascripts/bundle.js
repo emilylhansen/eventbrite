@@ -33171,16 +33171,6 @@ var _event_form2 = _interopRequireDefault(_event_form);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var currentDateTime = function currentDateTime() {
-  var newDate = new Date();
-  var month = newDate.getMonth() + 1 < 10 ? "0" + newDate.getMonth() + 1 : newDate.getMonth() + 1;
-  var day = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
-  var currentDate = newDate.getFullYear() + "-" + month + "-" + day;
-  var currentTime = newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
-
-  return { currentDate: currentDate, currentTime: currentTime };
-};
-
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var event = {
     title: "",
@@ -33197,13 +33187,6 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     organizer_description: ""
   };
 
-  var dateTime = {
-    startDate: currentDateTime().currentDate,
-    startTime: "19:00:00",
-    endDate: currentDateTime().currentDate,
-    endTime: "22:00:00"
-  };
-
   var formType = "new";
 
   var categories = Object.values(state.entities.categories);
@@ -33214,29 +33197,20 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
   var eventType = eventTypes[0];
 
-  var currentDate = currentDateTime().currentDate;
-
   var errors = Object.values(state.errors.events);
 
   if (ownProps.match.path === '/events/:eventId/edit') {
     var potentialEvent = state.entities.events[ownProps.match.params.eventId];
     if (potentialEvent) {
       event = potentialEvent;
-      dateTime = {
-        startDate: event.start_date_time,
-        startTime: event.start_date_time,
-        endDate: event.end_date_time,
-        endTime: event.end_date_time
-      };
       category = Object.values(event.category)[0].name;
       eventType = Object.values(event.eventType)[0].name;
+      event.avatarUrl = event.avatar_url;
     }
     formType = "edit";
   }
-
-  return { event: event, dateTime: dateTime, formType: formType, category: category, eventType: eventType, categories: categories,
-    eventTypes: eventTypes, currentDate: currentDate, errors: errors
-  };
+  return { event: event, formType: formType, category: category, eventType: eventType, categories: categories,
+    eventTypes: eventTypes, errors: errors };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
@@ -33306,6 +33280,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// import DayPicker from 'react-day-picker';
+// import 'react-day-picker/lib/style.css';
+
+
 var EventForm = function (_React$Component) {
   _inherits(EventForm, _React$Component);
 
@@ -33316,17 +33294,19 @@ var EventForm = function (_React$Component) {
 
     _this.state = _this.props.event;
     _this.dateTime = {
-      startDate: _this.props.dateTime.startDate,
-      startTime: _this.props.dateTime.startTime,
-      endDate: _this.props.dateTime.endDate,
-      endTime: _this.props.dateTime.endTime
+      startDate: undefined,
+      startTime: undefined,
+      endDate: undefined,
+      endTime: undefined
     };
-    _this.category = _this.props.category;
-    _this.eventType = _this.props.eventType;
-
+    _this.category = undefined;
+    _this.eventType = undefined;
+    _this.refilled = false;
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
     _this.updateFile = _this.updateFile.bind(_this);
+    _this.currentDateTime = _this.currentDateTime.bind(_this);
+    _this.convertDateTime = _this.convertDateTime.bind(_this);
     return _this;
   }
 
@@ -33335,7 +33315,6 @@ var EventForm = function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchCategories();
       this.props.fetchEventTypes();
-      // this.props.fetchEvents();
 
       if (this.props.match.params.eventId) {
         this.props.fetchEvent(this.props.match.params.eventId);
@@ -33354,14 +33333,17 @@ var EventForm = function (_React$Component) {
       if (Object.keys(this.dateTime).includes(field)) {
         return function (e) {
           _this2.dateTime[field] = e.target.value;
+          _this2.forceUpdate();
         };
       } else if (field === 'category') {
         return function (e) {
           _this2.category = e.target.value;
+          _this2.forceUpdate();
         };
       } else if (field === 'eventType') {
         return function (e) {
           _this2.eventType = e.target.value;
+          _this2.forceUpdate();
         };
       } else {
         return function (e) {
@@ -33407,6 +33389,23 @@ var EventForm = function (_React$Component) {
       var endDateTime = this.dateTime.endDate + " " + this.dateTime.endTime;
       this.state.start_date_time = startDateTime;
       this.state.end_date_time = endDateTime;
+    }
+  }, {
+    key: 'convertDateTime',
+    value: function convertDateTime(dateTime) {
+      var arr = dateTime.split(/T|\./);
+      return { "date": arr[0], "time": arr[1] };
+    }
+  }, {
+    key: 'currentDateTime',
+    value: function currentDateTime() {
+      var newDate = new Date();
+      var month = newDate.getMonth() + 1 < 10 ? "0" + newDate.getMonth() + 1 : newDate.getMonth() + 1;
+      var day = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
+      var currentDate = newDate.getFullYear() + "-" + month + "-" + day;
+      var currentTime = newDate.getHours() + ":" + newDate.getMinutes() + ":" + newDate.getSeconds();
+
+      return { currentDate: currentDate, currentTime: currentTime };
     }
   }, {
     key: 'handleSubmit',
@@ -33521,6 +33520,28 @@ var EventForm = function (_React$Component) {
 
       var text = this.props.formType === "new" ? "Create an Event" : "Edit Your Event";
 
+      if (!this.refilled) {
+        if (this.props.event.title !== "" && this.props.formType === "edit") {
+          this.dateTime = {
+            startDate: this.convertDateTime(this.state.start_date_time).date,
+            startTime: this.convertDateTime(this.state.start_date_time).time,
+            endDate: this.convertDateTime(this.state.end_date_time).date,
+            endTime: this.convertDateTime(this.state.end_date_time).time
+          };
+          this.category = this.props.category;
+          this.eventType = this.props.eventType;
+          this.refilled = true;
+        } else if (this.props.event.title === "" && this.props.formType === "new") {
+          this.dateTime = {
+            startDate: this.currentDateTime().currentDate,
+            startTime: "19:00:00",
+            endDate: this.currentDateTime().currentDate,
+            endTime: "22:00:00"
+          };
+          this.refilled = true;
+        }
+      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -33599,17 +33620,16 @@ var EventForm = function (_React$Component) {
                     'div',
                     { className: 'event-form-timedates-start-top' },
                     _react2.default.createElement('input', { type: 'date',
-                      min: this.props.currentDate,
+                      min: this.currentDateTime().currentDate,
                       value: this.dateTime.startDate,
                       onChange: this.handleInput('startDate')
                     }),
-                    _react2.default.createElement('input', { list: 'times', name: 'times', placeholder: this.dateTime.startTime }),
+                    _react2.default.createElement('input', { list: 'times', name: 'times',
+                      value: this.dateTime.startTime,
+                      onChange: this.handleInput('startTime') }),
                     _react2.default.createElement(
                       'datalist',
-                      { id: 'times',
-                        value: this.dateTime.startTime,
-                        onChange: this.handleInput('startTime')
-                      },
+                      { id: 'times' },
                       timeOpts
                     )
                   )
@@ -33627,17 +33647,17 @@ var EventForm = function (_React$Component) {
                     'div',
                     { className: 'event-form-timedates-end-top' },
                     _react2.default.createElement('input', { type: 'date',
-                      min: this.props.currentDate,
+                      min: this.dateTime.startDate,
                       value: this.dateTime.endDate,
                       onChange: this.handleInput('endDate')
                     }),
-                    _react2.default.createElement('input', { list: 'times', name: 'times', placeholder: this.dateTime.endTime }),
+                    _react2.default.createElement('input', { list: 'times', name: 'times',
+                      value: this.dateTime.endTime,
+                      onChange: this.handleInput('endTime')
+                    }),
                     _react2.default.createElement(
                       'datalist',
-                      { id: 'times',
-                        value: this.dateTime.endTime,
-                        onChange: this.handleInput('endTime')
-                      },
+                      { id: 'times' },
                       timeOpts
                     )
                   )
@@ -33649,7 +33669,6 @@ var EventForm = function (_React$Component) {
                 'EVENT IMAGE'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement('input', { className: 'event-form-image-input', id: 'file', type: 'file', name: 'file', onChange: this.updateFile }),
               _react2.default.createElement(
                 'div',
                 { className: 'event-form-image-input-label-div' },
@@ -33659,7 +33678,8 @@ var EventForm = function (_React$Component) {
                   _react2.default.createElement('i', { className: 'fa fa-camera', 'aria-hidden': 'true' }),
                   ' ADD EVENT IMAGE',
                   _react2.default.createElement('img', { className: 'event-form-image', src: this.state.avatarUrl })
-                )
+                ),
+                _react2.default.createElement('input', { className: 'event-form-image-input', id: 'file', type: 'file', name: 'file', onChange: this.updateFile })
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(

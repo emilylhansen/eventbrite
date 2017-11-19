@@ -1,29 +1,33 @@
 import React from 'react';
 import EventApiUtil from '../../util/event_api_util';
 import NavBarContainer from "../nav_bar/nav_bar_container";
+// import DayPicker from 'react-day-picker';
+// import 'react-day-picker/lib/style.css';
+
 
 class EventForm extends React.Component {
   constructor(props){
     super(props);
-      this.state = this.props.event;
-      this.dateTime = {
-        startDate: this.props.dateTime.startDate,
-        startTime: this.props.dateTime.startTime,
-        endDate: this.props.dateTime.endDate,
-        endTime: this.props.dateTime.endTime
-      };
-      this.category  = this.props.category;
-      this.eventType = this.props.eventType;
-
+    this.state = this.props.event;
+    this.dateTime = {
+      startDate: undefined,
+      startTime: undefined,
+      endDate: undefined,
+      endTime: undefined
+    };
+    this.category  = undefined;
+    this.eventType = undefined;
+    this.refilled = false;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.updateFile = this.updateFile.bind(this);
+    this.currentDateTime = this.currentDateTime.bind(this);
+    this.convertDateTime = this.convertDateTime.bind(this);
   }
 
   componentDidMount(){
     this.props.fetchCategories();
     this.props.fetchEventTypes();
-    // this.props.fetchEvents();
 
     if(this.props.match.params.eventId){
       this.props.fetchEvent(this.props.match.params.eventId);
@@ -38,14 +42,17 @@ class EventForm extends React.Component {
     if (Object.keys(this.dateTime).includes(field)){
       return (e) => {
         this.dateTime[field] = e.target.value;
+        this.forceUpdate()
       };
     } else if (field === 'category'){
       return (e) => {
         this.category = e.target.value;
+        this.forceUpdate()
       };
     } else if (field === 'eventType'){
         return (e) => {
           this.eventType = e.target.value;
+          this.forceUpdate()
         };
     } else {
       return (e) => {
@@ -89,6 +96,25 @@ class EventForm extends React.Component {
                       + " " + this.dateTime.endTime;
     this.state.start_date_time = startDateTime;
     this.state.end_date_time = endDateTime;
+  }
+
+  convertDateTime(dateTime){
+    const arr = dateTime.split(/T|\./);
+    return {"date": arr[0], "time": arr[1]};
+  }
+
+  currentDateTime(){
+    let newDate = new Date();
+    let month = newDate.getMonth()+1 < 10 ? "0" + newDate.getMonth()+1 : newDate.getMonth()+1;
+    let day = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
+    let currentDate = newDate.getFullYear() + "-"
+                    + month + "-"
+                    + day;
+    let currentTime = newDate.getHours() + ":"
+                    + newDate.getMinutes() + ":"
+                    + newDate.getSeconds();
+
+    return {currentDate, currentTime};
   }
 
   handleSubmit(e){
@@ -173,6 +199,28 @@ class EventForm extends React.Component {
 
     let text = this.props.formType === "new" ? "Create an Event" : "Edit Your Event";
 
+    if(!this.refilled){
+      if(this.props.event.title !== "" && this.props.formType === "edit"){
+        this.dateTime = {
+          startDate: this.convertDateTime(this.state.start_date_time).date,
+          startTime: this.convertDateTime(this.state.start_date_time).time,
+          endDate: this.convertDateTime(this.state.end_date_time).date,
+          endTime: this.convertDateTime(this.state.end_date_time).time
+        };
+        this.category = this.props.category;
+        this.eventType = this.props.eventType;
+        this.refilled = true;
+      } else if(this.props.event.title === "" && this.props.formType === "new"){
+        this.dateTime = {
+          startDate: this.currentDateTime().currentDate,
+          startTime: "19:00:00",
+          endDate: this.currentDateTime().currentDate,
+          endTime: "22:00:00"
+        };
+        this.refilled = true;
+      }
+    }
+
     return(
       <div>
         <NavBarContainer/>
@@ -213,15 +261,14 @@ class EventForm extends React.Component {
                 <br></br>
                 <div className="event-form-timedates-start-top">
                   <input type="date"
-                    min={this.props.currentDate}
+                    min={this.currentDateTime().currentDate}
                     value={this.dateTime.startDate}
                     onChange={this.handleInput('startDate')}
                     />
-                  <input list="times" name="times" placeholder={this.dateTime.startTime}/>
-                  <datalist id="times"
+                  <input list="times" name="times"
                     value={this.dateTime.startTime}
-                    onChange={this.handleInput('startTime')}
-                    >
+                    onChange={this.handleInput('startTime')}/>
+                  <datalist id="times">
                     {timeOpts}
                   </datalist>
                 </div>
@@ -232,15 +279,15 @@ class EventForm extends React.Component {
                 <br></br>
                 <div className="event-form-timedates-end-top">
                   <input type="date"
-                    min={this.props.currentDate}
+                    min={this.dateTime.startDate}
                     value={this.dateTime.endDate}
                     onChange={this.handleInput('endDate')}
                     />
-                  <input list="times" name="times" placeholder={this.dateTime.endTime}/>
-                    <datalist id="times"
-                      value={this.dateTime.endTime}
-                      onChange={this.handleInput('endTime')}
-                      >
+                  <input list="times" name="times"
+                    value={this.dateTime.endTime}
+                    onChange={this.handleInput('endTime')}
+                    />
+                    <datalist id="times">
                       {timeOpts}
                     </datalist>
                 </div>
@@ -249,12 +296,12 @@ class EventForm extends React.Component {
 
               <label>EVENT IMAGE</label>
                 <br></br>
-                <input className="event-form-image-input" id="file" type="file" name="file" onChange={this.updateFile}/>
                 <div className="event-form-image-input-label-div">
                   <label className="event-form-image-input-label" htmlFor="file">
                   <i className="fa fa-camera" aria-hidden="true"></i> ADD EVENT IMAGE
                     <img className="event-form-image" src={this.state.avatarUrl}/>
                   </label>
+                  <input className="event-form-image-input" id="file" type="file" name="file" onChange={this.updateFile}/>
                 </div>
                 <br></br>
 
@@ -327,8 +374,6 @@ class EventForm extends React.Component {
                   {categoryOpts}
                 </select>
                 <br></br>
-
-
 
                 {this.renderErrors()}
             </div>
