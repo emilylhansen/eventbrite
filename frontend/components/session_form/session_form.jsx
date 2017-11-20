@@ -71,7 +71,9 @@ class SessionForm extends React.Component {
   render() {
     return (
       <div className="signin-form-container">
-        <Link to='/' className="signin-form-container-link">x</Link>
+        <Link to='/' className="signin-form-container-link">
+          <i className="fa fa-times-circle fa-2x" aria-hidden="true"></i>
+        </Link>
 
         <form onSubmit={this.handleSubmit} className="signin-form-box">
           <span className="signin-form-badge">E</span>

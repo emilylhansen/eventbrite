@@ -49,10 +49,14 @@ class SessionFormLogin extends React.Component {
   render() {
     return (
       <div className="signin-login-form-container">
-        <Link to='/' className="signin-login-form-container-link">x</Link>
+        <Link to='/' className="signin-login-form-container-link">
+          <i className="fa fa-times-circle fa-2x" aria-hidden="true"></i>
+        </Link>
 
         <form onSubmit={this.handleSubmit} className="signin-login-form-box">
-          <span className="signin-login-badge">E</span>
+          <span className="signin-login-badge">
+            <i className="fa fa-user-o" aria-hidden="true"></i>
+          </span>
 
           <div className="signin-login-header">
             <h1>Welcome back</h1>
@@ -62,7 +66,9 @@ class SessionFormLogin extends React.Component {
           <div className="signin-login-form">
             <label>Email address</label>
             <br></br>
-            <p>{this.state.email}</p>
+            <div className="signin-login-form-email">
+              <p>{this.state.email}</p>
+            </div>
             <br></br>
             <label>Password</label>
             <br></br>

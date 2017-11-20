@@ -1,11 +1,15 @@
-.signin-form-container {
+.signin-form-container,
+.signin-login-form-container,
+.signin-signup-form-container {
   display: flex;
   justify-content: center;
   text-align: center;
   margin-top: 100px;
 }
 
-.signin-form-container-link, .signin-login-form-container-link, .signin-signup-form-container-link {
+.signin-form-container-link,
+.signin-login-form-container-link,
+.signin-signup-form-container-link {
   position: absolute;
   right: 25px;
   top: 20px;
@@ -14,57 +18,94 @@
 
 }
 
-.signin-form-box {
+.signin-form-box,
+.signin-login-form-box,
+.signin-signup-form-box {
   margin: 0 auto;
   width: 300px;
 }
 
-.signin-form-box input {
+.signin-form-box input,
+.signin-login-form input,
+.signin-signup-form-box input{
   padding: 10px;
   margin: 10px 0px;
-  width: 100%;
+  width: 92%;
   height: 50%;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 300;
 }
 
-.signin-form-box label {
+.signin-form-box label,
+.signin-login-form label,
+.signin-signup-form label{
   float: left;
+  font-weight: 300;
 }
 
 .signin-form-badge {
   font-size: 30px;
   padding: 20px 30px;
-  background: orange;
+  background: #F36331;
   border-radius: 50%;
   color: white;
+  font-weight: 700;
 }
 
-.signin-form-header h1 {
+.signin-form-header h1,
+.signin-login-header h1,
+.signin-signup-header h1 {
   font-size: 30px;
   margin-bottom: 5px;
+  font-weight: 300;
+  color: #45494E;
 }
 
-.signin-form-header h1, p {
+.signin-form-header p,
+.signin-login-header p,
+.signin-signup-header p {
   width: 100%;
+  font-weight: 300;
+  text-align: center;
+  color: #484D52;
+  font-size: 14px;
 }
 
-
-
-.signin-form-header {
+.signin-form-header,
+.signin-login-header,
+.signin-signup-header {
   padding: 30px;
   margin-bottom: 40px;
   margin-top: 20px;
 }
 
-.signin-form-box input[type=submit] {
+.signin-form-box input[type=submit],
+.signin-login-form-box input[type=submit],
+.signin-signup-form input[type=submit] {
   border-radius: 30px;
-  background-color: orange;
+  background-color: #F36331;
   color: white;
   border: none;
 }
 
-.signin-form-box input[type=text] {
-  border: 1px solid gray;
+.signin-form-box input[type=text],
+.signin-login-form input[type=password],
+.signin-signup-form input[type=text],
+.signin-signup-form input[type=password],
+.signin-signup-names input[type="text"] {
+  border: 1px solid #D2D6DF;
   border-radius: 3px;
   text-align: left;
+}
+
+.signin-form-box input[type=text]::placeholder {
+  color: #ADB0B6;
+}
+
+.fa-times-circle {
+  color: #F8F8FA;
+}
+
+.fa-times-circle:hover {
+  color: #45494E;
 }

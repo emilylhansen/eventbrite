@@ -56,7 +56,7 @@ class Homepage extends React.Component{
 
             <div className="homepage-categories-two">
               <div className="homepage-categories-two-top">
-                <img src={window.img_yoga2}/>
+                <img src={window.classes2}/>
                 <div className="homepage-categories-two-top-info">
                   <Link to={{pathname: `/events/event-type/classes`, state:{category: "Classes"}}}
                     value="Classes" >Classes</Link>
