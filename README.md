@@ -1,4 +1,5 @@
 ## Happeningbrite
+[LIVE](https://happening-brite.herokuapp.com/#/)
 
 ### Summary 
 Happeningbrite is a web application inspired by Eventbrite built using Ruby on Rails utilizing React.js + Redux architecture. It is also a Single-page-application with content delivered via ajax requests to static page.
