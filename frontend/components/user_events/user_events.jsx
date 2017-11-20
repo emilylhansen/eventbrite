@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import NavBarContainer from '../nav_bar/nav_bar_container';
+import PageFooter from "../footer/footer";
 
 class UserEvents extends React.Component {
 
@@ -38,20 +40,24 @@ class UserEvents extends React.Component {
     return (
       <div>
         <NavBarContainer/>
-        <div className="user-events-main">
-          <h1>Manage Events</h1>
-
-          <ul className="user-events-live-list">
-            <li>
-              {`LIVE ${Object.values(this.props.currentUser.organized_events).length}`}
-            </li>
-          </ul>
-
-          <ul className="user-events-list">
-            {events}
-          </ul>
-        </div>
         <div className="user-events-background"></div>
+        <div className="user-events-main-wrapper">
+          <div className="user-events-main">
+            <h1>Manage Events</h1>
+
+            <ul className="user-events-live-list">
+              <li>
+                {`LIVE ${Object.values(this.props.currentUser.organized_events).length}`}
+              </li>
+            </ul>
+
+            <ul className="user-events-list">
+              {events}
+            </ul>
+          </div>
+
+        </div>
+        <PageFooter/>
       </div>
     );
   }

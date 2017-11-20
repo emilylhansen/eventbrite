@@ -7,10 +7,10 @@ const PageFooter = () => {
       <div className="footer-bottom">
         <div className="footer-bottom-links">
           <nav>
-            <a href="https://www.facebook.com/Eventbrite">Facebook</a>
-            <a href="https://twitter.com/eventbrite">Twitter</a>
-            <a href="https://www.linkedin.com/company/eventbrite/">LinkedIn</a>
-            <a href="https://www.instagram.com/eventbrite/">Instagram</a>
+            <a href="www.facebook.com/Eventbrite">Facebook</a>
+            <a href="www.twitter.com/eventbrite">Twitter</a>
+            <a href="www.linkedin.com/company/eventbrite/">LinkedIn</a>
+            <a href="www.instagram.com/eventbrite/">Instagram</a>
           </nav>
         </div>
         <div className="footer-bottom-logo">

@@ -1,13 +1,22 @@
 .event-index-background {
   position: absolute;
-  height: 2000px;
+  height: 2500px;
   z-index: -100;
   width: 100%;
   background-color: #F8F8FA;
 }
 
+.event-index-background-bottom {
+  position: absolute;
+  height: 200px;
+  z-index: -100;
+  width: 100%;
+  background-color: #F8F8FA;
+}
 .event-index-flex {
   display: flex;
+  width: 100%;
+  height: 2500px;
 }
 
 .event-index-options-main {

@@ -4684,22 +4684,22 @@ var PageFooter = function PageFooter() {
           null,
           _react2.default.createElement(
             "a",
-            { href: "https://www.facebook.com/Eventbrite" },
+            { href: "www.facebook.com/Eventbrite" },
             "Facebook"
           ),
           _react2.default.createElement(
             "a",
-            { href: "https://twitter.com/eventbrite" },
+            { href: "www.twitter.com/eventbrite" },
             "Twitter"
           ),
           _react2.default.createElement(
             "a",
-            { href: "https://www.linkedin.com/company/eventbrite/" },
+            { href: "www.linkedin.com/company/eventbrite/" },
             "LinkedIn"
           ),
           _react2.default.createElement(
             "a",
-            { href: "https://www.instagram.com/eventbrite/" },
+            { href: "www.instagram.com/eventbrite/" },
             "Instagram"
           )
         )
@@ -31856,7 +31856,7 @@ var App = function App() {
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/category/:categoryName', component: _event_index_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/event-type/:eventTypeName', component: _event_index_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/events/new', component: _event_form_container2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId', component: _event_show_container2.default }),
+      _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/events/:eventId', component: _event_show_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/events/:eventId/edit', component: _event_form_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/users/:userId', component: _user_show_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/myevents', component: _user_events_container2.default }),
@@ -32984,7 +32984,7 @@ var Homepage = function (_React$Component) {
                   { className: 'homepage-categories-two-top-info' },
                   _react2.default.createElement(
                     _reactRouterDom.Link,
-                    { to: { pathname: '/events/category/classes', state: { category: "Classes" } },
+                    { to: { pathname: '/events/event-type/classes', state: { category: "Classes" } },
                       value: 'Classes' },
                     'Classes'
                   ),
@@ -33032,7 +33032,7 @@ var Homepage = function (_React$Component) {
                   { className: 'homepage-categories-two-bottom-info' },
                   _react2.default.createElement(
                     _reactRouterDom.Link,
-                    { to: { pathname: '/events/category/parties', state: { category: "Parties" } },
+                    { to: { pathname: '/events/event-type/parties', state: { category: "Parties" } },
                       value: 'Parties' },
                     'Parties'
                   ),
@@ -33084,7 +33084,7 @@ var Homepage = function (_React$Component) {
                   { className: 'homepage-categories-three-bottom-info' },
                   _react2.default.createElement(
                     _reactRouterDom.Link,
-                    { to: { pathname: '/events/category/networking', state: { category: "Networking" } },
+                    { to: { pathname: '/events/event-type/networking', state: { category: "Networking" } },
                       value: 'Networking' },
                     'Networking'
                   ),
@@ -33270,6 +33270,10 @@ var _nav_bar_container = __webpack_require__(12);
 
 var _nav_bar_container2 = _interopRequireDefault(_nav_bar_container);
 
+var _footer = __webpack_require__(86);
+
+var _footer2 = _interopRequireDefault(_footer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -33279,10 +33283,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// import DayPicker from 'react-day-picker';
-// import 'react-day-picker/lib/style.css';
-
 
 var EventForm = function (_React$Component) {
   _inherits(EventForm, _React$Component);
@@ -33449,6 +33449,7 @@ var EventForm = function (_React$Component) {
       } else {
         this.props.action(formData, this.goBack);
       }
+      this.props.history.push('/myevents');
     }
   }, {
     key: 'goBack',
@@ -33817,7 +33818,8 @@ var EventForm = function (_React$Component) {
             ),
             _react2.default.createElement('input', { type: 'submit', value: 'MAKE YOUR EVENT LIVE' })
           )
-        )
+        ),
+        _react2.default.createElement(_footer2.default, null)
       );
     }
   }]);
@@ -33918,6 +33920,10 @@ var _event_index_item = __webpack_require__(251);
 
 var _event_index_item2 = _interopRequireDefault(_event_index_item);
 
+var _footer = __webpack_require__(86);
+
+var _footer2 = _interopRequireDefault(_footer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34012,49 +34018,53 @@ var EventIndex = function (_React$Component) {
           { className: 'event-index-flex' },
           _react2.default.createElement(
             'div',
-            { className: 'event-index-options-main' },
+            null,
             _react2.default.createElement(
               'div',
-              { className: 'event-index-options' },
+              { className: 'event-index-options-main' },
               _react2.default.createElement(
                 'div',
-                { className: 'event-index-options-event-type' },
-                _react2.default.createElement(
-                  'button',
-                  { onClick: function onClick(e) {
-                      return _this2.toggleSelections("event-index-event-type-dropdown");
-                    },
-                    className: 'event-index-event-type-btn' },
-                  'EVENT TYPE ',
-                  _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', 'aria-hidden': 'true' })
-                ),
+                { className: 'event-index-options' },
                 _react2.default.createElement(
                   'div',
-                  { id: 'event-index-event-type-dropdown',
-                    className: 'event-index-event-type-dropdown-content'
-                  },
-                  eventTypeOpts
-                )
-              ),
-              _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'div',
-                { className: 'event-index-options-category' },
-                _react2.default.createElement(
-                  'button',
-                  { onClick: function onClick(e) {
-                      return _this2.toggleSelections("event-index-category-dropdown");
+                  { className: 'event-index-options-event-type' },
+                  _react2.default.createElement(
+                    'button',
+                    { onClick: function onClick(e) {
+                        return _this2.toggleSelections("event-index-event-type-dropdown");
+                      },
+                      className: 'event-index-event-type-btn' },
+                    'EVENT TYPE ',
+                    _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', 'aria-hidden': 'true' })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { id: 'event-index-event-type-dropdown',
+                      className: 'event-index-event-type-dropdown-content'
                     },
-                    className: 'event-index-category-btn' },
-                  'CATEGORY ',
-                  _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', 'aria-hidden': 'true' })
+                    eventTypeOpts
+                  )
                 ),
+                _react2.default.createElement('br', null),
                 _react2.default.createElement(
                   'div',
-                  { id: 'event-index-category-dropdown',
-                    className: 'event-index-category-dropdown-content'
-                  },
-                  categoryOpts
+                  { className: 'event-index-options-category' },
+                  _react2.default.createElement(
+                    'button',
+                    { onClick: function onClick(e) {
+                        return _this2.toggleSelections("event-index-category-dropdown");
+                      },
+                      className: 'event-index-category-btn' },
+                    'CATEGORY ',
+                    _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', 'aria-hidden': 'true' })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { id: 'event-index-category-dropdown',
+                      className: 'event-index-category-dropdown-content'
+                    },
+                    categoryOpts
+                  )
                 )
               )
             )
@@ -34082,11 +34092,12 @@ var EventIndex = function (_React$Component) {
               _react2.default.createElement(
                 'ul',
                 { className: 'event-index-list' },
-                items
+                this.props.events.length > 1 ? items : "There are no events for this selection. Please select a different option :)"
               )
             )
           )
-        )
+        ),
+        _react2.default.createElement(_footer2.default, null)
       );
     }
   }]);
@@ -34370,6 +34381,10 @@ var _reactRouterDom = __webpack_require__(1);
 var _nav_bar_container = __webpack_require__(12);
 
 var _nav_bar_container2 = _interopRequireDefault(_nav_bar_container);
+
+var _footer = __webpack_require__(86);
+
+var _footer2 = _interopRequireDefault(_footer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34659,7 +34674,8 @@ var EventShow = function (_React$Component) {
                 )
               )
             )
-          )
+          ),
+          _react2.default.createElement(_footer2.default, null)
         );
       }
     }
@@ -35520,6 +35536,10 @@ var _nav_bar_container = __webpack_require__(12);
 
 var _nav_bar_container2 = _interopRequireDefault(_nav_bar_container);
 
+var _footer = __webpack_require__(86);
+
+var _footer2 = _interopRequireDefault(_footer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35584,30 +35604,35 @@ var UserEvents = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_nav_bar_container2.default, null),
+        _react2.default.createElement('div', { className: 'user-events-background' }),
         _react2.default.createElement(
           'div',
-          { className: 'user-events-main' },
+          { className: 'user-events-main-wrapper' },
           _react2.default.createElement(
-            'h1',
-            null,
-            'Manage Events'
-          ),
-          _react2.default.createElement(
-            'ul',
-            { className: 'user-events-live-list' },
+            'div',
+            { className: 'user-events-main' },
             _react2.default.createElement(
-              'li',
+              'h1',
               null,
-              'LIVE ' + Object.values(this.props.currentUser.organized_events).length
+              'Manage Events'
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'user-events-live-list' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'LIVE ' + Object.values(this.props.currentUser.organized_events).length
+              )
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'user-events-list' },
+              events
             )
-          ),
-          _react2.default.createElement(
-            'ul',
-            { className: 'user-events-list' },
-            events
           )
         ),
-        _react2.default.createElement('div', { className: 'user-events-background' })
+        _react2.default.createElement(_footer2.default, null)
       );
     }
   }]);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBarContainer from '../nav_bar/nav_bar_container';
+import PageFooter from "../footer/footer";
 
 class EventShow extends React.Component {
 
@@ -182,7 +183,7 @@ class EventShow extends React.Component {
             </div>
 
           </div>
-
+          <PageFooter/>
         </div>
       );
     }

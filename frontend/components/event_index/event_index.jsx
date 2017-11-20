@@ -1,9 +1,9 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
 
 import NavBarContainer from '../nav_bar/nav_bar_container';
 import EventIndexItem from './event_index_item';
+import PageFooter from "../footer/footer";
 
 class EventIndex extends React.Component{
 
@@ -80,39 +80,40 @@ class EventIndex extends React.Component{
       <div className="event-index-main-page">
       <NavBarContainer/>
       <div className="event-index-background"></div>
-
       <div className="event-index-flex">
 
-      <div className="event-index-options-main">
-        <div className="event-index-options">
-          <div className="event-index-options-event-type">
-            <button onClick={(e) => this.toggleSelections("event-index-event-type-dropdown")}
+      <div>
+        <div className="event-index-options-main">
+          <div className="event-index-options">
+            <div className="event-index-options-event-type">
+              <button onClick={(e) => this.toggleSelections("event-index-event-type-dropdown")}
               className="event-index-event-type-btn">
               EVENT TYPE <i className="fa fa-angle-down fa-lg" aria-hidden="true"></i>
               </button>
-            <div id="event-index-event-type-dropdown"
+              <div id="event-index-event-type-dropdown"
               className="event-index-event-type-dropdown-content"
               >
               {eventTypeOpts}
+              </div>
             </div>
-          </div>
-          <br></br>
-          <div className="event-index-options-category">
-            <button onClick={(e) => this.toggleSelections("event-index-category-dropdown")}
+            <br></br>
+            <div className="event-index-options-category">
+              <button onClick={(e) => this.toggleSelections("event-index-category-dropdown")}
               className="event-index-category-btn">
               CATEGORY <i className="fa fa-angle-down fa-lg" aria-hidden="true"></i>
               </button>
-            <div id="event-index-category-dropdown"
+              <div id="event-index-category-dropdown"
               className="event-index-category-dropdown-content"
               >
               {categoryOpts}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="event-index-content">
         <div className="event-index-main">
-
           <div className="event-index-info">
             <h1>Events For You</h1>
             <p>Five bustling boroughs make up the powerhouse known as
@@ -126,11 +127,12 @@ class EventIndex extends React.Component{
           </div>
 
           <ul className="event-index-list">
-            {items}
+            {this.props.events.length > 1 ? items : "There are no events for this selection. Please select a different option :)"}
           </ul>
         </div>
       </div>
     </div>
+    <PageFooter/>
     </div>
     );
   }

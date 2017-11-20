@@ -1,8 +1,8 @@
 import React from 'react';
 import EventApiUtil from '../../util/event_api_util';
 import NavBarContainer from "../nav_bar/nav_bar_container";
-// import DayPicker from 'react-day-picker';
-// import 'react-day-picker/lib/style.css';
+import PageFooter from "../footer/footer";
+
 
 
 class EventForm extends React.Component {
@@ -152,6 +152,7 @@ class EventForm extends React.Component {
     } else {
       this.props.action(formData, this.goBack);
     }
+    this.props.history.push('/myevents');
   }
 
   goBack(){
@@ -385,6 +386,7 @@ class EventForm extends React.Component {
           </div>
 
         </form>
+      <PageFooter/>
       </div>
     );
 

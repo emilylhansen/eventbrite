@@ -58,7 +58,7 @@ class Homepage extends React.Component{
               <div className="homepage-categories-two-top">
                 <img src={window.img_yoga2}/>
                 <div className="homepage-categories-two-top-info">
-                  <Link to={{pathname: `/events/category/classes`, state:{category: "Classes"}}}
+                  <Link to={{pathname: `/events/event-type/classes`, state:{category: "Classes"}}}
                     value="Classes" >Classes</Link>
                   <div className="homepage-categories-two-top-text">
                     <p>
@@ -82,7 +82,7 @@ class Homepage extends React.Component{
               <div className="homepage-categories-two-bottom">
                 <img src={window.img_party}/>
                 <div className="homepage-categories-two-bottom-info">
-                  <Link to={{pathname: `/events/category/parties`, state:{category: "Parties"}}}
+                  <Link to={{pathname: `/events/event-type/parties`, state:{category: "Parties"}}}
                     value="Parties" >Parties</Link>
                   <div className="homepage-categories-two-bottom-text">
                     <p>
@@ -109,7 +109,7 @@ class Homepage extends React.Component{
               <div className="homepage-categories-three-bottom">
                 <img src={window.img_networking}/>
                 <div className="homepage-categories-three-bottom-info">
-                  <Link to={{pathname: `/events/category/networking`, state:{category: "Networking"}}}
+                  <Link to={{pathname: `/events/event-type/networking`, state:{category: "Networking"}}}
                     value="Networking" >Networking</Link>
                   <div className="homepage-categories-three-bottom-text">
                     <p>
