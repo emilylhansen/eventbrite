@@ -31856,7 +31856,7 @@ var App = function App() {
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/category/:categoryName', component: _event_index_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/event-type/:eventTypeName', component: _event_index_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/events/new', component: _event_form_container2.default }),
-      _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/events/:eventId', component: _event_show_container2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/events/:eventId', component: _event_show_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/events/:eventId/edit', component: _event_form_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/users/:userId', component: _user_show_container2.default }),
       _react2.default.createElement(_route_util.ProtectedRoute, { exact: true, path: '/myevents', component: _user_events_container2.default }),
@@ -32900,11 +32900,7 @@ var Homepage = function (_React$Component) {
         'div',
         { className: 'homepage' },
         _react2.default.createElement(_nav_bar_container2.default, null),
-        _react2.default.createElement(
-          'div',
-          { className: 'homepage-img-div' },
-          _react2.default.createElement('img', { className: 'slides', src: window.img_outside })
-        ),
+        _react2.default.createElement('div', { className: 'homepage-img-div' }),
         _react2.default.createElement(
           'div',
           { className: 'homepage-search' },
@@ -33985,7 +33981,8 @@ var EventIndex = function (_React$Component) {
           event: event,
           createSavedEvent: _this2.props.createSavedEvent,
           deleteSavedEvent: _this2.props.deleteSavedEvent,
-          currentUser: _this2.props.currentUser
+          currentUser: _this2.props.currentUser,
+          history: _this2.props.history
         });
       });
 
@@ -34187,15 +34184,18 @@ var EventIndexItem = function (_React$Component) {
   }, {
     key: 'handleSave',
     value: function handleSave(e) {
-      debugger;
-      if (this.props.event.current_user_saved === false) {
-        document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
-        document.getElementById('' + e.target.id).classList.add("fa-bookmark");
-        this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
+      if (this.props.currentUser) {
+        if (this.props.event.current_user_saved === false) {
+          document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
+          document.getElementById('' + e.target.id).classList.add("fa-bookmark");
+          this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
+        } else {
+          document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
+          document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
+          this.props.deleteSavedEvent(this.props.currentUser.saved_events[e.target.id].saved_event_id);
+        }
       } else {
-        document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
-        document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
-        this.props.deleteSavedEvent(this.props.currentUser.saved_events[e.target.id].saved_event_id);
+        this.props.history.push('/signin');
       }
     }
   }, {
@@ -34413,6 +34413,7 @@ var EventShow = function (_React$Component) {
     _this.handleSave = _this.handleSave.bind(_this);
     _this.handleRegister = _this.handleRegister.bind(_this);
     _this.convertDateTime = _this.convertDateTime.bind(_this);
+    _this.convertPrice = _this.convertPrice.bind(_this);
     return _this;
   }
 
@@ -34426,24 +34427,31 @@ var EventShow = function (_React$Component) {
   }, {
     key: 'handleSave',
     value: function handleSave(e) {
-
-      if (this.props.event.current_user_saved === false) {
-        document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
-        document.getElementById('' + e.target.id).classList.add("fa-bookmark");
-        this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
+      if (this.props.current_user) {
+        if (this.props.event.current_user_saved === false) {
+          document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
+          document.getElementById('' + e.target.id).classList.add("fa-bookmark");
+          this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
+        } else {
+          document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
+          document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
+          this.props.deleteSavedEvent(this.props.current_user.saved_events[e.target.id].saved_event_id);
+        }
       } else {
-        document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
-        document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
-        this.props.deleteSavedEvent(this.props.current_user.saved_events[e.target.id].saved_event_id);
+        this.props.history.push('/signin');
       }
     }
   }, {
     key: 'handleRegister',
     value: function handleRegister() {
-      this.props.createTicket({
-        purchaser_id: this.props.current_user.id,
-        event_id: this.props.event.id
-      });
+      if (this.props.current_user) {
+        this.props.createTicket({
+          purchaser_id: this.props.current_user.id,
+          event_id: this.props.event.id
+        });
+      } else {
+        this.props.history.push('/signin');
+      }
     }
   }, {
     key: 'convertDateTime',
@@ -34451,8 +34459,23 @@ var EventShow = function (_React$Component) {
       var arr = dateTime.split(/-|T|:|\./);
       var dateArr = new Date(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]).toString().split(" ");
       var timeArr = dateArr[4].split(":");
-      var newDate = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ' ' + timeArr[0] + ':' + timeArr[1];
-      return newDate.toUpperCase();
+      var newDate = dateArr[0] + ' ' + dateArr[2];
+      var newDate2 = dateArr[0] + ', ' + dateArr[1] + ' ' + dateArr[2] + ', ' + dateArr[3] + ', ' + dateArr[4];
+      return { newDateTop: newDate.toUpperCase(), newDateBottom: newDate2.toUpperCase() };
+    }
+  }, {
+    key: 'convertPrice',
+    value: function convertPrice(price) {
+      var newPrice = price.toString().split(".");
+      if (price === 0) {
+        return "FREE";
+      } else if (newPrice.length === 1) {
+        return newPrice[0] + '.00';
+      } else if (newPrice[1].length === 1) {
+        return price.toString() + '0';
+      } else {
+        return '' + price.toString();
+      }
     }
   }, {
     key: 'render',
@@ -34487,11 +34510,13 @@ var EventShow = function (_React$Component) {
         var savedColor = this.state.savedColor ? "white" : "#0091DA";
 
         var registerText = "REGISTER";
-        Object.values(this.props.current_user.tickets).map(function (ticket) {
-          if (ticket.event_id === _this2.props.event.id) {
-            registerText = "REGISTER MORE TICKETS";
-          }
-        });
+        if (this.props.current_user) {
+          Object.values(this.props.current_user.tickets).map(function (ticket) {
+            if (ticket.event_id === _this2.props.event.id) {
+              registerText = "REGISTER MORE TICKETS";
+            }
+          });
+        }
 
         return _react2.default.createElement(
           'div',
@@ -34523,7 +34548,7 @@ var EventShow = function (_React$Component) {
                   _react2.default.createElement(
                     'p',
                     null,
-                    this.convertDateTime(this.props.event.start_date_time)
+                    this.convertDateTime(this.props.event.start_date_time).newDateTop
                   ),
                   _react2.default.createElement(
                     'h1',
@@ -34543,7 +34568,7 @@ var EventShow = function (_React$Component) {
                   _react2.default.createElement(
                     'span',
                     null,
-                    this.props.event.price
+                    this.convertPrice(this.props.event.price)
                   )
                 )
               )
@@ -34588,21 +34613,14 @@ var EventShow = function (_React$Component) {
                   'DESCRIPTION'
                 ),
                 _react2.default.createElement(
-                  'p',
-                  null,
-                  this.props.event.description
+                  'div',
+                  { className: 'event-show-bottom-left-description' },
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    this.props.event.description
+                  )
                 ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
                 _react2.default.createElement(
                   'h1',
                   null,
@@ -34613,18 +34631,18 @@ var EventShow = function (_React$Component) {
                   { className: 'event-show-tags' },
                   _react2.default.createElement(
                     'div',
-                    null,
+                    { className: 'event-show-tags-category' },
                     _react2.default.createElement(
-                      'h1',
+                      'h2',
                       null,
                       Object.values(this.props.event.category)[0].name
                     )
                   ),
                   _react2.default.createElement(
                     'div',
-                    null,
+                    { className: 'event-show-tags-event-type' },
                     _react2.default.createElement(
-                      'h1',
+                      'h2',
                       null,
                       Object.values(this.props.event.eventType)[0].name
                     )
@@ -34642,10 +34660,10 @@ var EventShow = function (_React$Component) {
                 _react2.default.createElement(
                   'p',
                   null,
-                  this.convertDateTime(this.props.event.start_date_time),
+                  this.convertDateTime(this.props.event.start_date_time).newDateBottom,
                   ' -',
                   _react2.default.createElement('br', null),
-                  this.convertDateTime(this.props.event.end_date_time)
+                  this.convertDateTime(this.props.event.end_date_time).newDateBottom
                 ),
                 _react2.default.createElement(
                   'h1',
@@ -34673,9 +34691,13 @@ var EventShow = function (_React$Component) {
                   'FRIENDS WHO ARE GOING'
                 ),
                 _react2.default.createElement(
-                  'ul',
-                  null,
-                  attendees
+                  'div',
+                  { className: 'event-show-bottom-right-attendees' },
+                  _react2.default.createElement(
+                    'ul',
+                    null,
+                    attendees
+                  )
                 )
               )
             )

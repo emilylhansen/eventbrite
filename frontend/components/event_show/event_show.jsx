@@ -13,6 +13,7 @@ class EventShow extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.convertDateTime = this.convertDateTime.bind(this);
+    this.convertPrice = this.convertPrice.bind(this);
   }
   componentDidMount(){
 
@@ -22,23 +23,30 @@ class EventShow extends React.Component {
   }
 
   handleSave(e){
-
-    if (this.props.event.current_user_saved === false){
-      document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark-o");
-      document.getElementById(`${e.target.id}`).classList.add("fa-bookmark");
-      this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: e.target.id});
+    if(this.props.current_user){
+      if (this.props.event.current_user_saved === false){
+        document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark-o");
+        document.getElementById(`${e.target.id}`).classList.add("fa-bookmark");
+        this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: e.target.id});
+      } else {
+        document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark");
+        document.getElementById(`${e.target.id}`).classList.add("fa-bookmark-o");
+        this.props.deleteSavedEvent(this.props.current_user.saved_events[e.target.id].saved_event_id);
+      }
     } else {
-      document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark");
-      document.getElementById(`${e.target.id}`).classList.add("fa-bookmark-o");
-      this.props.deleteSavedEvent(this.props.current_user.saved_events[e.target.id].saved_event_id);
+      this.props.history.push('/signin');
     }
   }
 
   handleRegister(){
-    this.props.createTicket({
-      purchaser_id: this.props.current_user.id,
-      event_id: this.props.event.id
-    });
+    if(this.props.current_user){
+      this.props.createTicket({
+        purchaser_id: this.props.current_user.id,
+        event_id: this.props.event.id
+      });
+    } else {
+      this.props.history.push('/signin');
+    }
   }
 
   convertDateTime(dateTime){
@@ -46,8 +54,22 @@ class EventShow extends React.Component {
     const dateArr = new Date(arr[0], arr[1], arr[2],
       arr[3], arr[4], arr[5]).toString().split(" ");
     const timeArr = dateArr[4].split(":");
-    const newDate = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]} ${timeArr[0]}:${timeArr[1]}`;
-    return newDate.toUpperCase();
+    const newDate = `${dateArr[0]} ${dateArr[2]}`;
+    const newDate2 = `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}, ${dateArr[3]}, ${dateArr[4]}`;
+    return {newDateTop: newDate.toUpperCase(), newDateBottom: newDate2.toUpperCase()};
+  }
+
+  convertPrice(price){
+    const newPrice = price.toString().split(".");
+    if (price === 0){
+      return "FREE";
+    } else if (newPrice.length === 1){
+      return `${newPrice[0]}.00`;
+    } else if (newPrice[1].length === 1){
+      return `${price.toString()}0`;
+    } else {
+      return `${price.toString()}`;
+    }
   }
 
   render(){
@@ -83,11 +105,13 @@ class EventShow extends React.Component {
       let savedColor = this.state.savedColor ? "white" : "#0091DA";
 
       let registerText = "REGISTER";
-      Object.values(this.props.current_user.tickets).map(ticket => {
-        if(ticket.event_id === this.props.event.id){
-          registerText = "REGISTER MORE TICKETS";
-        }
-      });
+      if(this.props.current_user){
+        Object.values(this.props.current_user.tickets).map(ticket => {
+          if(ticket.event_id === this.props.event.id){
+            registerText = "REGISTER MORE TICKETS";
+          }
+        });
+      }
 
       return (
         <div>
@@ -105,10 +129,10 @@ class EventShow extends React.Component {
 
               <div className="event-show-top-right-background">
                 <div className="event-show-top-right">
-                  <p>{this.convertDateTime(this.props.event.start_date_time)}</p>
+                  <p>{this.convertDateTime(this.props.event.start_date_time).newDateTop}</p>
                   <h1>{this.props.event.title}</h1>
                   <h3><a>by {this.props.event.organizer_name}</a></h3>
-                  <span>{this.props.event.price}</span>
+                  <span>{this.convertPrice(this.props.event.price)}</span>
                 </div>
               </div>
             </div>
@@ -133,29 +157,21 @@ class EventShow extends React.Component {
             <div className="event-show-bottom">
               <div className="event-show-bottom-left">
                 <h1>DESCRIPTION</h1>
-                <p>{this.props.event.description}</p>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
+                <div className="event-show-bottom-left-description">
+                  <p>{this.props.event.description}</p>
+                </div>
+
                 <h1>TAGS</h1>
                 <div className="event-show-tags">
-                  <div>
-                    <h1>
+                  <div className="event-show-tags-category">
+                    <h2>
                       {Object.values(this.props.event.category)[0].name}
-                    </h1>
+                    </h2>
                   </div>
-                  <div>
-                    <h1>
+                  <div className="event-show-tags-event-type">
+                    <h2>
                       {Object.values(this.props.event.eventType)[0].name}
-                    </h1>
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -163,9 +179,9 @@ class EventShow extends React.Component {
               <div className="event-show-bottom-right">
                 <h1>DATE AND TIME</h1>
                 <p>
-                  {this.convertDateTime(this.props.event.start_date_time)} -
+                  {this.convertDateTime(this.props.event.start_date_time).newDateBottom} -
                   <br></br>
-                  {this.convertDateTime(this.props.event.end_date_time)}
+                  {this.convertDateTime(this.props.event.end_date_time).newDateBottom}
                 </p>
                 <h1>LOCATION</h1>
                 <p>
@@ -176,9 +192,11 @@ class EventShow extends React.Component {
                   {num_tickets}
                 </p>
                 <h1>FRIENDS WHO ARE GOING</h1>
-                <ul>
-                  {attendees}
-                </ul>
+                <div className="event-show-bottom-right-attendees">
+                  <ul>
+                    {attendees}
+                  </ul>
+                </div>
               </div>
             </div>
 

@@ -47,7 +47,7 @@
 .event-index-info h1 {
   font-size: 40px;
   padding-left: 8px;
-
+  color: #282C35;
 }
 
 .event-index-info p {
@@ -56,6 +56,7 @@
   line-height: 24px;
   font-weight: 300;
   padding-left: 10px;
+  color: #6D7079;
 }
 
 .event-index-list,
@@ -80,6 +81,10 @@
   margin: 0 auto;
   display: inline-block;
   border-radius: 0;
+}
+
+.event-index-category-btn {
+  margin-bottom: 8px;
 }
 
 .event-index-event-type-btn,

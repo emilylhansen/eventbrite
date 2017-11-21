@@ -39,15 +39,18 @@ class EventIndexItem extends React.Component {
   }
 
   handleSave(e){
-    debugger
-    if (this.props.event.current_user_saved === false){
-      document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark-o");
-      document.getElementById(`${e.target.id}`).classList.add("fa-bookmark");
-      this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: e.target.id});
+    if(this.props.currentUser){
+      if (this.props.event.current_user_saved === false){
+        document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark-o");
+        document.getElementById(`${e.target.id}`).classList.add("fa-bookmark");
+        this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: e.target.id});
+      } else {
+        document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark");
+        document.getElementById(`${e.target.id}`).classList.add("fa-bookmark-o");
+        this.props.deleteSavedEvent(this.props.currentUser.saved_events[e.target.id].saved_event_id);
+      }
     } else {
-      document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark");
-      document.getElementById(`${e.target.id}`).classList.add("fa-bookmark-o");
-      this.props.deleteSavedEvent(this.props.currentUser.saved_events[e.target.id].saved_event_id);
+      this.props.history.push('/signin');
     }
   }
 

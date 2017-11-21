@@ -1,6 +1,6 @@
 .event-show-background {
   position: absolute;
-  height: 1500px;
+  height: 2000px;
   z-index: -100;
   width: 100%;
   background-color: #F8F8FA;
@@ -21,7 +21,7 @@
   margin: 0 auto;
   margin-top: 40px;
   border-radius: 5px;
-  height: 1000px;
+  height: 1500px;
   background-color: white;
 }
 
@@ -42,11 +42,13 @@
 
 .event-show-top-right p{
   color: gray;
+  margin-bottom: 10px;
 }
 
 .event-show-top-right h1{
-  font-size: 35px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: 400;
+  color: #282C35;
 }
 
 .event-show-top-right h3{
@@ -58,6 +60,7 @@
 .event-show-top-right span{
   position: absolute;
   color: gray;
+  font-weight: 300;
 }
 
 .event-show-top-left {
@@ -134,6 +137,16 @@
   padding-right: 50px;
 }
 
+.event-show-bottom-left h1{
+  color: #41454D;
+}
+
+.event-show-bottom-left h2{
+  color: #41454D;
+  font-weight: 100;
+  text-align: center;
+}
+
 .event-show-bottom-left p{
   // border: 1px solid black;
   width: 66%;
@@ -146,6 +159,15 @@
   width: 34%;
 }
 
+.event-show-bottom-right h1{
+  margin-bottom: 10px;
+  color: #41454D;
+}
+
+.event-show-bottom-right p{
+  margin-bottom: 30px;
+}
+
 .event-show-bottom-right p, .event-show-bottom-right ul li{
   // border: 1px solid black;
   color: #818488;
@@ -156,14 +178,15 @@
   display: flex;
   float: left;
   margin-right: 10px;
+  width: 100%;
 }
 
 .event-show-tags div{
+  float: left;
   margin-right: 20px;
   border: 1px solid #E0E0E0;
   border-radius: 20px;
   font-size: 14px;
-  margin: 0 auto;
   width: 100px;
 }
 
@@ -173,10 +196,20 @@
 }
 
 
-.event-show-tags h1:hover {
+.event-show-tags h2:hover {
   color: #008EDD;
 }
 
-.event-show-tags div:hover {
+.event-show-tags div:hover{
   border: 1px solid #008EDD;
+  cursor: pointer;
+}
+
+.event-show-bottom-left-description {
+  margin-bottom: 30px;
+}
+
+.event-show-bottom-right-attendees {
+  height: 100px;
+  overflow: scroll;
 }

@@ -40,6 +40,7 @@ class EventIndex extends React.Component{
         createSavedEvent={this.props.createSavedEvent}
         deleteSavedEvent={this.props.deleteSavedEvent}
         currentUser={this.props.currentUser}
+        history={this.props.history}
          />
     ));
 

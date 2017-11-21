@@ -16,7 +16,6 @@ class Homepage extends React.Component{
       <div className="homepage">
         <NavBarContainer/>
         <div className="homepage-img-div">
-          <img className="slides" src={window.img_outside}/>
         </div>
         <div className="homepage-search">
           <h1>Find your next experience</h1>
