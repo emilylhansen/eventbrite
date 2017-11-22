@@ -12,7 +12,7 @@ class Event < ApplicationRecord
             presence: true
 
 
-  # validates :avatar, attachment_presence: true
+  validates :avatar, attachment_presence: true
   # validates_with AttachmentPresenceValidator, attributes: :avatar
   # validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 1.megabytes
 

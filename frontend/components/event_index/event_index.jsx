@@ -116,7 +116,7 @@ class EventIndex extends React.Component{
       <div className="event-index-content">
         <div className="event-index-main">
           <div className="event-index-info">
-            <h1>Events For You</h1>
+            <h1>New York, NY Events For You</h1>
             <p>Five bustling boroughs make up the powerhouse known as
               New York City. Iconic sites like the Empire State Building
               and the Statue of Liberty draw crowds from across the globe.

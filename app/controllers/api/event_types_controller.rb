@@ -6,6 +6,7 @@ class Api::EventTypesController < ApplicationController
   end
 
   def create
+    debugger
     @eventType = EventType.new(event_params)
     if @eventType.save
       render :show
@@ -32,7 +33,7 @@ class Api::EventTypesController < ApplicationController
   end
 
   def search
-    
+
     hash = {
       "class" => "Class",
       "party" => "Party",

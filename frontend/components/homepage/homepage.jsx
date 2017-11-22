@@ -46,7 +46,7 @@ class Homepage extends React.Component{
                     value="Food & Drink" >Food & Drink</Link>
                   <div className="homepage-categories-one-bottom-text">
                     <p>
-                      Intimate house concerts, major music festivals, and the occasional dance party
+                      Dinner parties, tastings, and big-time festivals
                     </p>
                   </div>
                 </div>
@@ -61,7 +61,7 @@ class Homepage extends React.Component{
                     value="Classes" >Classes</Link>
                   <div className="homepage-categories-two-top-text">
                     <p>
-                      Intimate house concerts, major music festivals, and the occasional dance party
+                      Enlightening seminars, techinical workshops, and fitness classes
                     </p>
                   </div>
                 </div>
@@ -73,7 +73,7 @@ class Homepage extends React.Component{
                     value="Arts" >Arts</Link>
                   <div className="homepage-categories-two-middle-text">
                     <p>
-                      Intimate house concerts, major music festivals, and the occasional dance party
+                      Plays, comedy nights, art exhibitions and film festivals
                     </p>
                   </div>
                 </div>
@@ -85,7 +85,7 @@ class Homepage extends React.Component{
                     value="Parties" >Parties</Link>
                   <div className="homepage-categories-two-bottom-text">
                     <p>
-                      Intimate house concerts, major music festivals, and the occasional dance party
+                      Casual happy hours, singles nights, and all-night celebrations
                     </p>
                   </div>
                 </div>
@@ -100,7 +100,7 @@ class Homepage extends React.Component{
                     value="Sports & Wellness" >Sports & Wellness</Link>
                   <div className="homepage-categories-three-top-text">
                     <p>
-                      Intimate house concerts, major music festivals, and the occasional dance party
+                      Obstacle races, drop-in yoga classes, and the big game
                     </p>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ class Homepage extends React.Component{
                     value="Networking" >Networking</Link>
                   <div className="homepage-categories-three-bottom-text">
                     <p>
-                      Intimate house concerts, major music festivals, and the occasional dance party
+                      Business mixers, hobby meetups, and panel discussions 
                     </p>
                   </div>
                 </div>

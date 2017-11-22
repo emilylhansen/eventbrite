@@ -54,6 +54,7 @@ const mapStateToProps = (state, ownProps) => {
     }
     formType = "edit";
   }
+
   return {event, formType, category, eventType, categories,
     eventTypes, errors};
 };

@@ -32967,7 +32967,7 @@ var Homepage = function (_React$Component) {
                     _react2.default.createElement(
                       'p',
                       null,
-                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                      'Dinner parties, tastings, and big-time festivals'
                     )
                   )
                 )
@@ -32995,7 +32995,7 @@ var Homepage = function (_React$Component) {
                     _react2.default.createElement(
                       'p',
                       null,
-                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                      'Enlightening seminars, techinical workshops, and fitness classes'
                     )
                   )
                 )
@@ -33019,7 +33019,7 @@ var Homepage = function (_React$Component) {
                     _react2.default.createElement(
                       'p',
                       null,
-                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                      'Plays, comedy nights, art exhibitions and film festivals'
                     )
                   )
                 )
@@ -33043,7 +33043,7 @@ var Homepage = function (_React$Component) {
                     _react2.default.createElement(
                       'p',
                       null,
-                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                      'Casual happy hours, singles nights, and all-night celebrations'
                     )
                   )
                 )
@@ -33071,7 +33071,7 @@ var Homepage = function (_React$Component) {
                     _react2.default.createElement(
                       'p',
                       null,
-                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                      'Obstacle races, drop-in yoga classes, and the big game'
                     )
                   )
                 )
@@ -33095,7 +33095,7 @@ var Homepage = function (_React$Component) {
                     _react2.default.createElement(
                       'p',
                       null,
-                      'Intimate house concerts, major music festivals, and the occasional dance party'
+                      'Business mixers, hobby meetups, and panel discussions'
                     )
                   )
                 )
@@ -33210,6 +33210,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     }
     formType = "edit";
   }
+
   return { event: event, formType: formType, category: category, eventType: eventType, categories: categories,
     eventTypes: eventTypes, errors: errors };
 };
@@ -33303,11 +33304,13 @@ var EventForm = function (_React$Component) {
     _this.category = undefined;
     _this.eventType = undefined;
     _this.refilled = false;
+    _this.submitted = false;
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
     _this.updateFile = _this.updateFile.bind(_this);
     _this.currentDateTime = _this.currentDateTime.bind(_this);
     _this.convertDateTime = _this.convertDateTime.bind(_this);
+    _this.matchErrors = _this.matchErrors.bind(_this);
     return _this;
   }
 
@@ -33440,6 +33443,7 @@ var EventForm = function (_React$Component) {
 
       var category_id = this.findCategoryId();
       var event_type_id = this.findEventTypeId();
+      debugger;
       if (this.props.match.path === '/events/new') {
         this.props.action(formData, this.goBack).then(function (_ref) {
           var event = _ref.event;
@@ -33450,7 +33454,7 @@ var EventForm = function (_React$Component) {
       } else {
         this.props.action(formData, this.goBack);
       }
-      this.props.history.push('/myevents');
+      this.submitted = true;
     }
   }, {
     key: 'goBack',
@@ -33498,6 +33502,20 @@ var EventForm = function (_React$Component) {
       return timeOptions;
     }
   }, {
+    key: 'matchErrors',
+    value: function matchErrors() {
+      var errors = [];
+      Object.values(this.props.errors).map(function (err) {
+        var field = err.split(" ");
+        if (field[0] === "Organizer") {
+          errors.push(field[0] + ' ' + field[1]);
+        } else {
+          errors.push(field[0]);
+        }
+      });
+      return errors;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var timeOpts = this.getTimeOpts().map(function (opt) {
@@ -33540,8 +33558,19 @@ var EventForm = function (_React$Component) {
             endDate: this.currentDateTime().currentDate,
             endTime: "22:00:00"
           };
-          this.refilled = true;
+          if (this.props.categories.length > 0 && this.props.eventTypes.length > 0) {
+            this.category = this.props.category.name;
+            this.eventType = this.props.eventType.name;
+            this.refilled = true;
+          }
         }
+      }
+
+      if (this.submitted && this.props.errors.length === 0) {
+        this.submitted = false;
+        this.props.history.push('/myevents');
+      } else {
+        this.submitted = false;
       }
 
       return _react2.default.createElement(
@@ -33585,7 +33614,12 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'EVENT TITLE'
+                'EVENT TITLE ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Title") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'text',
@@ -33597,7 +33631,12 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'LOCATION'
+                'LOCATION ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Location") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'text',
@@ -33668,7 +33707,12 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'EVENT IMAGE'
+                'EVENT IMAGE ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Avatar") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
@@ -33687,7 +33731,12 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'EVENT DESCRIPTION'
+                'EVENT DESCRIPTION ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Description") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('textarea', { value: this.state.description,
@@ -33698,7 +33747,12 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'ORGANIZER NAME'
+                'ORGANIZER NAME ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Organizer name") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('input', { type: 'text',
@@ -33709,7 +33763,12 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'ORGANIZER DESCRIPTION'
+                'ORGANIZER DESCRIPTION ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Organizer description") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('textarea', { value: this.state.organizer_description,
@@ -33734,10 +33793,15 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'Quantity available'
+                'Quantity available ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Num") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement('input', { type: 'text',
+              _react2.default.createElement('input', { type: 'number',
                 value: this.state.num_tickets,
                 onChange: this.handleInput("num_tickets")
               }),
@@ -33745,10 +33809,15 @@ var EventForm = function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'Price'
+                'Price ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'event-form-error' },
+                  this.matchErrors().includes("Price") ? '*' : ''
+                )
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement('input', { type: 'text',
+              _react2.default.createElement('input', { type: 'number',
                 value: this.state.price,
                 onChange: this.handleInput("price")
               }),
@@ -33772,19 +33841,18 @@ var EventForm = function (_React$Component) {
                 'EVENT TYPE'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement(
+              this.props.formType === "new" ? _react2.default.createElement(
                 'select',
                 { value: this.eventType,
                   className: 'event-type-select',
                   onChange: this.handleInput('eventType')
                 },
-                _react2.default.createElement(
-                  'option',
-                  null,
-                  'Select the type of event'
-                ),
                 eventTypeOpts
-              ),
+              ) : _react2.default.createElement('input', { type: 'text',
+                className: 'event-type-select',
+                value: this.eventType,
+                disabled: true
+              }),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 'label',
@@ -33792,21 +33860,24 @@ var EventForm = function (_React$Component) {
                 'EVENT TOPIC'
               ),
               _react2.default.createElement('br', null),
-              _react2.default.createElement(
+              this.props.formType === "new" ? _react2.default.createElement(
                 'select',
                 { value: this.category,
                   className: 'event-topic-select',
                   onChange: this.handleInput('category')
                 },
-                _react2.default.createElement(
-                  'option',
-                  null,
-                  'Select a topic'
-                ),
                 categoryOpts
-              ),
+              ) : _react2.default.createElement('input', { type: 'text',
+                className: 'event-topic-select',
+                value: this.category,
+                disabled: true
+              }),
               _react2.default.createElement('br', null),
-              this.renderErrors()
+              _react2.default.createElement(
+                'span',
+                { className: 'event-form-error-bottom' },
+                this.props.errors.length > 0 ? "Please fill in the required fields." : ""
+              )
             )
           ),
           _react2.default.createElement(
@@ -34083,7 +34154,7 @@ var EventIndex = function (_React$Component) {
                 _react2.default.createElement(
                   'h1',
                   null,
-                  'Events For You'
+                  'New York, NY Events For You'
                 ),
                 _react2.default.createElement(
                   'p',

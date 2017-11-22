@@ -62,14 +62,14 @@
   display: flex;
   height: 220px;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
 }
 
 .homepage-categories-one-top,
 .homepage-categories-three-bottom {
   height: 100%;
-  width: 65%;
+  width: 66%;
   border-radius: 5px;
   align-content: center;
   text-align: center;
@@ -166,6 +166,9 @@
 .homepage-categories-three-bottom img {
   -webkit-transition: all 1s;
   transition: all 1s;
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%
 }
 
 .homepage-categories-one-top:hover img,
@@ -186,7 +189,7 @@
 .homepage-categories-two-bottom,
 .homepage-categories-three-top, {
   height: 100%;
-  width: 31%;
+  width: 32%;
   border-radius: 5px;
   align-content: center;
   text-align: center;

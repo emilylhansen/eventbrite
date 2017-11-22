@@ -18,11 +18,13 @@ class EventForm extends React.Component {
     this.category  = undefined;
     this.eventType = undefined;
     this.refilled = false;
+    this.submitted = false;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.updateFile = this.updateFile.bind(this);
     this.currentDateTime = this.currentDateTime.bind(this);
     this.convertDateTime = this.convertDateTime.bind(this);
+    this.matchErrors = this.matchErrors.bind(this);
   }
 
   componentDidMount(){
@@ -42,17 +44,17 @@ class EventForm extends React.Component {
     if (Object.keys(this.dateTime).includes(field)){
       return (e) => {
         this.dateTime[field] = e.target.value;
-        this.forceUpdate()
+        this.forceUpdate();
       };
     } else if (field === 'category'){
       return (e) => {
         this.category = e.target.value;
-        this.forceUpdate()
+        this.forceUpdate();
       };
     } else if (field === 'eventType'){
         return (e) => {
           this.eventType = e.target.value;
-          this.forceUpdate()
+          this.forceUpdate();
         };
     } else {
       return (e) => {
@@ -143,6 +145,7 @@ class EventForm extends React.Component {
 
     const category_id = this.findCategoryId();
     const event_type_id = this.findEventTypeId();
+    debugger
     if(this.props.match.path === '/events/new'){
       this.props.action(formData, this.goBack).then(
         ({event}) => {
@@ -152,7 +155,7 @@ class EventForm extends React.Component {
     } else {
       this.props.action(formData, this.goBack);
     }
-    this.props.history.push('/myevents');
+    this.submitted = true;
   }
 
   goBack(){
@@ -183,6 +186,19 @@ class EventForm extends React.Component {
     }
 
     return timeOptions;
+  }
+
+  matchErrors(){
+    let errors = [];
+    Object.values(this.props.errors).map(err => {
+      let field = err.split(" ");
+      if(field[0] === "Organizer"){
+        errors.push(field[0] + ' ' + field[1]);
+      } else {
+        errors.push(field[0]);
+      }
+    });
+    return errors;
   }
 
   render(){
@@ -218,9 +234,21 @@ class EventForm extends React.Component {
           endDate: this.currentDateTime().currentDate,
           endTime: "22:00:00"
         };
-        this.refilled = true;
+        if(this.props.categories.length > 0 && this.props.eventTypes.length > 0){
+          this.category = this.props.category.name;
+          this.eventType = this.props.eventType.name;
+          this.refilled = true;
+        }
       }
     }
+
+    if(this.submitted && this.props.errors.length === 0){
+      this.submitted = false;
+      this.props.history.push('/myevents');
+    } else {
+      this.submitted = false;
+    }
+
 
     return(
       <div>
@@ -238,7 +266,7 @@ class EventForm extends React.Component {
                 <h1>Event Details</h1>
               </div>
 
-              <label>EVENT TITLE</label>
+              <label>EVENT TITLE <span className="event-form-error">{this.matchErrors().includes("Title") ? '*' : '' }</span></label>
                 <br></br>
                 <input type="text"
                   placeholder="Give it a short distinct name"
@@ -247,7 +275,7 @@ class EventForm extends React.Component {
                   />
                 <br></br>
 
-              <label>LOCATION</label>
+              <label>LOCATION <span className="event-form-error">{this.matchErrors().includes("Location") ? '*' : '' }</span></label>
                 <br></br>
                 <input type="text"
                   placeholder="Specify where it's held"
@@ -295,7 +323,7 @@ class EventForm extends React.Component {
               </div>
               </div>
 
-              <label>EVENT IMAGE</label>
+              <label>EVENT IMAGE <span className="event-form-error">{this.matchErrors().includes("Avatar") ? '*' : '' }</span></label>
                 <br></br>
                 <div className="event-form-image-input-label-div">
                   <label className="event-form-image-input-label" htmlFor="file">
@@ -306,7 +334,7 @@ class EventForm extends React.Component {
                 </div>
                 <br></br>
 
-              <label>EVENT DESCRIPTION</label>
+              <label>EVENT DESCRIPTION <span className="event-form-error">{this.matchErrors().includes("Description") ? '*' : '' }</span></label>
                 <br></br>
                 <textarea value={this.state.description}
                   cols="75" rows="10"
@@ -314,7 +342,7 @@ class EventForm extends React.Component {
                   />
                 <br></br>
 
-              <label>ORGANIZER NAME</label>
+              <label>ORGANIZER NAME <span className="event-form-error">{this.matchErrors().includes("Organizer name") ? '*' : '' }</span></label>
                 <br></br>
                 <input type="text"
                   value={this.state.organizer_name}
@@ -322,7 +350,7 @@ class EventForm extends React.Component {
                   />
                 <br></br>
 
-              <label>ORGANIZER DESCRIPTION</label>
+              <label>ORGANIZER DESCRIPTION <span className="event-form-error">{this.matchErrors().includes("Organizer description") ? '*' : '' }</span></label>
                 <br></br>
                 <textarea value={this.state.organizer_description}
                   cols="75" rows="1"
@@ -335,16 +363,16 @@ class EventForm extends React.Component {
               </div>
 
               <br></br>
-              <label>Quantity available</label>
+              <label>Quantity available <span className="event-form-error">{this.matchErrors().includes("Num") ? '*' : '' }</span></label>
               <br></br>
-              <input type="text"
+              <input type="number"
                 value={this.state.num_tickets}
                 onChange={this.handleInput("num_tickets")}
                 />
               <br></br>
-              <label>Price</label>
+              <label>Price <span className="event-form-error">{this.matchErrors().includes("Price") ? '*' : '' }</span></label>
               <br></br>
-              <input type="text"
+              <input type="number"
                 value={this.state.price}
                 onChange={this.handleInput("price")}
                 />
@@ -356,27 +384,39 @@ class EventForm extends React.Component {
 
               <label>EVENT TYPE</label>
                 <br></br>
-                <select value={this.eventType}
-                  className="event-type-select"
-                  onChange={this.handleInput('eventType')}
-                  >
-                  <option>Select the type of event</option>
-                  {eventTypeOpts}
-                </select>
+                {this.props.formType === "new" ?
+                  <select value={this.eventType}
+                    className="event-type-select"
+                    onChange={this.handleInput('eventType')}
+                    >
+                    {eventTypeOpts}
+                  </select>
+                  :
+                  <input type="text"
+                    className="event-type-select"
+                    value={this.eventType}
+                    disabled
+                    ></input>}
                 <br></br>
 
               <label>EVENT TOPIC</label>
                 <br></br>
-                <select value={this.category}
-                  className="event-topic-select"
-                  onChange={this.handleInput('category')}
-                  >
-                  <option>Select a topic</option>
-                  {categoryOpts}
-                </select>
+                {this.props.formType === "new" ?
+                  <select value={this.category}
+                    className="event-topic-select"
+                    onChange={this.handleInput('category')}
+                    >
+                    {categoryOpts}
+                  </select>
+                  :
+                  <input type="text"
+                    className="event-topic-select"
+                    value={this.category}
+                    disabled
+                    ></input>}
                 <br></br>
 
-                {this.renderErrors()}
+                <span className="event-form-error-bottom">{this.props.errors.length > 0 ? "Please fill in the required fields." : ""}</span>
             </div>
           </div>
 
