@@ -47,6 +47,7 @@ class SessionFormLogin extends React.Component {
   }
 
   render() {
+    debugger
     return (
       <div className="signin-login-form-container">
         <Link to='/' className="signin-login-form-container-link">

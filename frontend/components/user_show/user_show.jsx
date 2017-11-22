@@ -56,7 +56,8 @@ class UserShow extends React.Component {
               style={{borderBottom: `4px solid ${this.selectionColor(0)}`}}
               active={this.state.activeComponent}
               >
-              <span>{Object.values(this.props.currentUser.tickets).length}</span>
+              <span>{this.props.currentUser.tickets !== undefined ?
+                  Object.values(this.props.currentUser.tickets).length : ""}</span>
               <br></br>
               <span>UPCOMING EVENTS</span>
             </li>
@@ -65,7 +66,8 @@ class UserShow extends React.Component {
               style={{borderBottom: `4px solid ${this.selectionColor(1)}`}}
               active={this.state.activeComponent}
               >
-              <span>{Object.values(this.props.currentUser.saved_events).length}</span>
+              <span>{this.props.currentUser.saved_events !== undefined ?
+                  Object.values(this.props.currentUser.saved_events).length : ""}</span>
               <br></br>
               <span>SAVED EVENTS</span>
             </li>

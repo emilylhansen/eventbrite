@@ -3,7 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import UserShowIndexItem from './user_show_index_item';
 
 const UserShowIndex= ({ activeComponent, createSavedEvent, deleteSavedEvent, currentUser, outer, history}) => {
-  const items = Object.values(currentUser.saved_events).map(e => (
+  const items = currentUser.saved_events !== undefined ?
+  Object.values(currentUser.saved_events).map(e => (
     <UserShowIndexItem
       key={e.event_id}
       event={e}
@@ -11,13 +12,13 @@ const UserShowIndex= ({ activeComponent, createSavedEvent, deleteSavedEvent, cur
       deleteSavedEvent={deleteSavedEvent}
       currentUser={currentUser}
       />
-  ));
+  )) : "";
 
   if (activeComponent === 1){
     return (
       <div>
         <div className="user-show-index-main">
-        
+
             {items}
 
         </div>

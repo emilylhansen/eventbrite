@@ -32331,6 +32331,7 @@ var SessionFormLogin = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'signin-login-form-container' },
@@ -32711,7 +32712,7 @@ var NavBar = function (_React$Component) {
             _react2.default.createElement(
               'a',
               { href: '/#/users/' + this.props.currentUser.id },
-              'Tickets ' + Object.values(this.props.currentUser.tickets).length
+              'Tickets ' + (this.props.currentUser.tickets !== undefined ? Object.values(this.props.currentUser.tickets).length : "")
             )
           ),
           _react2.default.createElement(
@@ -32720,7 +32721,7 @@ var NavBar = function (_React$Component) {
             _react2.default.createElement(
               'a',
               { href: '/#/users/' + this.props.currentUser.id },
-              'Saved ' + Object.values(this.props.currentUser.saved_events).length
+              'Saved ' + (this.props.currentUser.saved_events !== undefined ? Object.values(this.props.currentUser.saved_events).length : "")
             )
           ),
           _react2.default.createElement(
@@ -34255,11 +34256,12 @@ var EventIndexItem = function (_React$Component) {
   }, {
     key: 'handleSave',
     value: function handleSave(e) {
+      // this.props.event.current_user_saved === false
       if (this.props.currentUser) {
-        if (this.props.event.current_user_saved === false) {
+        if (document.getElementById('' + e.target.id).classList.contains("fa-bookmark-o")) {
           document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
           document.getElementById('' + e.target.id).classList.add("fa-bookmark");
-          this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
+          this.props.createSavedEvent({ user_id: this.props.currentUser.id, event_id: e.target.id });
         } else {
           document.getElementById('' + e.target.id).classList.remove("fa-bookmark");
           document.getElementById('' + e.target.id).classList.add("fa-bookmark-o");
@@ -35136,7 +35138,7 @@ var UserShow = function (_React$Component) {
               _react2.default.createElement(
                 'span',
                 null,
-                Object.values(this.props.currentUser.tickets).length
+                this.props.currentUser.tickets !== undefined ? Object.values(this.props.currentUser.tickets).length : ""
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
@@ -35157,7 +35159,7 @@ var UserShow = function (_React$Component) {
               _react2.default.createElement(
                 'span',
                 null,
-                Object.values(this.props.currentUser.saved_events).length
+                this.props.currentUser.saved_events !== undefined ? Object.values(this.props.currentUser.saved_events).length : ""
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
@@ -35239,7 +35241,7 @@ var UserShowIndex = function UserShowIndex(_ref) {
       outer = _ref.outer,
       history = _ref.history;
 
-  var items = Object.values(currentUser.saved_events).map(function (e) {
+  var items = currentUser.saved_events !== undefined ? Object.values(currentUser.saved_events).map(function (e) {
     return _react2.default.createElement(_user_show_index_item2.default, {
       key: e.event_id,
       event: e,
@@ -35247,7 +35249,7 @@ var UserShowIndex = function UserShowIndex(_ref) {
       deleteSavedEvent: deleteSavedEvent,
       currentUser: currentUser
     });
-  });
+  }) : "";
 
   if (activeComponent === 1) {
     return _react2.default.createElement(
@@ -35467,13 +35469,13 @@ var UserShowTicketIndex = function UserShowTicketIndex(_ref) {
       outer = _ref.outer,
       history = _ref.history;
 
-  var items = Object.values(currentUser.tickets).map(function (ticket) {
+  var items = currentUser.tickets !== undefined ? Object.values(currentUser.tickets).map(function (ticket) {
     return _react2.default.createElement(_user_show_ticket_index_item2.default, {
       key: ticket.id,
       ticket: ticket,
       currentUser: currentUser
     });
-  });
+  }) : "";
 
   if (activeComponent === 0) {
     return _react2.default.createElement(
