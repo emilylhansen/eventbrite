@@ -24,7 +24,7 @@ class EventShow extends React.Component {
 
   handleSave(e){
     if(this.props.current_user){
-      if (this.props.event.current_user_saved === false){
+      if (document.getElementById(`${e.target.id}`).classList.contains("fa-bookmark-o")){
         document.getElementById(`${e.target.id}`).classList.remove("fa-bookmark-o");
         document.getElementById(`${e.target.id}`).classList.add("fa-bookmark");
         this.props.createSavedEvent({user_id: this.props.current_user.id, event_id: e.target.id});
@@ -165,12 +165,22 @@ class EventShow extends React.Component {
                 <div className="event-show-tags">
                   <div className="event-show-tags-category">
                     <h2>
-                      {Object.values(this.props.event.category)[0].name}
+                      <Link
+                        to={{pathname: `/events/category/${Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase()}`,
+                        state:{category: `${Object.values(this.props.event.category)[0].name}`}}}
+                        value={`${Object.values(this.props.event.category)[0].name}`} >
+                        {Object.values(this.props.event.category)[0].name}
+                      </Link>
                     </h2>
                   </div>
                   <div className="event-show-tags-event-type">
                     <h2>
-                      {Object.values(this.props.event.eventType)[0].name}
+                      <Link
+                        to={{pathname: `/events/event-type/${Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase()}`,
+                        state:{eventType: `${Object.values(this.props.event.eventType)[0].name}`}}}
+                        value={`${Object.values(this.props.event.eventType)[0].name}`} >
+                        {Object.values(this.props.event.eventType)[0].name}
+                      </Link>
                     </h2>
                   </div>
                 </div>

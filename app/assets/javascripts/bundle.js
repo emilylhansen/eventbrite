@@ -34019,21 +34019,23 @@ var EventIndex = function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchCategories();
       this.props.fetchEventTypes();
-
       if (this.props.match.params.categoryName) {
         this.props.fetchByCategory({ name: this.props.match.params.categoryName });
+        // this.forceUpdate();
       } else if (this.props.match.params.eventTypeName) {
         this.props.fetchByEventType({ name: this.props.match.params.eventTypeName });
+        // this.forceUpdate();
       } else {
         this.props.fetchEvents();
+        // this.forceUpdate();
       }
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (this.props.match.params.categoryName !== nextProps.match.params.categoryName) {
+      if (nextProps.match.params.categoryName && this.props.match.params.categoryName !== nextProps.match.params.categoryName) {
         nextProps.fetchByCategory({ name: nextProps.match.params.categoryName });
-      } else if (this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName) {
+      } else if (nextProps.match.params.eventTypeName && this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName) {
         nextProps.fetchByEventType({ name: nextProps.match.params.eventTypeName });
       }
     }
@@ -34166,7 +34168,7 @@ var EventIndex = function (_React$Component) {
               _react2.default.createElement(
                 'ul',
                 { className: 'event-index-list' },
-                this.props.events.length > 1 ? items : "There are no events for this selection. Please select a different option :)"
+                this.props.events.length > 0 ? items : "There are no events for this selection. Please select a different option :)"
               )
             )
           )
@@ -34339,10 +34341,26 @@ var EventIndexItem = function (_React$Component) {
                 { className: 'event-index-item-info-right-span' },
                 _react2.default.createElement(
                   'span',
-                  null,
-                  '#' + Object.values(this.props.event.category)[0].name,
+                  { className: 'event-index-item-info-right-span-links' },
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    {
+                      to: { pathname: '/events/category/' + Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase(),
+                        state: { category: '' + Object.values(this.props.event.category)[0].name } },
+                      value: '' + Object.values(this.props.event.category)[0].name },
+                    '#',
+                    Object.values(this.props.event.category)[0].name
+                  ),
                   '\xA0\xA0\xA0\xA0',
-                  '#' + Object.values(this.props.event.eventType)[0].name
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    {
+                      to: { pathname: '/events/event-type/' + Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase(),
+                        state: { eventType: '' + Object.values(this.props.event.eventType)[0].name } },
+                      value: '' + Object.values(this.props.event.eventType)[0].name },
+                    '#',
+                    Object.values(this.props.event.eventType)[0].name
+                  )
                 )
               ),
               _react2.default.createElement(
@@ -34501,7 +34519,7 @@ var EventShow = function (_React$Component) {
     key: 'handleSave',
     value: function handleSave(e) {
       if (this.props.current_user) {
-        if (this.props.event.current_user_saved === false) {
+        if (document.getElementById('' + e.target.id).classList.contains("fa-bookmark-o")) {
           document.getElementById('' + e.target.id).classList.remove("fa-bookmark-o");
           document.getElementById('' + e.target.id).classList.add("fa-bookmark");
           this.props.createSavedEvent({ user_id: this.props.current_user.id, event_id: e.target.id });
@@ -34708,7 +34726,14 @@ var EventShow = function (_React$Component) {
                     _react2.default.createElement(
                       'h2',
                       null,
-                      Object.values(this.props.event.category)[0].name
+                      _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        {
+                          to: { pathname: '/events/category/' + Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase(),
+                            state: { category: '' + Object.values(this.props.event.category)[0].name } },
+                          value: '' + Object.values(this.props.event.category)[0].name },
+                        Object.values(this.props.event.category)[0].name
+                      )
                     )
                   ),
                   _react2.default.createElement(
@@ -34717,7 +34742,14 @@ var EventShow = function (_React$Component) {
                     _react2.default.createElement(
                       'h2',
                       null,
-                      Object.values(this.props.event.eventType)[0].name
+                      _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        {
+                          to: { pathname: '/events/event-type/' + Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase(),
+                            state: { eventType: '' + Object.values(this.props.event.eventType)[0].name } },
+                          value: '' + Object.values(this.props.event.eventType)[0].name },
+                        Object.values(this.props.event.eventType)[0].name
+                      )
                     )
                   )
                 )

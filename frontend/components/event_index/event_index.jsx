@@ -10,20 +10,24 @@ class EventIndex extends React.Component{
   componentDidMount(){
     this.props.fetchCategories();
     this.props.fetchEventTypes();
-
     if(this.props.match.params.categoryName){
       this.props.fetchByCategory({name: this.props.match.params.categoryName});
+      // this.forceUpdate();
     } else if (this.props.match.params.eventTypeName){
       this.props.fetchByEventType({name: this.props.match.params.eventTypeName});
+      // this.forceUpdate();
     } else {
       this.props.fetchEvents();
+      // this.forceUpdate();
     }
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props.match.params.categoryName !== nextProps.match.params.categoryName){
+    if(nextProps.match.params.categoryName &&
+      (this.props.match.params.categoryName !== nextProps.match.params.categoryName)){
       nextProps.fetchByCategory({name: nextProps.match.params.categoryName});
-    } else if (this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName){
+    } else if (nextProps.match.params.eventTypeName &&
+      (this.props.match.params.eventTypeName !== nextProps.match.params.eventTypeName)){
       nextProps.fetchByEventType({name: nextProps.match.params.eventTypeName});
     }
   }
@@ -128,7 +132,7 @@ class EventIndex extends React.Component{
           </div>
 
           <ul className="event-index-list">
-            {this.props.events.length > 1 ? items : "There are no events for this selection. Please select a different option :)"}
+            {this.props.events.length > 0 ? items : "There are no events for this selection. Please select a different option :)"}
           </ul>
         </div>
       </div>

@@ -56,6 +56,7 @@ class EventIndexItem extends React.Component {
   }
 
   render(){
+    
     const newPrice = this.convertPrice(this.props.event.price);
     return (
       <li className="event-index-item-li">
@@ -82,9 +83,21 @@ class EventIndexItem extends React.Component {
 
             <div className="event-index-item-info-right">
               <div className="event-index-item-info-right-span">
-                <span>{`#${Object.values(this.props.event.category)[0].name}`}
+                <span className="event-index-item-info-right-span-links">
+                  <Link
+                    to={{pathname: `/events/category/${Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase()}`,
+                    state:{category: `${Object.values(this.props.event.category)[0].name}`}}}
+                    value={`${Object.values(this.props.event.category)[0].name}`} >
+                    #{Object.values(this.props.event.category)[0].name}
+                  </Link>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  {`#${Object.values(this.props.event.eventType)[0].name}`}</span>
+                  <Link
+                    to={{pathname: `/events/event-type/${Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase()}`,
+                    state:{eventType: `${Object.values(this.props.event.eventType)[0].name}`}}}
+                    value={`${Object.values(this.props.event.eventType)[0].name}`} >
+                    #{Object.values(this.props.event.eventType)[0].name}
+                  </Link>
+                </span>
               </div>
               <div className="event-index-item-info-right-span-glyphicon">
                 <i className="fa fa-bookmark-o fa-lg"
