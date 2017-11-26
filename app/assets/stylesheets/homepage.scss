@@ -122,10 +122,14 @@
 .homepage-categories-two-bottom-text,
 .homepage-categories-three-top-text,
 .homepage-categories-three-bottom-text{
-  display: none;
+  // display: none;
   align-content: center;
   text-align: center;
   width: 100%;
+  transition: all .5s ease-in-out;
+  transform: scale(.000001);
+  position: absolute;
+
 }
 
 .homepage-categories-one-top-text p,
@@ -136,7 +140,6 @@
 .homepage-categories-three-top-text p,
 .homepage-categories-three-bottom-text p{
   text-align: center;
-
 }
 
 .homepage-categories-one-top:hover
@@ -153,9 +156,10 @@
 .homepage-categories-three-top-text,
 .homepage-categories-three-bottom:hover
 .homepage-categories-three-bottom-text, {
-  display: block;
-
-}
+  // display: block;
+  transform: scale(1);
+  position: relative;
+  }
 
 .homepage-categories-one-top img,
 .homepage-categories-one-bottom img,

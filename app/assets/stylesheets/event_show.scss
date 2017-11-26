@@ -1,6 +1,6 @@
 .event-show-background {
   position: absolute;
-  height: 2000px;
+  // height: 100%;
   z-index: -100;
   width: 100%;
   background-color: #F8F8FA;
@@ -17,12 +17,15 @@
 
 .event-show-main {
   width: 75%;
-  box-shadow: 1px 1px 5px #E0E0E0;
   margin: 0 auto;
   margin-top: 40px;
   border-radius: 5px;
-  height: 1500px;
+  // height: 1500px;
   background-color: white;
+  margin-bottom: 100px;
+  padding-bottom: 75px;
+  border: 1px solid #E0E0E0;
+
 }
 
 .event-show-top {

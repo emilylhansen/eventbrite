@@ -68,7 +68,6 @@ class SessionForm extends React.Component {
     );
   }
 
-  debugger
   render() {
     return (
       <div className="signin-form-container">

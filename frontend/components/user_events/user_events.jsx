@@ -40,7 +40,7 @@ class UserEvents extends React.Component {
     return (
       <div>
         <NavBarContainer/>
-        <div className="user-events-background"></div>
+        <div className="user-events-background">
         <div className="user-events-main-wrapper">
           <div className="user-events-main">
             <h1>Manage Events</h1>
@@ -58,6 +58,7 @@ class UserEvents extends React.Component {
 
         </div>
         <PageFooter/>
+        </div>
       </div>
     );
   }

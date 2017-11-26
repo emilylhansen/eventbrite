@@ -12,13 +12,10 @@ class EventIndex extends React.Component{
     this.props.fetchEventTypes();
     if(this.props.match.params.categoryName){
       this.props.fetchByCategory({name: this.props.match.params.categoryName});
-      // this.forceUpdate();
     } else if (this.props.match.params.eventTypeName){
       this.props.fetchByEventType({name: this.props.match.params.eventTypeName});
-      // this.forceUpdate();
     } else {
       this.props.fetchEvents();
-      // this.forceUpdate();
     }
   }
 
@@ -32,8 +29,15 @@ class EventIndex extends React.Component{
     }
   }
 
-  toggleSelections(field){
+  toggleSelections(field, angle){
     document.getElementById(field).classList.toggle("show");
+    if (document.getElementById(angle).classList.contains("fa-angle-down")){
+      document.getElementById(angle).classList.remove("fa-angle-down");
+      document.getElementById(angle).classList.add("fa-angle-up");
+    } else {
+      document.getElementById(angle).classList.remove("fa-angle-up");
+      document.getElementById(angle).classList.add("fa-angle-down");
+    }
   }
 
   render(){
@@ -84,16 +88,16 @@ class EventIndex extends React.Component{
     return (
       <div className="event-index-main-page">
       <NavBarContainer/>
-      <div className="event-index-background"></div>
+      <div className="event-index-background">
       <div className="event-index-flex">
 
       <div>
         <div className="event-index-options-main">
           <div className="event-index-options">
             <div className="event-index-options-event-type">
-              <button onClick={(e) => this.toggleSelections("event-index-event-type-dropdown")}
+              <button onClick={(e) => this.toggleSelections("event-index-event-type-dropdown", "event-index-event-type-btn-angle")}
               className="event-index-event-type-btn">
-              EVENT TYPE <i className="fa fa-angle-down fa-lg" aria-hidden="true"></i>
+              EVENT TYPE <i className="fa fa-angle-down fa-lg" id="event-index-event-type-btn-angle" aria-hidden="true"></i>
               </button>
               <div id="event-index-event-type-dropdown"
               className="event-index-event-type-dropdown-content"
@@ -103,9 +107,9 @@ class EventIndex extends React.Component{
             </div>
             <br></br>
             <div className="event-index-options-category">
-              <button onClick={(e) => this.toggleSelections("event-index-category-dropdown")}
+              <button onClick={(e) => this.toggleSelections("event-index-category-dropdown", "event-index-category-btn-angle")}
               className="event-index-category-btn">
-              CATEGORY <i className="fa fa-angle-down fa-lg" aria-hidden="true"></i>
+              CATEGORY <i className="fa fa-angle-down fa-lg" id="event-index-category-btn-angle"aria-hidden="true"></i>
               </button>
               <div id="event-index-category-dropdown"
               className="event-index-category-dropdown-content"
@@ -138,6 +142,7 @@ class EventIndex extends React.Component{
       </div>
     </div>
     <PageFooter/>
+    </div>
     </div>
     );
   }

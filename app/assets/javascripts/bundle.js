@@ -32235,6 +32235,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchEventTypes: function fetchEventTypes() {
       return dispatch((0, _event_type_actions.fetchEventTypes)());
+    },
+    receiveEmail: function receiveEmail(email) {
+      return dispatch((0, _session_actions.receiveEmail)(email));
     }
   };
 };
@@ -32331,7 +32334,6 @@ var SessionFormLogin = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'signin-login-form-container' },
@@ -34021,13 +34023,10 @@ var EventIndex = function (_React$Component) {
       this.props.fetchEventTypes();
       if (this.props.match.params.categoryName) {
         this.props.fetchByCategory({ name: this.props.match.params.categoryName });
-        // this.forceUpdate();
       } else if (this.props.match.params.eventTypeName) {
         this.props.fetchByEventType({ name: this.props.match.params.eventTypeName });
-        // this.forceUpdate();
       } else {
         this.props.fetchEvents();
-        // this.forceUpdate();
       }
     }
   }, {
@@ -34041,8 +34040,15 @@ var EventIndex = function (_React$Component) {
     }
   }, {
     key: 'toggleSelections',
-    value: function toggleSelections(field) {
+    value: function toggleSelections(field, angle) {
       document.getElementById(field).classList.toggle("show");
+      if (document.getElementById(angle).classList.contains("fa-angle-down")) {
+        document.getElementById(angle).classList.remove("fa-angle-down");
+        document.getElementById(angle).classList.add("fa-angle-up");
+      } else {
+        document.getElementById(angle).classList.remove("fa-angle-up");
+        document.getElementById(angle).classList.add("fa-angle-down");
+      }
     }
   }, {
     key: 'render',
@@ -34088,92 +34094,95 @@ var EventIndex = function (_React$Component) {
         'div',
         { className: 'event-index-main-page' },
         _react2.default.createElement(_nav_bar_container2.default, null),
-        _react2.default.createElement('div', { className: 'event-index-background' }),
         _react2.default.createElement(
           'div',
-          { className: 'event-index-flex' },
+          { className: 'event-index-background' },
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'event-index-flex' },
             _react2.default.createElement(
               'div',
-              { className: 'event-index-options-main' },
+              null,
               _react2.default.createElement(
                 'div',
-                { className: 'event-index-options' },
+                { className: 'event-index-options-main' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'event-index-options-event-type' },
-                  _react2.default.createElement(
-                    'button',
-                    { onClick: function onClick(e) {
-                        return _this2.toggleSelections("event-index-event-type-dropdown");
-                      },
-                      className: 'event-index-event-type-btn' },
-                    'EVENT TYPE ',
-                    _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', 'aria-hidden': 'true' })
-                  ),
+                  { className: 'event-index-options' },
                   _react2.default.createElement(
                     'div',
-                    { id: 'event-index-event-type-dropdown',
-                      className: 'event-index-event-type-dropdown-content'
-                    },
-                    eventTypeOpts
+                    { className: 'event-index-options-event-type' },
+                    _react2.default.createElement(
+                      'button',
+                      { onClick: function onClick(e) {
+                          return _this2.toggleSelections("event-index-event-type-dropdown", "event-index-event-type-btn-angle");
+                        },
+                        className: 'event-index-event-type-btn' },
+                      'EVENT TYPE ',
+                      _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', id: 'event-index-event-type-btn-angle', 'aria-hidden': 'true' })
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { id: 'event-index-event-type-dropdown',
+                        className: 'event-index-event-type-dropdown-content'
+                      },
+                      eventTypeOpts
+                    )
+                  ),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'event-index-options-category' },
+                    _react2.default.createElement(
+                      'button',
+                      { onClick: function onClick(e) {
+                          return _this2.toggleSelections("event-index-category-dropdown", "event-index-category-btn-angle");
+                        },
+                        className: 'event-index-category-btn' },
+                      'CATEGORY ',
+                      _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', id: 'event-index-category-btn-angle', 'aria-hidden': 'true' })
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { id: 'event-index-category-dropdown',
+                        className: 'event-index-category-dropdown-content'
+                      },
+                      categoryOpts
+                    )
+                  )
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'event-index-content' },
+              _react2.default.createElement(
+                'div',
+                { className: 'event-index-main' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'event-index-info' },
+                  _react2.default.createElement(
+                    'h1',
+                    null,
+                    'New York, NY Events For You'
+                  ),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    'Five bustling boroughs make up the powerhouse known as New York City. Iconic sites like the Empire State Building and the Statue of Liberty draw crowds from across the globe. Most New York events feature music, performing & visual arts, or food & drink. Enjoy a Broadway show or take a stroll through Central Park. Check out the city\'s many events below \u2014 there\'s something for everyone!'
                   )
                 ),
-                _react2.default.createElement('br', null),
                 _react2.default.createElement(
-                  'div',
-                  { className: 'event-index-options-category' },
-                  _react2.default.createElement(
-                    'button',
-                    { onClick: function onClick(e) {
-                        return _this2.toggleSelections("event-index-category-dropdown");
-                      },
-                      className: 'event-index-category-btn' },
-                    'CATEGORY ',
-                    _react2.default.createElement('i', { className: 'fa fa-angle-down fa-lg', 'aria-hidden': 'true' })
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { id: 'event-index-category-dropdown',
-                      className: 'event-index-category-dropdown-content'
-                    },
-                    categoryOpts
-                  )
+                  'ul',
+                  { className: 'event-index-list' },
+                  this.props.events.length > 0 ? items : "There are no events for this selection. Please select a different option :)"
                 )
               )
             )
           ),
-          _react2.default.createElement(
-            'div',
-            { className: 'event-index-content' },
-            _react2.default.createElement(
-              'div',
-              { className: 'event-index-main' },
-              _react2.default.createElement(
-                'div',
-                { className: 'event-index-info' },
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'New York, NY Events For You'
-                ),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  'Five bustling boroughs make up the powerhouse known as New York City. Iconic sites like the Empire State Building and the Statue of Liberty draw crowds from across the globe. Most New York events feature music, performing & visual arts, or food & drink. Enjoy a Broadway show or take a stroll through Central Park. Check out the city\'s many events below \u2014 there\'s something for everyone!'
-                )
-              ),
-              _react2.default.createElement(
-                'ul',
-                { className: 'event-index-list' },
-                this.props.events.length > 0 ? items : "There are no events for this selection. Please select a different option :)"
-              )
-            )
-          )
-        ),
-        _react2.default.createElement(_footer2.default, null)
+          _react2.default.createElement(_footer2.default, null)
+        )
       );
     }
   }]);
@@ -34613,201 +34622,204 @@ var EventShow = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(_nav_bar_container2.default, null),
-          _react2.default.createElement('div', { className: 'event-show-background' }),
           _react2.default.createElement(
             'div',
-            { className: 'event-show-background-img' },
-            _react2.default.createElement('img', { src: this.props.event.avatar_url })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'event-show-main' },
+            { className: 'event-show-background' },
             _react2.default.createElement(
               'div',
-              { className: 'event-show-top' },
+              { className: 'event-show-background-img' },
+              _react2.default.createElement('img', { src: this.props.event.avatar_url })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'event-show-main' },
               _react2.default.createElement(
                 'div',
-                { className: 'event-show-top-left' },
-                _react2.default.createElement('img', { src: this.props.event.avatar_url })
+                { className: 'event-show-top' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'event-show-top-left' },
+                  _react2.default.createElement('img', { src: this.props.event.avatar_url })
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'event-show-top-right-background' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'event-show-top-right' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      this.convertDateTime(this.props.event.start_date_time).newDateTop
+                    ),
+                    _react2.default.createElement(
+                      'h1',
+                      null,
+                      this.props.event.title
+                    ),
+                    _react2.default.createElement(
+                      'h3',
+                      null,
+                      _react2.default.createElement(
+                        'a',
+                        null,
+                        'by ',
+                        this.props.event.organizer_name
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'span',
+                      null,
+                      this.convertPrice(this.props.event.price)
+                    )
+                  )
+                )
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'event-show-top-right-background' },
+                { className: 'event-show-tickets-background' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'event-show-top-right' },
+                  { className: 'event-show-tickets' },
                   _react2.default.createElement(
-                    'p',
+                    'div',
+                    { className: 'event-show-tickets-top' },
+                    _react2.default.createElement('i', { className: 'fa fa-bookmark-o fa-lg',
+                      'aria-hidden': 'true',
+                      id: '' + this.props.event.id,
+                      onClick: function onClick(e) {
+                        return _this2.handleSave(e);
+                      }
+                    })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'event-show-tickets-bottom' },
+                    _react2.default.createElement(
+                      'button',
+                      { onClick: this.handleRegister },
+                      registerText
+                    )
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'event-show-bottom' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'event-show-bottom-left' },
+                  _react2.default.createElement(
+                    'h1',
                     null,
-                    this.convertDateTime(this.props.event.start_date_time).newDateTop
+                    'DESCRIPTION'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'event-show-bottom-left-description' },
+                    _react2.default.createElement(
+                      'p',
+                      null,
+                      this.props.event.description
+                    )
                   ),
                   _react2.default.createElement(
                     'h1',
                     null,
-                    this.props.event.title
+                    'TAGS'
                   ),
                   _react2.default.createElement(
-                    'h3',
-                    null,
+                    'div',
+                    { className: 'event-show-tags' },
                     _react2.default.createElement(
-                      'a',
-                      null,
-                      'by ',
-                      this.props.event.organizer_name
+                      'div',
+                      { className: 'event-show-tags-category' },
+                      _react2.default.createElement(
+                        'h2',
+                        null,
+                        _react2.default.createElement(
+                          _reactRouterDom.Link,
+                          {
+                            to: { pathname: '/events/category/' + Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase(),
+                              state: { category: '' + Object.values(this.props.event.category)[0].name } },
+                            value: '' + Object.values(this.props.event.category)[0].name },
+                          Object.values(this.props.event.category)[0].name
+                        )
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'event-show-tags-event-type' },
+                      _react2.default.createElement(
+                        'h2',
+                        null,
+                        _react2.default.createElement(
+                          _reactRouterDom.Link,
+                          {
+                            to: { pathname: '/events/event-type/' + Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase(),
+                              state: { eventType: '' + Object.values(this.props.event.eventType)[0].name } },
+                            value: '' + Object.values(this.props.event.eventType)[0].name },
+                          Object.values(this.props.event.eventType)[0].name
+                        )
+                      )
                     )
-                  ),
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'event-show-bottom-right' },
                   _react2.default.createElement(
-                    'span',
+                    'h1',
                     null,
-                    this.convertPrice(this.props.event.price)
-                  )
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'event-show-tickets-background' },
-              _react2.default.createElement(
-                'div',
-                { className: 'event-show-tickets' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'event-show-tickets-top' },
-                  _react2.default.createElement('i', { className: 'fa fa-bookmark-o fa-lg',
-                    'aria-hidden': 'true',
-                    id: '' + this.props.event.id,
-                    onClick: function onClick(e) {
-                      return _this2.handleSave(e);
-                    }
-                  })
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'event-show-tickets-bottom' },
-                  _react2.default.createElement(
-                    'button',
-                    { onClick: this.handleRegister },
-                    registerText
-                  )
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'event-show-bottom' },
-              _react2.default.createElement(
-                'div',
-                { className: 'event-show-bottom-left' },
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'DESCRIPTION'
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'event-show-bottom-left-description' },
+                    'DATE AND TIME'
+                  ),
                   _react2.default.createElement(
                     'p',
                     null,
-                    this.props.event.description
-                  )
-                ),
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'TAGS'
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'event-show-tags' },
+                    this.convertDateTime(this.props.event.start_date_time).newDateBottom,
+                    ' -',
+                    _react2.default.createElement('br', null),
+                    this.convertDateTime(this.props.event.end_date_time).newDateBottom
+                  ),
                   _react2.default.createElement(
-                    'div',
-                    { className: 'event-show-tags-category' },
-                    _react2.default.createElement(
-                      'h2',
-                      null,
-                      _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        {
-                          to: { pathname: '/events/category/' + Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase(),
-                            state: { category: '' + Object.values(this.props.event.category)[0].name } },
-                          value: '' + Object.values(this.props.event.category)[0].name },
-                        Object.values(this.props.event.category)[0].name
-                      )
-                    )
+                    'h1',
+                    null,
+                    'LOCATION'
+                  ),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    this.props.event.location
+                  ),
+                  _react2.default.createElement(
+                    'h1',
+                    null,
+                    'REMAINING TICKETS'
+                  ),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    num_tickets
+                  ),
+                  _react2.default.createElement(
+                    'h1',
+                    null,
+                    'FRIENDS WHO ARE GOING'
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'event-show-tags-event-type' },
+                    { className: 'event-show-bottom-right-attendees' },
                     _react2.default.createElement(
-                      'h2',
+                      'ul',
                       null,
-                      _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        {
-                          to: { pathname: '/events/event-type/' + Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase(),
-                            state: { eventType: '' + Object.values(this.props.event.eventType)[0].name } },
-                          value: '' + Object.values(this.props.event.eventType)[0].name },
-                        Object.values(this.props.event.eventType)[0].name
-                      )
+                      attendees
                     )
                   )
                 )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'event-show-bottom-right' },
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'DATE AND TIME'
-                ),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  this.convertDateTime(this.props.event.start_date_time).newDateBottom,
-                  ' -',
-                  _react2.default.createElement('br', null),
-                  this.convertDateTime(this.props.event.end_date_time).newDateBottom
-                ),
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'LOCATION'
-                ),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  this.props.event.location
-                ),
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'REMAINING TICKETS'
-                ),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  num_tickets
-                ),
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'FRIENDS WHO ARE GOING'
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'event-show-bottom-right-attendees' },
-                  _react2.default.createElement(
-                    'ul',
-                    null,
-                    attendees
-                  )
-                )
               )
-            )
-          ),
-          _react2.default.createElement(_footer2.default, null)
+            ),
+            _react2.default.createElement(_footer2.default, null)
+          )
         );
       }
     }
@@ -35144,95 +35156,98 @@ var UserShow = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_nav_bar_container2.default, null),
-        _react2.default.createElement('div', { className: 'user-show-background' }),
         _react2.default.createElement(
           'div',
-          { className: 'user-show-header' },
+          { className: 'user-show-background' },
           _react2.default.createElement(
-            'h1',
-            null,
-            this.props.currentUser.first_name,
-            ' ',
-            this.props.currentUser.last_name
-          ),
-          _react2.default.createElement(
-            'ul',
-            null,
+            'div',
+            { className: 'user-show-header' },
             _react2.default.createElement(
-              'li',
-              { value: 'upcomingEvents',
-                onClick: function onClick() {
-                  return _this2.toggleSelection(0);
-                },
-                style: { borderBottom: '4px solid ' + this.selectionColor(0) },
-                active: this.state.activeComponent
-              },
-              _react2.default.createElement(
-                'span',
-                null,
-                this.props.currentUser.tickets !== undefined ? Object.values(this.props.currentUser.tickets).length : ""
-              ),
-              _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'span',
-                null,
-                'UPCOMING EVENTS'
-              )
+              'h1',
+              null,
+              this.props.currentUser.first_name,
+              ' ',
+              this.props.currentUser.last_name
             ),
             _react2.default.createElement(
-              'li',
-              { value: 'savedEvents',
-                onClick: function onClick() {
-                  return _this2.toggleSelection(1);
-                },
-                style: { borderBottom: '4px solid ' + this.selectionColor(1) },
-                active: this.state.activeComponent
-              },
+              'ul',
+              null,
               _react2.default.createElement(
-                'span',
-                null,
-                this.props.currentUser.saved_events !== undefined ? Object.values(this.props.currentUser.saved_events).length : ""
+                'li',
+                { value: 'upcomingEvents',
+                  onClick: function onClick() {
+                    return _this2.toggleSelection(0);
+                  },
+                  style: { borderBottom: '4px solid ' + this.selectionColor(0) },
+                  active: this.state.activeComponent
+                },
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  this.props.currentUser.tickets !== undefined ? Object.values(this.props.currentUser.tickets).length : ""
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  'UPCOMING EVENTS'
+                )
               ),
-              _react2.default.createElement('br', null),
               _react2.default.createElement(
-                'span',
-                null,
-                'SAVED EVENTS'
-              )
-            ),
-            _react2.default.createElement(
-              'li',
-              { value: 'pastEvents',
-                onClick: function onClick() {
-                  return _this2.toggleSelection(2);
+                'li',
+                { value: 'savedEvents',
+                  onClick: function onClick() {
+                    return _this2.toggleSelection(1);
+                  },
+                  style: { borderBottom: '4px solid ' + this.selectionColor(1) },
+                  active: this.state.activeComponent
                 },
-                style: { borderBottom: '4px solid ' + this.selectionColor(2) }
-              },
-              _react2.default.createElement('span', null),
-              _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  this.props.currentUser.saved_events !== undefined ? Object.values(this.props.currentUser.saved_events).length : ""
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  'SAVED EVENTS'
+                )
+              ),
               _react2.default.createElement(
-                'span',
-                null,
-                'PAST EVENTS'
+                'li',
+                { value: 'pastEvents',
+                  onClick: function onClick() {
+                    return _this2.toggleSelection(2);
+                  },
+                  style: { borderBottom: '4px solid ' + this.selectionColor(2) }
+                },
+                _react2.default.createElement('span', null),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  'PAST EVENTS'
+                )
               )
             )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_user_show_index2.default, {
-            activeComponent: this.state.activeComponent,
-            currentUser: this.props.currentUser,
-            deleteSavedEvent: this.props.deleteSavedEvent,
-            createSavedEvent: this.props.createSavedEvent
-          }),
-          _react2.default.createElement(_user_show_ticket_index2.default, {
-            activeComponent: this.state.activeComponent,
-            currentUser: this.props.currentUser
-          })
-        ),
-        _react2.default.createElement('div', { className: 'user-show-background' })
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_user_show_index2.default, {
+              activeComponent: this.state.activeComponent,
+              currentUser: this.props.currentUser,
+              deleteSavedEvent: this.props.deleteSavedEvent,
+              createSavedEvent: this.props.createSavedEvent
+            }),
+            _react2.default.createElement(_user_show_ticket_index2.default, {
+              activeComponent: this.state.activeComponent,
+              currentUser: this.props.currentUser
+            })
+          ),
+          _react2.default.createElement(_footer2.default, null)
+        )
       );
     }
   }]);
@@ -35290,7 +35305,11 @@ var UserShowIndex = function UserShowIndex(_ref) {
       _react2.default.createElement(
         'div',
         { className: 'user-show-index-main' },
-        items
+        _react2.default.createElement(
+          'ul',
+          null,
+          items
+        )
       )
     );
   } else {
@@ -35392,7 +35411,7 @@ var UserShowIndexItem = function (_React$Component) {
 
       var newPrice = this.convertPrice(this.props.event.price);
       return _react2.default.createElement(
-        'div',
+        'li',
         { className: 'user-index-item-li' },
         _react2.default.createElement(
           'div',
@@ -35442,10 +35461,26 @@ var UserShowIndexItem = function (_React$Component) {
               { className: 'user-index-item-info-right-span-tags' },
               _react2.default.createElement(
                 'span',
-                null,
-                '#' + Object.values(this.props.event.category)[0].name,
-                ' ',
-                '#' + Object.values(this.props.event.eventType)[0].name
+                { className: 'event-index-item-info-right-span-links' },
+                _react2.default.createElement(
+                  _reactRouterDom.Link,
+                  {
+                    to: { pathname: '/events/category/' + Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase(),
+                      state: { category: '' + Object.values(this.props.event.category)[0].name } },
+                    value: '' + Object.values(this.props.event.category)[0].name },
+                  '#',
+                  Object.values(this.props.event.category)[0].name
+                ),
+                '\xA0\xA0\xA0\xA0',
+                _react2.default.createElement(
+                  _reactRouterDom.Link,
+                  {
+                    to: { pathname: '/events/event-type/' + Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase(),
+                      state: { eventType: '' + Object.values(this.props.event.eventType)[0].name } },
+                    value: '' + Object.values(this.props.event.eventType)[0].name },
+                  '#',
+                  Object.values(this.props.event.eventType)[0].name
+                )
               )
             ),
             _react2.default.createElement(
@@ -35736,35 +35771,38 @@ var UserEvents = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_nav_bar_container2.default, null),
-        _react2.default.createElement('div', { className: 'user-events-background' }),
         _react2.default.createElement(
           'div',
-          { className: 'user-events-main-wrapper' },
+          { className: 'user-events-background' },
           _react2.default.createElement(
             'div',
-            { className: 'user-events-main' },
+            { className: 'user-events-main-wrapper' },
             _react2.default.createElement(
-              'h1',
-              null,
-              'Manage Events'
-            ),
-            _react2.default.createElement(
-              'ul',
-              { className: 'user-events-live-list' },
+              'div',
+              { className: 'user-events-main' },
               _react2.default.createElement(
-                'li',
+                'h1',
                 null,
-                'LIVE ' + Object.values(this.props.currentUser.organized_events).length
+                'Manage Events'
+              ),
+              _react2.default.createElement(
+                'ul',
+                { className: 'user-events-live-list' },
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  'LIVE ' + Object.values(this.props.currentUser.organized_events).length
+                )
+              ),
+              _react2.default.createElement(
+                'ul',
+                { className: 'user-events-list' },
+                events
               )
-            ),
-            _react2.default.createElement(
-              'ul',
-              { className: 'user-events-list' },
-              events
             )
-          )
-        ),
-        _react2.default.createElement(_footer2.default, null)
+          ),
+          _react2.default.createElement(_footer2.default, null)
+        )
       );
     }
   }]);

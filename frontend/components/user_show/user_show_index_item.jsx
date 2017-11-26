@@ -52,7 +52,7 @@ class UserShowIndexItem extends React.Component {
   render(){
     const newPrice = this.convertPrice(this.props.event.price);
     return (
-      <div className="user-index-item-li">
+      <li className="user-index-item-li">
         <div className="user-index-item-main">
           <div className="user-index-item-info-left">
           </div>
@@ -74,7 +74,21 @@ class UserShowIndexItem extends React.Component {
 
             <div className="user-index-item-info-right">
               <div className="user-index-item-info-right-span-tags">
-                <span>{`#${Object.values(this.props.event.category)[0].name}`} {`#${Object.values(this.props.event.eventType)[0].name}`}</span>
+                <span className="event-index-item-info-right-span-links">
+                  <Link
+                    to={{pathname: `/events/category/${Object.values(this.props.event.category)[0].name.split(" & ").join("-and-").toLowerCase()}`,
+                    state:{category: `${Object.values(this.props.event.category)[0].name}`}}}
+                    value={`${Object.values(this.props.event.category)[0].name}`} >
+                    #{Object.values(this.props.event.category)[0].name}
+                  </Link>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <Link
+                    to={{pathname: `/events/event-type/${Object.values(this.props.event.eventType)[0].name.split(" & ").join("-and-").toLowerCase()}`,
+                    state:{eventType: `${Object.values(this.props.event.eventType)[0].name}`}}}
+                    value={`${Object.values(this.props.event.eventType)[0].name}`} >
+                    #{Object.values(this.props.event.eventType)[0].name}
+                  </Link>
+                </span>
               </div>
               <div className="user-index-item-info-right-glyph">
                 <i className="fa fa-bookmark-o lg"
@@ -86,7 +100,7 @@ class UserShowIndexItem extends React.Component {
             </div>
 
         </div>
-      </div>
+      </li>
     );
   }
 }

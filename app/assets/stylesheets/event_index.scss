@@ -1,9 +1,9 @@
 .event-index-background {
   position: absolute;
-  height: 2500px;
   z-index: -100;
   width: 100%;
   background-color: #F8F8FA;
+  // height: 100%;
 }
 
 .event-index-background-bottom {
@@ -16,7 +16,9 @@
 .event-index-flex {
   display: flex;
   width: 100%;
-  height: 2500px;
+  // height: 100%;
+  // border: 1px solid black;
+
 }
 
 .event-index-options-main {
@@ -32,7 +34,16 @@
   margin: 0 auto;
   width: 75%;
   margin-top: 40px;
+  // height:100%;
+  // border: 1px solid black;
+  padding-bottom: 100px;
+
+
 }
+
+// .event-index-main {
+//   height:100%;
+// }
 
 .event-index-main ul li{
   margin: 10px 10px;
@@ -62,7 +73,7 @@
 .event-index-list,
 .event-index-info {
   width: 75%;
-  height: 150px;
+  // height: 150px;
   margin: 0 auto;
 
 }
@@ -85,9 +96,11 @@
 
 .event-index-category-btn {
   margin-bottom: 8px;
+  border-top: 1px solid #D2D6DF;
+
 }
 
-.event-index-event-type-btn,
+// .event-index-event-type-btn,
 .event-index-options-main {
   border-bottom: 1px solid #D2D6DF;
 }

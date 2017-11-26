@@ -18,9 +18,9 @@ const UserShowIndex= ({ activeComponent, createSavedEvent, deleteSavedEvent, cur
     return (
       <div>
         <div className="user-show-index-main">
-
+          <ul>
             {items}
-
+          </ul>
         </div>
       </div>
     );

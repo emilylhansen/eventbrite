@@ -45,7 +45,7 @@ class UserShow extends React.Component {
     return (
       <div>
         <NavBarContainer/>
-        <div className="user-show-background"></div>
+        <div className="user-show-background">
         <div className="user-show-header">
           <h1>
             {this.props.currentUser.first_name} {this.props.currentUser.last_name}
@@ -93,7 +93,8 @@ class UserShow extends React.Component {
             currentUser={this.props.currentUser}
             />
         </div>
-        <div className="user-show-background"></div>
+        <PageFooter/>
+        </div>
       </div>
     );
   }

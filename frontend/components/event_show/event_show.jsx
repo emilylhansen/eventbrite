@@ -116,7 +116,7 @@ class EventShow extends React.Component {
       return (
         <div>
           <NavBarContainer/>
-          <div className="event-show-background"></div>
+          <div className="event-show-background">
           <div className="event-show-background-img">
             <img src={this.props.event.avatar_url}/>
           </div>
@@ -209,9 +209,9 @@ class EventShow extends React.Component {
                 </div>
               </div>
             </div>
-
           </div>
           <PageFooter/>
+          </div>
         </div>
       );
     }
