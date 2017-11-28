@@ -145,13 +145,14 @@ class EventForm extends React.Component {
 
     const category_id = this.findCategoryId();
     const event_type_id = this.findEventTypeId();
-    debugger
+
     if(this.props.match.path === '/events/new'){
       this.props.action(formData, this.goBack).then(
         ({event}) => {
         this.props.createEventCategory({event_id: event.id, category_id: category_id});
         this.props.createEventEventType({event_id: event.id, event_type_id: event_type_id});
       });
+
     } else {
       this.props.action(formData, this.goBack);
     }
@@ -248,7 +249,6 @@ class EventForm extends React.Component {
     } else {
       this.submitted = false;
     }
-
 
     return(
       <div>

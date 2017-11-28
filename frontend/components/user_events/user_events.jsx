@@ -10,8 +10,8 @@ class UserEvents extends React.Component {
     super(props);
 
   }
-  componentDidMount(){
 
+  componentDidMount(){
   }
 
   convertDateTime(dateTime) {

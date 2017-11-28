@@ -24986,7 +24986,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
+  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 };
 
 exports.default = configureStore;
@@ -33446,7 +33446,7 @@ var EventForm = function (_React$Component) {
 
       var category_id = this.findCategoryId();
       var event_type_id = this.findEventTypeId();
-      debugger;
+
       if (this.props.match.path === '/events/new') {
         this.props.action(formData, this.goBack).then(function (_ref) {
           var event = _ref.event;
