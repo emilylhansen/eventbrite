@@ -416,7 +416,11 @@ class EventForm extends React.Component {
                     ></input>}
                 <br></br>
 
-                <span className="event-form-error-bottom">{this.props.errors.length > 0 ? "Please fill in the required fields." : ""}</span>
+                <div className="event-form-error-bottom">
+                  <span>
+                    {this.props.errors.length > 0 ? "Please fill in the required fields." : ""}
+                  </span>
+                </div>
             </div>
           </div>
 

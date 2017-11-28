@@ -126,7 +126,7 @@
   align-content: center;
   text-align: center;
   width: 100%;
-  transition: all .5s ease-in-out;
+  transition: all .3s ease-in-out;
   transform: scale(.000001);
   position: absolute;
 
@@ -184,7 +184,7 @@
 .homepage-categories-three-bottom:hover img, {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-  -webkit-filter: blur(3px);
+  -webkit-filter: blur(7px);
 }
 
 .homepage-categories-one-bottom,

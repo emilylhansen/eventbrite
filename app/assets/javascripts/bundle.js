@@ -24986,7 +24986,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
 };
 
 exports.default = configureStore;
@@ -33877,9 +33877,13 @@ var EventForm = function (_React$Component) {
               }),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
-                'span',
+                'div',
                 { className: 'event-form-error-bottom' },
-                this.props.errors.length > 0 ? "Please fill in the required fields." : ""
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  this.props.errors.length > 0 ? "Please fill in the required fields." : ""
+                )
               )
             )
           ),

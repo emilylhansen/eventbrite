@@ -224,6 +224,9 @@
   font-weight: 100;
   margin: 0 auto;
   vertical-align: middle;
+  // border: 1px solid black;
+  // height: 100%;
+  // width: 100%;
 }
 
 .event-form-image-input-label:hover {
@@ -236,5 +239,5 @@
 
 .event-form-error-bottom {
   color: red;
-  padding-bottom: 20px;
+  margin-bottom: 50px;
 }
